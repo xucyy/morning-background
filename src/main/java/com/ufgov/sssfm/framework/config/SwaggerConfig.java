@@ -36,7 +36,7 @@ public class SwaggerConfig
                 .apiInfo(apiInfo())
                 .select()
                 // 指定当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.ufgov.sssfm.project"))
+                .apis(RequestHandlerSelectors.basePackage("com.ufgov.sssfm.project.module"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();

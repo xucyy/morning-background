@@ -1,6 +1,9 @@
 package com.ufgov.sssfm.project.module.eioDistricts.controller;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,7 @@ import com.ufgov.sssfm.framework.web.domain.AjaxResult;
  * @author fanhla
  * @date 2018-08-02
  */
+@Api(value="行政区划",tags ="行政区划")
 @Controller
 @RequestMapping("/module/eioDistricts")
 public class EioDistrictsController extends BaseController
@@ -43,6 +47,7 @@ public class EioDistrictsController extends BaseController
 	/**
 	 * 查询基金委托运营地区列表
 	 */
+	@ApiOperation(value="获取行政区划列表", notes="获取行政区划列表")
 	@RequiresPermissions("module:eioDistricts:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -77,6 +82,7 @@ public class EioDistrictsController extends BaseController
 	/**
 	 * 修改基金委托运营地区
 	 */
+	@ApiOperation(value="根据区划编码查询", notes="根据区划编码查询")
 	@GetMapping("/edit/{nD}")
 	public String edit(@PathVariable("nD") Integer nD, ModelMap mmap)
 	{
