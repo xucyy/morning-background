@@ -11,7 +11,7 @@ sssfm:
 #开发环境配置
 server:
   #端口
-  port: 80
+  port: 8080
   tomcat:
     uri-encoding: utf-8
 #日志配置

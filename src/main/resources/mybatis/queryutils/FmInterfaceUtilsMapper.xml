@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ufgov.sssfm.project.module.queryutils.mapper.FmInterfaceUtilsMapper">
+
+    <select id="selectValsByPK" parameterType="java.util.Map"  resultType="java.util.HashMap"  >
+        select * from fm_interface_utils
+        <where>
+            <if test="TRANSTOWHERE !=null">
+                transtowhere=#{TRANSTOWHERE}
+            </if>
+            <if test="USERTOWHERE !=null">
+                and  usertowhere=#{USERTOWHERE}
+            </if>
+            <if test="VAL_ID !=null">
+                and  val_id=#{VAL_ID}
+            </if>
+        </where>
+    </select>
+
+</mapper>
