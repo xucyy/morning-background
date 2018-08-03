@@ -327,7 +327,7 @@ $(function(){
                         type:"post",
                         dataType:'json',
                         data:{
-                            "AAZ031List": JSON.stringify(ids),
+                            "AAZ031Json": JSON.stringify(ids),
                             "bankCode":$('#chooseBank').selectpicker('val'),
                             "bankAccount":$('#chooseName').selectpicker('val')
                         },
@@ -391,7 +391,7 @@ $(function(){
                            type:"post",
                            dataType:'json',
                            data:{
-                               "AAZ031List": JSON.stringify(ids)
+                               "AAZ031Json": JSON.stringify(ids)
                            },
                            beforeSend:function (){
                                $('#myModal').modal('show');

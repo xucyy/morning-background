@@ -273,7 +273,7 @@ $(function(){
                             url: allUrlOutcome.send,
                             type:"post",
                             dataType:'json',
-                            data:{"AAZ301Json": JSON.stringify(ids)},
+                            data:{"AAZ031Json": JSON.stringify(ids)},
                             beforeSend:function (){
                                 $('#myModal').modal('show');
                             },
