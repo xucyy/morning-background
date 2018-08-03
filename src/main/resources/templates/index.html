@@ -20,7 +20,7 @@
         .nav > li:hover .dropdown-menu {display: block;}
     </style>
 </head>
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden" th:classappend="${@config.getKey('sys.index.skinName')}">
+<body class="fixed-sidebar full-height-layout gray-bg skin-blue" style="overflow: hidden" th:classappend="${@config.getKey('sys.index.skinName')}">
 <div id="wrapper">
 
     <!--左侧导航开始-->
@@ -43,7 +43,7 @@
                          </ul>
                     </div>
                 </li>
-                 <li class="active">
+                <li class="active">
                     <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="active"><a class="menuItem" th:href="@{/system/main}">首页</a></li>
