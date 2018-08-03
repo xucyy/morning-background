@@ -57,7 +57,7 @@ public class OutcomeController {
      **/
     @PostMapping("/query_jf07_pagedata")
     @ApiOperation(value="征缴页面查询表格数据", notes="征缴页面查询表格数据")
-    private String  query_jf07_pagedata( String pageNumber, String pageSize,String AAE035,String AAE140,String AAA079,String AAE008){
+    private String  query_jf07_pagedata( String pageNumber, String pageSize,String AAE035,String AAE140,String AAA079,String AAE008,String PAYMENT_STATUS){
 
         JSONObject jsonObject = new JSONObject();
         Map map = new HashMap();
@@ -71,6 +71,7 @@ public class OutcomeController {
         map.put("AAE140",AAE140);
         map.put("AAE008",AAE008);
         map.put("AAA079",AAA079);
+        map.put("PAYMENT_STATUS",PAYMENT_STATUS);
 
 
         List query_list= outcomeService.query_jf07_pagedata(map);

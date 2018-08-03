@@ -78,6 +78,9 @@
             <if test="(AAE008 !=null and AAE008 !='-1')">
                 and AAE008=#{AAE008}
             </if>
+            <if test="PAYMENT_STATUS !=null">
+                and PAYMENT_STATUS=#{PAYMENT_STATUS}
+            </if>
             <if test="AAE035 !=null">
                 and str_to_date(AAE035,'%Y/%m/%d') =str_to_date(#{AAE035},'%Y%m%d')
             </if>
