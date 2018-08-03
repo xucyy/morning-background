@@ -67,7 +67,7 @@
 		<logger name="org.springframework.jdbc" level="debug" />
 	-->
 
-	<logger name="com..ufgov.sssfm" level="info" />
+	<logger name="com.ufgov.sssfm" level="info" />
 
 	<root level="info">
 		<appender-ref ref="console" />

@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
  * 
  * @author ruoyi
  */
-@Component("ryTask")
-public class RyTask
+@Component("fanTask")
+public class FanTask
 {
 
-    public void ryParams(String params)
+    public void fanParams(String params)
     {
         System.out.println("执行有参方法：" + params);
     }
 
-    public void ryNoParams()
+    public void fanNoParams()
     {
         System.out.println("执行无参方法");
     }
