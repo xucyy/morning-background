@@ -32,7 +32,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                         <img th:src="(${user.avatar} == '') ? '/img/profile.jpg' : '/profile/' + ${user.avatar}" alt="image" class="img-circle" height="60" width="60"/></span>
+                         <img th:src="(${user.avatar} == '') ? '/profile/' + ${user.avatar} : '/img/profile.jpg'  " alt="image" class="img-circle" height="60" width="60"/></span>
                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <span class="clear"><span class="block m-t-xs"><strong class="font-bold">[[${user.userName}]]</strong></span>
                          <span class="text-muted text-xs block"><span th:if="${not #strings.isEmpty(user.dept)}">[[${user.dept.deptName}]]</span> <b class="caret"></b></span> </span> </a>
@@ -46,7 +46,7 @@
                  <li class="active">
                     <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a class="menuItem" th:href="@{/system/main}">主页示例一s</a></li>
+                        <li class="active"><a class="menuItem" th:href="@{/system/main}">首页</a></li>
                     </ul>
                 </li>
                 <li th:each="menu : ${menus}">
@@ -65,6 +65,16 @@
 						</li>
 					</ul>
                 </li>
+                <!--<li>-->
+                    <!--<a href="#">-->
+                        <!--<i class="fa fa-bar-chart"></i>-->
+                        <!--<span class="nav-label">收入管理</span>-->
+                        <!--<span class="fa arrow"></span>-->
+                    <!--</a>-->
+                    <!--<ul class="nav nav-second-level">-->
+                        <!--<li><a class="menuItem" th:href="@{/modules/incomePlanCZ}">应收计划发财政</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
             </ul>
         </div>
     </nav>
@@ -124,7 +134,7 @@
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
         </div>
         <div class="footer">
-            <div class="pull-right">© [[${copyrightYear}]] RuoYi Copyright </div>
+            <div class="pull-right">© [[${copyrightYear}]] yonyou Copyright </div>
         </div>
     </div>
     <!--右侧部分结束-->
@@ -135,7 +145,6 @@
 <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
-<script src="http://tajs.qq.com/stats?sId=62048022"></script>
 <script th:src="@{/ruoyi/js/ry-ui.min.js?v=2.2.0}"></script>
 <script th:src="@{/ruoyi/index.js}"></script>
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
