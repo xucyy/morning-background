@@ -133,7 +133,6 @@ $(function(){
 
             //初始化其他组件
             getComponents: function () {
-                $.ajaxSettings.async = false;//ajax同步设定
                 //险种
                 $.post(allUrlInCome.pullDown,{
                     "valset_id": "AAE140"
@@ -156,7 +155,7 @@ $(function(){
                     }
                     $('#jfSelect').selectpicker('refresh');
                 });
-                $.ajaxSettings.async = true;//改回异步
+
                 //时间显示到月
                 commonJS.showMonth('yyyy-mm',3,'year',nowTimeToMonth);
             },

@@ -105,17 +105,21 @@
 
 <!--设置发放行模态框-->
 <div class="modal fade" id="winBank" tabindex="-1" role="dialog" aria-labelledby="bankLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:50%">
+    <div class="modal-dialog" style="width:65%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="bankLabel">设置发放行</h4>
             </div>
             <div class="modal-body">
-                <span>选择发放银行:</span>
-                <select id="chooseBank" class="selectpicker"></select>
-                <span>选择户名及账号:</span>
-                <select id="chooseName" class="selectpicker"></select>
+                <div style="float:left;margin-right: 20px">
+                    <span>选择发放银行:</span>
+                    <select id="chooseBank" class="selectpicker"></select>
+                </div>
+                <div>
+                    <span>选择户名及账号:</span>
+                    <select id="chooseName" class="selectpicker"></select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btn-sure">确认设置</button>

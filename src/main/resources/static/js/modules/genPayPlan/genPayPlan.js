@@ -5,7 +5,11 @@ $(function(){
         pullDown:'../../../queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
         query:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata',//加载表格
         querySon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_item',//子表
-        queryGrandSon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_child'//孙表
+        queryGrandSon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_child',//孙表
+        chooseBank:'../../../outcomeinfo/PaymentPlanController/query_bankName',//获取发放行下拉菜单
+        chooseName:'../../../outcomeinfo/PaymentPlanController/query_bankInfo ',//获取发放户名账号下拉菜单
+        setBank:'../../../outcomeinfo/PaymentPlanController/update_Gra_BankInfo',//设置发放行
+        genPlan:'../../../outcomeinfo/PaymentPlanController/update_createPaymentPlan'//生成支付计划
     };
     var columnsOne=[    //第一个表格表头
         {field:'ck',checkbox:true},
@@ -60,7 +64,7 @@ $(function(){
 
         return {
             // 加载表格
-            getTab: function (id,url,columns) {
+            getTab: function (id,url,columns,status) {
                 $('#'+id).bootstrapTable({
                     url: url,
                     queryParams: function (params) {
@@ -69,7 +73,8 @@ $(function(){
                             pageNumber: params.offset / params.limit + 1,//当前页码
                             "AAE140": $('#safeSelect').selectpicker('val'),//险种
                             "AAA079":$('#bfSelect').selectpicker('val'),//拨付方式
-                            "AAE035": $('.datetimepicker').val().replace(/-/g, '')//拨付时间
+                            "AAE035": $('.datetimepicker').val().replace(/-/g, ''),//拨付时间
+                            "PAYMENT_STATUS":status
                         };
                     },
                     method: 'post',
@@ -194,24 +199,11 @@ $(function(){
                     }
                 });
 
-                //页签中的表格初始化
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                    // 获取已激活的标签页的名称
-                    var activeTab = $(e.target).text();
-                    if (activeTab == '未生成支付计划') {
-                        $('#firstTable').bootstrapTable('refresh');
-                        $('#btn-gen').prop('disabled',false);
-                    }
-                    else {
-                        $('#secondTable').bootstrapTable('refresh');
-                        $('#btn-gen').prop('disabled',true);
-                    }
-                });
             },
 
             //初始化其他组件
             getComponents: function () {
-                $.ajaxSettings.async = false;//ajax同步设定
+                // $.ajaxSettings.async = false;//ajax同步设定
 
                 //险种
                 $.post(allUrlOutcome.pullDown,{
@@ -239,11 +231,10 @@ $(function(){
 
                 //时间显示到月
                 commonJS.showMonth('yyyy-mm-dd',2,'month',nowTime);
-                $.ajaxSettings.async = true;//改回异步
-
+                // $.ajaxSettings.async = true;//改回异步
             },
 
-            //初始化点击事件
+            //初始化触发性事件
             onEventListener: function () {
                 //事件图标触发日期选择
                 $('.glyphicon-time').on('click', function () {
@@ -284,8 +275,41 @@ $(function(){
                     }
                     else{
                         $('#winBank').modal('show');
+                        $('#chooseBank,#chooseName').find('option').remove();//清除之前的下拉内容
 
+                        //加载发放银行
+                        $.post(allUrlOutcome.chooseBank,function(result){
+                            for (var i = 0; i < JSON.parse(result).result.length; i++) {
+                                $('#chooseBank').append("<option value='"+JSON.parse(result).result[i].VAL_ID+"'>"
+                                    + JSON.parse(result).result[i].VAL + "</option>");
+                            }
+                            $('#chooseBank').selectpicker('refresh');//重绘
+                            //根据发放银行选择发放户名(第一次)
+                            $.post(allUrlOutcome.chooseName,{
+                                "bankCode": $('#chooseBank').selectpicker('val')
+                            },function(result){
+                                for (var i = 0; i < JSON.parse(result).result.length; i++) {
+                                    $('#chooseName').append("<option value='"+JSON.parse(result).result[i].VAL_ID+"'>"
+                                        + JSON.parse(result).result[i].VAL + "</option>");
+                                }
+                                $('#chooseName').selectpicker('refresh');//重绘
+                            });
+                        });
                     }
+                });
+
+                //根据发放银行选择发放户名（点击下拉选项时）
+                $('#chooseBank').on('changed.bs.select',function(e){
+                    $('#chooseName').find('option').remove();//清除之前的下拉内容
+                    $.post(allUrlOutcome.chooseName,{
+                        "bankCode": e.target.value
+                    },function(result){
+                        for (var i = 0; i < JSON.parse(result).result.length; i++) {
+                            $('#chooseName').append("<option value='"+JSON.parse(result).result[i].VAL_ID+"'>"
+                                + JSON.parse(result).result[i].VAL + "</option>");
+                        }
+                        $('#chooseName').selectpicker('refresh');//重绘
+                    });
                 });
 
                 //确认设置
@@ -298,6 +322,40 @@ $(function(){
                             ids.push(selectOne[i].AAZ031);
                         }
                     }
+                    $.ajax({
+                        url: allUrlOutcome.setBank,
+                        type:"post",
+                        dataType:'json',
+                        data:{
+                            "AAZ031List": JSON.stringify(ids),
+                            "bankCode":$('#chooseBank').selectpicker('val'),
+                            "bankAccount":$('#chooseName').selectpicker('val')
+                        },
+                        beforeSend:function (){
+                            $('#myModal').modal('show');
+                        },
+                        success: function(result){
+                            $('#myModal,#winBank').modal('hide');
+                            //重新加载一次表格（两个都要刷新，因为不清楚目前是哪个表格）
+                            $('#firstTable,#secondTable').bootstrapTable('refresh');
+                            $.confirm({
+                                title: '消息',
+                                content: result.result?result.result:result.msg,
+                                buttons: {
+                                    ok: {
+                                        text: '确认',
+                                        btnClass: 'btn-primary',
+                                        action: function() {
+                                        }
+                                    },
+                                    cancel: {
+                                        text: '取消',
+                                        btnClass: 'btn-primary'
+                                    }
+                                }
+                            });
+                        }
+                    });
                 });
 
                 //生成支付计划
@@ -321,21 +379,70 @@ $(function(){
                        });
                    }
                    else{
+                       var ids = [];
+                       var select = $('#firstTable').bootstrapTable('getAllSelections');
+                       if(select.length!=0){//若选择了第一个表格，推送第一个表格的ID集合
+                           for (var i = 0; i < select.length; i++) {
+                               ids.push(select[i].AAZ031);
+                           }
+                       }
                        $.ajax({
-
-                       })
+                           url: allUrlOutcome.genPlan,
+                           type:"post",
+                           dataType:'json',
+                           data:{
+                               "AAZ031List": JSON.stringify(ids)
+                           },
+                           beforeSend:function (){
+                               $('#myModal').modal('show');
+                           },
+                           success: function(result){
+                               $('#myModal').modal('hide');
+                               //重新加载一次表格
+                               $('#firstTable').bootstrapTable('refresh');
+                               $.confirm({
+                                   title: '消息',
+                                   content: result.result?result.result:result.msg,
+                                   buttons: {
+                                       ok: {
+                                           text: '确认',
+                                           btnClass: 'btn-primary',
+                                           action: function() {
+                                           }
+                                       },
+                                       cancel: {
+                                           text: '取消',
+                                           btnClass: 'btn-primary'
+                                       }
+                                   }
+                               });
+                           }
+                       });
                    }
                 });
 
+                //页签中的表格初始化
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    // 获取已激活的标签页的名称
+                    var activeTab = $(e.target).text();
+                    if (activeTab == '未生成支付计划') {
+                        $('#firstTable').bootstrapTable('refresh');
+                        $('#btn-gen').prop('disabled',false);
+                    }
+                    else {
+                        $('#secondTable').bootstrapTable('refresh');
+                        $('#btn-gen').prop('disabled',true);
+                    }
+                });
             },
             init: function () {
                 if (typeof JSON == 'undefined') {
                     $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
                 }
-                this.onEventListener();
                 this.getComponents();
-                this.getTab('firstTable',allUrlOutcome.query,columnsOne);
-                this.getTab('secondTable',allUrlOutcome.query,columnsTwo);
+                this.getTab('firstTable',allUrlOutcome.query,columnsOne,'00');
+                this.getTab('secondTable',allUrlOutcome.query,columnsTwo,'01');
+                this.onEventListener();
             }
         }
     }();

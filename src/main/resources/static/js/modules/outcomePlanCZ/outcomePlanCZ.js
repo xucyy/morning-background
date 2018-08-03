@@ -179,7 +179,7 @@ $(function(){
 
             //初始化其他组件
             getComponents: function () {
-                $.ajaxSettings.async = false;//ajax同步设定
+
                 //险种
                 $.post(allUrlOutcome.pullDown,{
                     "valset_id": "AAE140"
@@ -191,6 +191,7 @@ $(function(){
                     }
                     $('#safeSelect').selectpicker('refresh');
                 });
+
                 //拨付方式
                 $.post(allUrlOutcome.pullDown,{
                     "valset_id": "AAA079"
@@ -202,6 +203,7 @@ $(function(){
                     }
                     $('#bfSelect').selectpicker('refresh');
                 });
+
                 //银行编码
                 $.post(allUrlOutcome.pullDown,{
                     "valset_id": "AAE008"
@@ -213,26 +215,9 @@ $(function(){
                     }
                     $('#bankSelect').selectpicker('refresh');
                 });
+
                 //时间显示到日
                 commonJS.showMonth('yyyy-mm-dd',2,'month',nowTime);
-                $.ajaxSettings.async = true;//改回异步
-                //页签中的表格初始化
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                    // 获取已激活的标签页的名称
-                    var activeTab = $(e.target).text();
-                    if (activeTab == '未发财政') {
-                        $('#firstTable').bootstrapTable('refresh');
-                        $('#btn-sendCZ').prop('disabled',false);
-                    }
-                    else if (activeTab == '已发财政') {
-                        $('#secondTable').bootstrapTable('refresh');
-                        $('#btn-sendCZ').prop('disabled',true);
-                    }
-                    else {
-                        $('#thirdTable').bootstrapTable('refresh');
-                        $('#btn-sendCZ').prop('disabled',true);
-                    }
-                });
             },
 
             //初始化点击事件
@@ -298,7 +283,7 @@ $(function(){
                                 $('#firstTable').bootstrapTable('refresh');
                                 $.confirm({
                                     title: '消息',
-                                    content: result.result,
+                                    content: result.result?result.result:result.msg,
                                     buttons: {
                                         ok: {
                                             text: '确认',
@@ -316,16 +301,34 @@ $(function(){
                         });
                     }
                 })
+
+                //页签中的表格初始化
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    // 获取已激活的标签页的名称
+                    var activeTab = $(e.target).text();
+                    if (activeTab == '未发财政') {
+                        $('#firstTable').bootstrapTable('refresh');
+                        $('#btn-sendCZ').prop('disabled',false);
+                    }
+                    else if (activeTab == '已发财政') {
+                        $('#secondTable').bootstrapTable('refresh');
+                        $('#btn-sendCZ').prop('disabled',true);
+                    }
+                    else {
+                        $('#thirdTable').bootstrapTable('refresh');
+                        $('#btn-sendCZ').prop('disabled',true);
+                    }
+                });
             },
             init: function () {
                 if (typeof JSON == 'undefined') {
                     $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
                 }
-                this.onEventListener();
                 this.getComponents();
                 this.getTab('firstTable',allUrlOutcome.query);
                 this.getTab('secondTable',allUrlOutcome.query);
                 this.getTab('thirdTable',allUrlOutcome.query);
+                this.onEventListener();
             }
         }
     }();
