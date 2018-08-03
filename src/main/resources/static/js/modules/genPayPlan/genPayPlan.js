@@ -322,6 +322,11 @@ $(function(){
                             ids.push(selectOne[i].AAZ031);
                         }
                     }
+                    else{
+                        for (var i = 0; i < selectTwo.length; i++) {
+                            ids.push(selectTwo[i].AAZ031);
+                        }
+                    }
                     $.ajax({
                         url: allUrlOutcome.setBank,
                         type:"post",
