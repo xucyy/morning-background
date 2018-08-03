@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,9 +54,42 @@ public class PaymentPlanController {
         @PostMapping("/update_Gra_BankInfo")
         public String update_Gra_BankInfo(List AAZ031List,String bankCode,String bankAccount){
             JSONObject jsonObject=new JSONObject();
+            try{
+                for(int i=0;i<AAZ031List.size();i++){
+                    Map map=new HashMap();
+                    String AAZ031=AAZ031List.get(i)+"";
+                    map.put("AAZ031",AAZ031);
+                    map.put("bankCode",bankCode);
+                    map.put("bankAccount",bankAccount);
+                    paymentPlanService.update_Gra_BankInfo(map);
+                }
+            }catch (Exception e){
+                jsonObject.put("result","修改数据失败"+e);
+                return jsonObject.toString();
+            }
+            jsonObject.put("result","修改数据成功");
+            return jsonObject.toString();
+        }
 
+        //生成支付计划
+        @PostMapping("/update_createPaymentPlan")
+        public String update_createPaymentPlan(List AAZ031List){
+            JSONObject jsonObject=new JSONObject();
+            try{
+                Map updateMap=new HashMap();
+                String BatchNo=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+"001" ;
+                updateMap.put("BatchNo",BatchNo);
+                for(int i=0;i<AAZ031List.size();i++){
+                    String AAZ031=AAZ031List.get(i)+"";
+                    updateMap.put("AAZ031",AAZ031);
+                    paymentPlanService.update_createPaymentPlan(updateMap);
+                }
+            }catch (Exception e){
+                jsonObject.put("result","生成支付计划失败"+e);
+                return jsonObject.toString();
+            }
 
-            jsonObject.put("result","");
+            jsonObject.put("result","生成支付计划成功");
             return jsonObject.toString();
         }
 }

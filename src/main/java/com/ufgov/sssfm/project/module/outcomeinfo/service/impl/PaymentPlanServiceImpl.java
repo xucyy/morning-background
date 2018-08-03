@@ -28,4 +28,14 @@ public class PaymentPlanServiceImpl implements PaymentPlanService {
         public List query_bankInfo(Map map) {
                 return paymentPlanMapper.query_bankInfo(map);
         }
+
+        @Override
+        public int update_Gra_BankInfo(Map map) {
+                return paymentPlanMapper.update_Gra_BankInfo(map);
+        }
+
+        @Override
+        public int update_createPaymentPlan(Map map) {
+                return paymentPlanMapper.update_createPaymentPlan(map);
+        }
 }
