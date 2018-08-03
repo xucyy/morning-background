@@ -4,6 +4,8 @@ import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
 import com.ufgov.sssfm.common.utils.nx.bean.MsgHeaderParamBean;
 import com.ylzinfo.esb.client.XMLRequest;
+import com.ylzinfo.esb.util.XMLUtil;
+import org.apache.axiom.om.OMElement;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 
 import java.io.File;
@@ -19,7 +21,68 @@ import java.util.*;
  */
 public class AnalysisMsgUtil 
 {
-	
+	/**
+	 *  解析接收报文
+	 * @param element
+	 * @return
+	 */
+	public static AnalysisReceiveMsgBig getRecieveMessage(OMElement element) {
+		AnalysisReceiveMsgBig analysisReceiveMsgBig=new AnalysisReceiveMsgBig();
+		/**
+		 * 1、解析报文，读取数据
+		 *
+		 */
+		//调用XMLUtil. parseBatchData ()方法解释请求报文里的批量数据
+		List<?> infoList= XMLUtil.parseBatchData(element.getFirstElement());
+		//获取请求报文里的para参数集合
+		Map<String,String> paraMap = XMLUtil.getPara4BatchData(infoList);
+		//获取请求报文里的paralist参数集合
+		Map<String,ArrayList> pramlistMap = XMLUtil.getParalist4BatchData(infoList);
+
+
+		/**
+		 * 2、数据处理，业务流程
+		 */
+		//TODO 调用调用业务组件处理数据
+		analysisReceiveMsgBig.setMsgid(paraMap.get("msgid"));
+		analysisReceiveMsgBig.setOldmsgid(paraMap.get("oldmsgid"));
+		analysisReceiveMsgBig.setSenderno(paraMap.get("senderno"));
+		analysisReceiveMsgBig.setRecieverno(paraMap.get("recieverno"));
+		analysisReceiveMsgBig.setBse173(paraMap.get("bse173"));
+		analysisReceiveMsgBig.setBse174(paraMap.get("bse174"));
+		analysisReceiveMsgBig.setAae036(paraMap.get("aae036"));
+		analysisReceiveMsgBig.setAbe100(paraMap.get("abe100"));
+		analysisReceiveMsgBig.setMsgtype(paraMap.get("msgtype"));
+		analysisReceiveMsgBig.setMsgcontent(paraMap.get("msgcontent"));
+		analysisReceiveMsgBig.setMd5msgcode(paraMap.get("md5msgcode"));
+		analysisReceiveMsgBig.setFjnum(paraMap.get("fjnum"));
+
+
+		/**
+		 * 向子对象中去塞入每一个文件的信息，再加入到主对象中
+		 */
+		ArrayList arrList=pramlistMap.get("paralist");
+		List<AnalysisReceiveMsgSmall> analysisReceiveMsgSmallList=new ArrayList<AnalysisReceiveMsgSmall>();
+
+		for(int i=0;i<arrList.size();i++){
+			AnalysisReceiveMsgSmall analysisReceiveMsgSmall=new AnalysisReceiveMsgSmall();
+			Map<String,String> map=(Map) arrList.get(i);
+			analysisReceiveMsgSmall.setFjid(map.get("fjid"));
+			analysisReceiveMsgSmall.setFjtype(map.get("fjtype"));
+			analysisReceiveMsgSmall.setFjname(map.get("fjname"));
+			analysisReceiveMsgSmall.setOssstr(map.get("ossstr"));
+			analysisReceiveMsgSmall.setMd5fjcode(map.get("md5fjcode"));
+
+			analysisReceiveMsgSmallList.add(analysisReceiveMsgSmall);
+		}
+
+		//加入到主对象中
+		analysisReceiveMsgBig.setAnalysisReceiveMsgSmallList(analysisReceiveMsgSmallList);
+
+		return analysisReceiveMsgBig;
+
+	}
+
 	/**
 	 * 拼装上传到oss上的xml文件
 	 */

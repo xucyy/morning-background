@@ -1,11 +1,11 @@
 package com.ufgov.sssfm.project.module.queryutils.service.impl;
 
+import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
 import com.ufgov.sssfm.project.module.queryutils.mapper.FmInterfaceUtilsMapper;
 import com.ufgov.sssfm.project.module.queryutils.service.FmInterfaceUtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,7 +21,7 @@ public class FmInterfaceUtilsServiceImpl implements FmInterfaceUtilsService {
 
 
     @Override
-    public List selectValsByPK(Map map) {
-        return fmInterfaceUtilsMapper.selectValsByPK(map);
+    public FmInterfaceUtils selectByPrimaryKey(Map map) {
+        return fmInterfaceUtilsMapper.selectByPrimaryKey(map);
     }
 }

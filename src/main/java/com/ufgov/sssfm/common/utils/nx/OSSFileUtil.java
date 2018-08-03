@@ -1,5 +1,6 @@
 package com.ufgov.sssfm.common.utils.nx;
 
+import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
 import com.ylzinfo.analysis.service.EsbQueryFactory;
 import com.ylzinfo.analysis.service.QueryListService;
 import com.ylzinfo.esb.bas.EsbException;
@@ -28,30 +29,30 @@ public class OSSFileUtil {
 
     /**
      *
-     * @param file 要上传文件
+     * @param file  要上传文件
      * @param fileName 上传文件名
      * @return 一个已经上传到平台oss的地址，需要填写到业务报文中
      */
-    public static Map<String,String> upload(Map mapParam){
+    public static Map<String,String> upload(FmInterfaceUtils fmInterfaceUtils,String fileName){
         Map resultMap=new HashMap();
 
         //获取文件服务器的地址
-    	String path = mapParam.get("path")+"/"+mapParam.get("fileName");
+    	String path = fmInterfaceUtils.getPath()+"/"+fileName;
        
         XMLRequest xmlRequest = new XMLRequest();									 //new一个客户端请求对象
-	    xmlRequest.setEsbUrl(mapParam.get("esbUrl")+"");		//人社政务网服务地址（调用方固定传入）
-	    xmlRequest.setEsbUserPwd(new String[]{mapParam.get("esbUserPwd_user")+"",mapParam.get("esbUserPwd_pwd")+""}); 		//设置请求服务的用户id（身份证号码）,密码串
-	    xmlRequest.setSys(mapParam.get("sys")+""); 								//设置请求服务的机构编号CZSYSTEM  RSSYSTEM
-	    xmlRequest.setVer(mapParam.get("ver")+"");							//设置请求服务的版本号D
+	    xmlRequest.setEsbUrl(fmInterfaceUtils.getEsburl());		//人社政务网服务地址（调用方固定传入）
+	    xmlRequest.setEsbUserPwd(new String[]{fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd()}); 		//设置请求服务的用户id（身份证号码）,密码串
+	    xmlRequest.setSys(fmInterfaceUtils.getSys()); 								//设置请求服务的机构编号CZSYSTEM  RSSYSTEM
+	    xmlRequest.setVer(fmInterfaceUtils.getVer());							//设置请求服务的版本号D
 	     
-		xmlRequest.setSvid(mapParam.get("svid")+"");//cn.nxhrss.z.sbcx.ybycxdyffcx//cn.nxhrss.a.login
+		xmlRequest.setSvid(fmInterfaceUtils.getSvid());//cn.nxhrss.z.sbcx.ybycxdyffcx//cn.nxhrss.a.login
 		xmlRequest.setParam(new String[] {"bucketName","urlstr","key"});
-		xmlRequest.setParamValue(new String[] {mapParam.get("bucketName")+"",path,mapParam.get("fileName")+""});
+		xmlRequest.setParamValue(new String[] {fmInterfaceUtils.getBacketname(),path,fileName});
 
 		//将发送报文放到结果集合中
         String requestXML="";
         try{
-            requestXML=xmlRequest.genRequestMessage(mapParam.get("esbUserPwd_user")+"",mapParam.get("esbUserPwd_pwd")+"")+"";
+            requestXML=xmlRequest.genRequestMessage(fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd())+"";
         }catch (EsbException e){
             requestXML="获取请求报文失败";
         }
@@ -113,20 +114,14 @@ public class OSSFileUtil {
      * @param path 要下载到文件夹路径
      * @return 下载下来的文件的绝对路径
      */
-    public static String download(String ossstr,String path){
+    public static String download(String ossstr,FmInterfaceUtils fmInterfaceUtils){
         XMLRequest xmlRequest = new XMLRequest();
-        xmlRequest.setEsbUrl("http://172.28.22.23:8001/PreServer/preproxy");		//人社政务网服务地址（调用方固定传入）
-        //人社
-//      xmlRequest.setEsbUserPwd(new String[]{"RSSYSTEM","DF10EF8509DC176D733D59549E7DBFAF"}); 		//设置请求服务的用户id（身份证号码）,密码串
-//      xmlRequest.setSys("RSSYSTEM");								//设置请求服务的机构编号
-      //财政社保
-      xmlRequest.setEsbUserPwd(new String[]{"CZSYSTEM","DF10EF8509DC176D733D59549E7DBFAF"}); 		//设置请求服务的用户id（身份证号码）,密码串
-      xmlRequest.setSys("CZSYSTEM");								//设置请求服务的机构编号
-      xmlRequest.setVer("v1.0.1");	
+        xmlRequest.setEsbUrl(fmInterfaceUtils.getEsburl());		//人社政务网服务地址（调用方固定传入）
+        xmlRequest.setEsbUserPwd(new String[]{fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd()}); 		//设置请求服务的用户id（身份证号码）,密码串
+        xmlRequest.setSys(fmInterfaceUtils.getSys());								//设置请求服务的机构编号
+        xmlRequest.setVer(fmInterfaceUtils.getVer());
 
-        //  xmlRequest.setSvid("cn.nxhrss.z.sys.receivemessage_RS");			//人社侧消息接收服务编号（正式消息发送用）
-
-        xmlRequest.setSvid("cn.nxhrss.oss.getObject");//测试消息联通性服务编号（用于测试联通性，测试用）
+        xmlRequest.setSvid(fmInterfaceUtils.getSvid());//测试消息联通性服务编号（用于测试联通性，测试用）
         /**
          * 1、设置非批量部分参数集合
          *
@@ -157,31 +152,31 @@ public class OSSFileUtil {
         String msg="";
         String url="";
         //读取响应结果
-    		if(null != service){
-    			/**
-    			 * 1、读取报文通用响应状态信息
-    			 */			
-    			//读取报文响应状态 true 成功，FALSE失败
-    			boolean isok = service.isOK();
-    			System.out.println("响应结果："+isok);
-    			
-    			//读取响应编码 000.000.000表示成功，其它表示失败
-    			String code = service.getFaultCode();
-    			System.out.println("响应编码："+code);
-    			
-    			//读取响应说明，读取由服务提供方反馈的响应结果描述
-    			msg = service.getFaultString();
-    			System.out.println("响应描述："+msg);
-    			
-    			Map map=service.getResultMap();
-    			url=map.get("information")+"";
-    			System.out.println("map："+map.get("information"));
-    		}
-    		
-    	//需要UrlEncode解码
+        if(null != service){
+            /**
+             * 1、读取报文通用响应状态信息
+             */
+            //读取报文响应状态 true 成功，FALSE失败
+            boolean isok = service.isOK();
+            System.out.println("响应结果："+isok);
+
+            //读取响应编码 000.000.000表示成功，其它表示失败
+            String code = service.getFaultCode();
+            System.out.println("响应编码："+code);
+
+            //读取响应说明，读取由服务提供方反馈的响应结果描述
+            msg = service.getFaultString();
+            System.out.println("响应描述："+msg);
+
+            Map map=service.getResultMap();
+            url=map.get("information")+"";
+            System.out.println("map："+map.get("information"));
+        }
+
+        //需要UrlEncode解码
         String downLoadPath =getURLDecoderString(url); //获取到下载路径，下载文件
-        
-        File file = saveUrlAs(downLoadPath, path);
+
+        File file = saveUrlAs(downLoadPath, fmInterfaceUtils.getDownloadpath());
 
         return file.getAbsolutePath();
 
@@ -258,7 +253,7 @@ public class OSSFileUtil {
     /** 
      * @功能 下载临时素材接口 
      * @param filePath 文件将要保存的目录 
-     * @param method  请求方法，包括POST和GET
+     * @param method   请求方法，包括POST和GET
      * @param url 请求的路径 
      * @return 
      */ 

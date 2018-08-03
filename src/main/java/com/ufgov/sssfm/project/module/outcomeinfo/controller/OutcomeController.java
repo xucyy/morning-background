@@ -10,6 +10,7 @@ import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
 import com.ufgov.sssfm.common.utils.nx.bean.MsgHeaderParamBean;
 import com.ufgov.sssfm.project.module.outcomeinfo.service.OutcomeService;
+import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
 import com.ufgov.sssfm.project.module.queryutils.service.FmBankXmlLogService;
 import com.ufgov.sssfm.project.module.queryutils.service.FmInterfaceUtilsService;
 import com.ylzinfo.analysis.service.EsbQueryFactory;
@@ -45,6 +46,7 @@ public class OutcomeController {
 
     @Autowired
     private FmBankXmlLogService fmBankXmlLogService;
+
 
     /** @Author xucy
      * @Description 征缴页面查询表格数据
@@ -239,9 +241,9 @@ public class OutcomeController {
         for(int i=0;i<filePathList.size();i++){
 
             //拼装上传文件报文头，并上传文件
-            Map mapParam=completeMap(queryMap);
-            mapParam.put("fileName", filePathList.get(i));
-            Map resultMap=OSSFileUtil.upload(mapParam);
+            FmInterfaceUtils fmInterfaceUtils=getRequestParam("rs_cz","sendrequest");
+
+            Map resultMap=OSSFileUtil.upload(fmInterfaceUtils,filePathList.get(i));
 
             if(resultMap.get("errorMsg")!=null){
                 //插入日志表记录
@@ -274,19 +276,16 @@ public class OutcomeController {
         //返回数组结果,00代表发送成功，01代表发送失败
         String[] result=new String[2];
 
-        Map queryMap=new HashMap();
-        queryMap.put("TRANSTOWHERE", "rs_cz");
-        queryMap.put("USERTOWHERE", "sendrequest");
-        Map mapParam=completeMap(queryMap);
+        FmInterfaceUtils fmInterfaceUtils=getRequestParam("rs_cz","sendrequest");
 
         //拼装报文header部分
         MsgHeaderParamBean headerParamBean=new MsgHeaderParamBean();
-        headerParamBean.setEsbUrl(mapParam.get("esbUrl")+"");
-        headerParamBean.setEsbUserPwd(new String[]{mapParam.get("esbUserPwd_user")+"",mapParam.get("esbUserPwd_pwd")+""});
-        headerParamBean.setOrg(mapParam.get("org")+"");
-        headerParamBean.setSys(mapParam.get("sys")+"");								//设置请求服务的机构编号
-        headerParamBean.setVer(mapParam.get("ver")+"");							//设置请求服务的版本号D
-        headerParamBean.setSvid(mapParam.get("svid")+"");//测试消息联通性服务编号（用于测试联通性，测试用）
+        headerParamBean.setEsbUrl(fmInterfaceUtils.getEsburl());
+        headerParamBean.setEsbUserPwd(new String[]{fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd()});
+        headerParamBean.setOrg(fmInterfaceUtils.getOrg());
+        headerParamBean.setSys(fmInterfaceUtils.getSys());								//设置请求服务的机构编号
+        headerParamBean.setVer(fmInterfaceUtils.getVer());							//设置请求服务的版本号D
+        headerParamBean.setSvid(fmInterfaceUtils.getSvid());//测试消息联通性服务编号（用于测试联通性，测试用）
 
         if(ossstrList.size()!=filePathList.size()){
             fmBankXmlLogService.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("send_outcome_to_czsb","send_outcome_to_czsb",""
@@ -325,7 +324,7 @@ public class OutcomeController {
 
         String requestXML="";
         try{
-            requestXML=xmlRequest.genRequestMessage(mapParam.get("esbUserPwd_user")+"",mapParam.get("esbUserPwd_pwd")+"")+"";
+            requestXML=xmlRequest.genRequestMessage(fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd())+"";
         }catch (EsbException e){
             requestXML="获取请求报文失败";
         }
@@ -389,30 +388,14 @@ public class OutcomeController {
 
     }
 
-    //根据传入的参数，在数据库中得到值，然后塞入map中返回
-    public Map completeMap(Map queryMap){
-        List list=fmInterfaceUtilsService.selectValsByPK(queryMap);
+    //得到请求报文中的header信息，不对外暴露
+    private FmInterfaceUtils getRequestParam(String transtowhere, String  usertowhere ){
 
-        Map mapParam=new HashMap();
-        Map mapList=(Map) list.get(0);
-        mapParam.put("bucketName", mapList.get("bucketname"));
+        Map map=new HashMap();
+        map.put("TRANSTOWHERE",transtowhere);
+        map.put("USERTOWHERE",usertowhere);
+        FmInterfaceUtils fmInterfaceUtils=fmInterfaceUtilsService.selectByPrimaryKey(map);
 
-        mapParam.put("esbUrl", mapList.get("esburl"));
-
-        mapParam.put("esbUserPwd_pwd", mapList.get("esbuserpwd_pwd"));
-
-        mapParam.put("esbUserPwd_user", mapList.get("esbuserpwd_user"));
-
-        mapParam.put("path", mapList.get("path"));
-
-        mapParam.put("svid", mapList.get("svid"));
-
-        mapParam.put("sys", mapList.get("sys"));
-
-        mapParam.put("ver", mapList.get("ver"));
-
-        mapParam.put("org", mapList.get("org"));
-
-        return mapParam;
+        return fmInterfaceUtils;
     }
 }
