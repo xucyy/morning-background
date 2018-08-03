@@ -1,6 +1,5 @@
 package com.ufgov.sssfm.project.module.outcomeinfo.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ufgov.sssfm.project.module.outcomeinfo.service.PaymentPlanService;
 import io.swagger.annotations.Api;
@@ -34,7 +33,7 @@ public class PaymentPlanController {
             JSONObject jsonObject=new JSONObject();
             List resultList= paymentPlanService.query_bankName();
             jsonObject.put("result",resultList);
-            return jsonObject.toJSONString();
+            return jsonObject.toString();
         }
 
         //获取银行信息
@@ -46,6 +45,8 @@ public class PaymentPlanController {
             map.put("bankCode",bankCode);
             List resultList= paymentPlanService.query_bankInfo(map);
             jsonObject.put("result",resultList);
-            return jsonObject.toJSONString();
+            return jsonObject.toString();
         }
+
+        //修改主表信息的
 }
