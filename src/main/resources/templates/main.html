@@ -10,9 +10,11 @@
     <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
     <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
     <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 
-<body class="gray-bg">
+<!--<body class="gray-bg">
     <div class="row  border-bottom white-bg dashboard-header">
         <div class="col-sm-12">
             <blockquote class="text-warning" style="font-size:14px">门户研发人员正在努力开发中。
@@ -23,471 +25,616 @@
 
             <hr>
         </div>
-      <!--  <div class="col-sm-3">
-            <h2>Hello,Guest</h2>
-            <small>移动设备访问请扫描以下二维码：</small>
-            <br>
-            <br>
-            <img th:src="@{/img/qr_code.png}" width="100%" style="max-width:264px;">
-            <br>
-        </div>
-        <div class="col-sm-5">
-            <h2>若依后台管理框架</h2>
-            <p>一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了若依管理系统。，她可以用于所有的Web应用程序，如<b>网站管理后台</b>，<b>网站会员中心</b>，<b>CMS</b>，<b>CRM</b>，<b>OA</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。</p>
-            <p>
-                <b>当前版本：</b><span>v[[${version}]]</span>
-            </p>
-            <p>
-                <span class="label label-warning">&yen;免费开源</span>
-            </p>
-            <br>
-            <p>
-                <a class="btn btn-success btn-outline" href="https://gitee.com/y_project/RuoYi" target="_blank">
-                    <i class="fa fa-cloud"> </i> 访问码云
-                </a>
-                <a class="btn btn-white btn-bitbucket" href="http://ruoyi.club/" target="_blank">
-                    <i class="fa fa-home"></i> 访问主页
-                </a>
-            </p>
-        </div>
-        <div class="col-sm-4">
-            <h4>技术选型：</h4>
-            <ol>
-                <li>核心框架：Spring Boot。</li>
-                <li>安全框架：Apache Shiro。</li>
-                <li>模板引擎：Thymeleaf。</li>
-                <li>持久层框架：MyBatis。</li>
-				<li>定时任务:Quartz。</li>
-                <li>数据库连接池：Druid。</li>
-                <li>工具类：Fastjson。</li>
-                <li>更多……</li>
-            </ol>
-        </div>
 
-    </div>
-    <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-sm-4">
 
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>联系信息</h5>
+</body>-->
 
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-success pull-right">月</span>
+                    <h5>收入</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">40 886,200</h1>
+                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i>
                     </div>
-                    <div class="ibox-content">
-                        <p><i class="fa fa-send-o"></i> 官网：<a href="http://www.ruoyi.club" target="_blank">http://www.ruoyi.club</a>
-                        </p>
-                        <p><i class="fa fa-qq"></i> QQ群：<a href="https://jq.qq.com/?_wv=1027&k=5HBAaYN" target="_blank">1389287</a>
-                        </p>
-                        <p><i class="fa fa-weixin"></i> 微信：<a href="javascript:;">/ *若依</a>
-                        </p>
-                        <p><i class="fa fa-credit-card"></i> 支付宝：<a href="javascript:;" class="支付宝信息">/ *若依</a>
-                        </p>
+                    <small>总收入</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">月</span>
+                    <h5>支出</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">300,275,800</h1>
+                    <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i>
+                    </div>
+                    <small>总支出</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">今天</span>
+                    <h5>在线人数</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">6,120</h1>
+                    <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i>
+                    </div>
+                    <small>当天在线</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-danger pull-right">最近一个月</span>
+                    <h5>养老金支付进度</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">90%</h1>
+                    <!--<div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i>
+                    </div>-->
+                    <small>8月</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>订单</h5>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-xs btn-white active">天</button>
+                            <button type="button" class="btn btn-xs btn-white">月</button>
+                            <button type="button" class="btn btn-xs btn-white">年</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <ul class="stat-list">
+                                <li>
+                                    <h2 class="no-margins">2,346</h2>
+                                    <small>订单总数</small>
+                                    <div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i>
+                                    </div>
+                                    <div class="progress progress-mini">
+                                        <div style="width: 48%;" class="progress-bar"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h2 class="no-margins ">4,422</h2>
+                                    <small>最近一个月订单</small>
+                                    <div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i>
+                                    </div>
+                                    <div class="progress progress-mini">
+                                        <div style="width: 60%;" class="progress-bar"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h2 class="no-margins ">9,180</h2>
+                                    <small>最近一个月销售额</small>
+                                    <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i>
+                                    </div>
+                                    <div class="progress progress-mini">
+                                        <div style="width: 22%;" class="progress-bar"></div>
+                                    </div>
+                                </li>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>-->
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>消息</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content ibox-heading">
+                    <h3><i class="fa fa-envelope-o"></i> 新消息</h3>
+                    <small><i class="fa fa-tim"></i> 您有22条未读消息</small>
+                </div>
+                <div class="ibox-content">
+                    <div class="feed-activity-list">
+
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right text-navy">1月前</small>
+                                <strong>海淀区xxx</strong>
+                                <div>已提交本进度支付计划！</div>
+                                <small class="text-muted">4月11日 00:00</small>
+                            </div>
+                        </div>
+
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right">2月前</small>
+                                <strong>朝阳区xxx </strong>
+                                <div>邀请来我区参加年度党支部会议！</div>
+                                <small class="text-muted">11月8日 20:08 </small>
+                            </div>
+                        </div>
+
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right">5月前</small>
+                                <strong>芒果宓 </strong>
+                                <div>一个完整的梦。</div>
+                                <small class="text-muted">11月8日 20:08 </small>
+                            </div>
+                        </div>
+
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right">5月前</small>
+                                <strong>刺猬尼克索</strong>
+                                <div>哈哈哈哈 你卖什么萌啊! 蠢死了</div>
+                                <small class="text-muted">11月8日 20:08 </small>
+                            </div>
+                        </div>
+
+
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right">5月前</small>
+                                <strong>老刀99</strong>
+                                <div>昨天评论里你见过最“温暖和感人”的诗句，整理其中经典100首，值得你收下学习。</div>
+                                <small class="text-muted">11月8日 20:08 </small>
+                            </div>
+                        </div>
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right">5月前</small>
+                                <strong>娱乐小主 </strong>
+                                <div>你是否想过记录自己的梦？你是否想过有自己的一个记梦本？小时候写日记，没得写了就写昨晚的梦，后来变成了习惯………翻了一晚上自己做过的梦，想哭，想笑…</div>
+                                <small class="text-muted">11月8日 20:08 </small>
+                            </div>
+                        </div>
+                        <div class="feed-element">
+                            <div>
+                                <small class="pull-right">5月前</small>
+                                <strong>DMG电影 </strong>
+                                <div>《和外国男票乘地铁，被中国大妈骂不要脸》妹子实在委屈到不行，中国妹子找外国男友很令人不能接受吗？大家都来说说自己的看法</div>
+                                <small class="text-muted">11月8日 20:08 </small>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>更新日志</h5>
+        </div>
+
+        <div class="col-sm-8">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>本月拨付进度列表</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="table table-hover no-margins">
+                                <thead>
+                                <tr>
+                                    <th>状态</th>
+                                    <th>日期</th>
+                                    <th>用户</th>
+                                    <th>值</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 11:20</td>
+                                    <td>东城区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 24%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="label label-warning">已取消</span>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 10:40</td>
+                                    <td>西城区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 01:30</td>
+                                    <td>海淀区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 54%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 02:20</td>
+                                    <td>朝阳区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 12%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 09:40</td>
+                                    <td>昌平区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 22%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="label label-primary">已完成</span>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 04:10</td>
+                                    <td>怀柔区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 12:08</td>
+                                    <td>密云区</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 23%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="ibox-content no-padding">
-                        <div class="panel-body">
-                            <div class="panel-group" id="version">
-                                <div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v22">v2.2.0</a><code class="pull-right">2018.07.23</code>
-									   </h5>
-									</div>
-									<div id="v22" class="panel-collapse collapse in">
-										<div class="panel-body">
-										   <ol>
-										        <li>修复批量生成代码异常问题</li>
-										        <li>修复定时器保存失败问题</li>
-										        <li>修复热部署转换问题</li>
-												<li>支持查询菜单管理，部门管理</li>
-												<li>大多数功能支持时间查询</li>
-												<li>自定义导出注解自动匹配column</li>
-												<li>新增任务执行策略</li>
-												<li>操作详细动态显示类型</li>
-												<li>支持动态回显字典数据</li>
-												<li>后台代码优化调整</li>
-												<li>其他细节优化</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-                                <div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v21">v2.1.0</a><code class="pull-right">2018.07.10</code>
-									   </h5>
-									</div>
-									<div id="v21" class="panel-collapse collapse">
-										<div class="panel-body">
-										   <ol>
-										        <li>新增登陆超时提醒</li>
-										        <li>修复定时器热部署转换问题</li>
-										        <li>修复登录验证码校验无效问题</li>
-												<li>定时任务新增立即执行一次</li>
-												<li>存在字典数据不允许删除字典</li>
-												<li>字典数据支持按名称查询</li>
-												<li>代码生成增加日志注解&表格优化</li>
-												<li>修复用户逻辑删除后能登录问题</li>
-												<li>表格支持多字段动态排序</li>
-												<li>支持三级菜单显示</li>
-												<li>新增ry.sh启动程序脚本</li>
-												<li>其他细节优化</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-                            	<div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v20">v2.0.0</a><code class="pull-right">2018.07.02</code>
-									   </h5>
-									</div>
-									<div id="v20" class="panel-collapse collapse">
-										<div class="panel-body">
-										   <ol>
-										        <li>升级SpringBoot到最新版本2.0.3</li>
-										        <li>新增公告管理</li>
-												<li>表单校验示提体验优化</li>
-												<li>前端通用方法封装调整</li>
-												<li>前端去除js文件，合并到html</li>
-												<li>操作加载遮罩层</li>
-												<li>支持全屏模式操作</li>
-												<li>支持注解导出数据</li>
-												<li>系统支持多查询&下载</li>
-												<li>系统样式调整</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-                                <div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v16">v1.1.6</a><code class="pull-right">2018.06.04</code>
-									   </h5>
-									</div>
-									<div id="v16" class="panel-collapse collapse">
-										<div class="panel-body">
-										   <ol>
-												<li>新增用户列表部门列</li>
-												<li>新增登录地点</li>
-												<li>新增swagger</li>
-												<li>修复排序数字校验</li>
-												<li>优化头像上传文件类型限定为图片</li>
-												<li>新增XSS过滤</li>
-												<li>新增热部署提高开发效率</li>
-												<li>修复treegrid居中无效</li>
-												<li>角色多条件查询</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-                            	<div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v15">v1.1.5</a><code class="pull-right">2018.05.28</code>
-									   </h5>
-									</div>
-									<div id="v15" class="panel-collapse collapse">
-										<div class="panel-body">
-										   <ol>
-												<li>优化登录失败刷新验证码</li>
-												<li>新增用户登陆地址时间</li>
-												<li>修复ajax超时退出问题</li>
-												<li>新增html调用数据字典(若依首创)</li>
-												<li>调整系统部分样式</li>
-												<li>新增用户逻辑删除</li>
-												<li>新增管理员不允许删除修改</li>
-												<li>升级bootstrapTable到最新版本1.12.1</li>
-												<li>升级layer到最新版本3.1.1</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-							    <div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v14">v1.1.4</a><code class="pull-right">2018.05.20</code>
-									   </h5>
-									</div>
-									<div id="v14" class="panel-collapse collapse">
-										<div class="panel-body">
-										   <ol>
-												<li>新增参数管理</li>
-												<li>修复头像上传bug</li>
-												<li>手机邮箱唯一校验</li>
-												<li>支持手机邮箱登录</li>
-												<li>代码生成优化</li>
-												<li>支持模糊查询</li>
-												<li>支持切换主题皮肤</li>
-												<li>修改权限即时生效</li>
-												<li>修复页签Tab关闭问题</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-								<div class="panel-heading">
-									   <h5 class="panel-title">
-										   <a data-toggle="collapse" data-parent="#version" href="#v13">v1.1.3</a><code class="pull-right">2018.05.14</code>
-									   </h5>
-									</div>
-									<div id="v13" class="panel-collapse collapse">
-										<div class="panel-body">
-										   <ol>
-												<li>新增验证码（数组计算、字符验证）</li>
-												<li>新增cookie记住我</li>
-												<li>新增头像上传</li>
-												<li>用户名密码长度限制</li>
-												<li>通用字段提取</li>
-												<li>支持自定义条件查询</li>
-												<li>部门名称必填、时间格式调整</li>
-												<li>其他细节优化</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v12">v1.1.2</a><code class="pull-right">2018.05.07</code>
-										</h5>
-                                    </div>
-                                    <div id="v12" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增个人信息修改</li>
-												<li>菜单存在子菜单不允许删除</li>
-												<li>菜单分配角色不允许删除</li>
-												<li>角色分配人员不允许删除</li>
-												<li>岗位使用后不允许删除</li>
-												<li>保证用户的数据完整性加入事物</li>
-												<li>新增环境使用手册、数据建模</li>
-												<li>Thymeleaf升级到3.0</li>
-												<li>支持非ROOT部署</li>
-                                            </ol>
-                                        </div>
-                                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>任务列表</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <ul class="todo-list m-t small-list ui-sortable">
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                    <span class="m-l-xs todo-completed">开会</span>
+
+                                </li>
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                    <span class="m-l-xs  todo-completed">省厅会议</span>
+
+                                </li>
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">下乡调研</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                                </li>
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">入户调研</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                                </li>
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">职业年金二次发放</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                                </li>
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">进度会</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                                </li>
+                                <li>
+                                    <a href="widgets.html#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">汇报</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>银行交易</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <table class="table table-hover margin bottom">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 1%" class="text-center">序号</th>
+                                            <th>银行</th>
+                                            <th class="text-center">日期</th>
+                                            <th class="text-center">发放金额</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>工商银行
+                                                </small>
+                                            </td>
+                                            <td class="text-center small">2018.9.15</td>
+                                            <td class="text-center"><span class="label label-primary">&yen;483.00</span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>农业银行
+                                            </td>
+                                            <td class="text-center small">2018.9.15</td>
+                                            <td class="text-center"><span class="label label-primary">&yen;327.00</span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">3</td>
+                                            <td>邮储银行
+                                            </td>
+                                            <td class="text-center small">2018.9.15</td>
+                                            <td class="text-center"><span class="label label-warning">&yen;125.00</span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">4</td>
+                                            <td>中行</td>
+                                            <td class="text-center small">2018.9.15</td>
+                                            <td class="text-center"><span class="label label-primary">&yen;344.00</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">5</td>
+                                            <td>建设银行</td>
+                                            <td class="text-center small">2018.9.15</td>
+                                            <td class="text-center"><span class="label label-primary">&yen;235.00</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">6</td>
+                                            <td>信用社</td>
+                                            <td class="text-center small">2018.9.15</td>
+                                            <td class="text-center"><span class="label label-primary">&yen;100.00</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v11">v1.1.1</a><code class="pull-right">2018.04.23</code>
-										</h5>
-                                    </div>
-                                    <div id="v11" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增表单构建器</li>
-												<li>代码生成优化</li>
-												<li>支持新增主部门</li>
-												<li>支持选择上级部门、上级菜单</li>
-												<li>新增字典管理单条删除</li>
-												<li>优化一些其他细节</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v10">v1.1.0</a><code class="pull-right">2018.04.20</code>
-										</h5>
-                                    </div>
-                                    <div id="v10" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>支持密码盐</li>
-												<li>支持新增主目录</li>
-												<li>支持批量生成代码</li>
-												<li>支持表格导出(csv、txt、doc、excel)</li>
-												<li>自动适应宽高模式窗体</li>
-												<li>重复校验(角色名、菜单名、部门名)</li>
-												<li>优化一些其他细节</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v09">v1.0.9</a><code class="pull-right">2018.04.14</code>
-										</h5>
-                                    </div>
-                                    <div id="v09" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增代码生成(生成包括 java、html、js、xml、sql)</li>
-												<li>新增按钮权限控制隐藏(若依首创)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-								<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v08">v1.0.8</a><code class="pull-right">2018.04.08</code>
-										</h5>
-                                    </div>
-                                    <div id="v08" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增定时任务(新增、修改、删除、查询、启动/暂停)</li>
-												<li>新增调度日志(查询、删除)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-                            	<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v07">v1.0.7</a><code class="pull-right">2018.04.04</code>
-										</h5>
-                                    </div>
-                                    <div id="v07" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增岗位管理(新增、修改、删除、查询)</li>
-												<li>优化用户管理，菜单管理部分细节</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-								<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v06">v1.0.6</a><code class="pull-right">2018.03.15</code>
-										</h5>
-                                    </div>
-                                    <div id="v06" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增字典管理(新增、删除、修改、查询、数据选择)</li>
-												<li>新增用户密码重置</li>
-												<li>优化一些其他细节</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-								<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v05">v1.0.5</a><code class="pull-right">2018.03.12</code>
-										</h5>
-                                    </div>
-                                    <div id="v05" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增菜单管理(新增、删除、修改、查询、图标选择)</li>
-												<li>部门管理优化(添加责任人、联系电话、邮箱、修改者)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-								<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v04">v1.0.4</a><code class="pull-right">2018.03.11</code>
-										</h5>
-                                    </div>
-                                    <div id="v04" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增角色管理(新增、删除、修改、查询、菜单选择)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-								<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v03">v1.0.3</a><code class="pull-right">2018.03.08</code>
-										</h5>
-                                    </div>
-                                    <div id="v03" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增用户管理(新增、删除、修改、查询、部门选择)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-                            	<div class="panel panel-default">
-                            	<div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v02">v1.0.2</a><code class="pull-right">2018.03.04</code>
-										</h5>
-                                    </div>
-                                    <div id="v02" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增部门管理 (新增、删除、修改、查询)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h5 class="panel-title">
-											<a data-toggle="collapse" data-parent="#version" href="#v01">v1.0.1</a><code class="pull-right">2018.03.03</code>
-										</h5>
-                                    </div>
-                                    <div id="v01" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                            	<li>新增在线用户 (批量强退、单条强退、查询)</li>
-                                                <li>新增登录日志 (批量删除、查询)</li>
-												<li>新增操作日志 (批量删除、查询、详细)</li>
-												<li>新增数据监控 (监控DB池连接和SQL的执行)</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#version" href="#v00">v1.0.0</a><code class="pull-right">2018.03.01</code>
-                                        </h4>
-                                    </div>
-                                    <div id="v00" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ol>
-                                                <li>若依管理系统正式发布。</li>
-                                            </ol>
-                                        </div>
-                                    </div>
+                                <div class="col-sm-6">
+                                    <div id="world-map" style="height: 300px;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>捐赠</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="alert alert-warning">
-                            	请作者喝杯咖啡。
-                        </div>
-                        <p id="pay-qrcode">
-                            <a href="javascript:;"><img th:src="@{/img/pay.png}" width="100%" alt="请使用手机支付宝或者微信扫码支付">
-                            </a>
-                        </p>
 
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>-->
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.chart').easyPieChart({
+            barColor: '#f8ac59',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        $('.chart2').easyPieChart({
+            barColor: '#1c84c6',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        var data2 = [
+            [gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
+            [gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4],
+            [gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6],
+            [gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8],
+            [gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6],
+            [gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13],
+            [gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8],
+            [gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
+        ];
+
+        var data3 = [
+            [gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700],
+            [gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589],
+            [gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700],
+            [gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786],
+            [gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888],
+            [gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567],
+            [gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900],
+            [gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
+        ];
+
+
+        var dataset = [
+            {
+                label: "订单数",
+                data: data3,
+                color: "#1ab394",
+                bars: {
+                    show: true,
+                    align: "center",
+                    barWidth: 24 * 60 * 60 * 600,
+                    lineWidth: 0
+                }
+
+            }, {
+                label: "付款数",
+                data: data2,
+                yaxis: 2,
+                color: "#464f88",
+                lines: {
+                    lineWidth: 1,
+                    show: true,
+                    fill: true,
+                    fillColor: {
+                        colors: [{
+                            opacity: 0.2
+                        }, {
+                            opacity: 0.2
+                        }]
+                    }
+                },
+                splines: {
+                    show: false,
+                    tension: 0.6,
+                    lineWidth: 1,
+                    fill: 0.1
+                },
+            }
+        ];
+
+
+        var options = {
+            xaxis: {
+                mode: "time",
+                tickSize: [3, "day"],
+                tickLength: 0,
+                axisLabel: "Date",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Arial',
+                axisLabelPadding: 10,
+                color: "#838383"
+            },
+            yaxes: [{
+                position: "left",
+                max: 1070,
+                color: "#838383",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Arial',
+                axisLabelPadding: 3
+            }, {
+                position: "right",
+                clolor: "#838383",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: ' Arial',
+                axisLabelPadding: 67
+            }
+            ],
+            legend: {
+                noColumns: 1,
+                labelBoxBorderColor: "#000000",
+                position: "nw"
+            },
+            grid: {
+                hoverable: false,
+                borderWidth: 0,
+                color: '#838383'
+            }
+        };
+
+        function gd(year, month, day) {
+            return new Date(year, month - 1, day).getTime();
+        }
+
+        var previousPoint = null,
+            previousLabel = null;
+
+        $.plot($("#flot-dashboard-chart"), dataset, options);
+
+        var mapData = {
+            "US": 298,
+            "SA": 200,
+            "DE": 220,
+            "FR": 540,
+            "CN": 120,
+            "AU": 760,
+            "BR": 550,
+            "IN": 200,
+            "GB": 120,
+        };
+
+        $('#world-map').vectorMap({
+            map: 'world_mill_en',
+            backgroundColor: "transparent",
+            regionStyle: {
+                initial: {
+                    fill: '#e4e4e4',
+                    "fill-opacity": 0.9,
+                    stroke: 'none',
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                }
+            },
+
+            series: {
+                regions: [{
+                    values: mapData,
+                    scale: ["#1ab394", "#22d6b1"],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+        });
+    });
+</script>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<!--统计代码，可删除-->
+
 </body>
 </html>
