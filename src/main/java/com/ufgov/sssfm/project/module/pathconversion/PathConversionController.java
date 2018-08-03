@@ -25,8 +25,24 @@ public class PathConversionController {
     //收入查询页面跳转
     @RequiresPermissions("module:incomePlanCZ:view")
     @GetMapping("/incomePlanCZ")
-    public String eioDistricts()
+    public String incomePlanCZ()
     {
         return "module/incomePlanCZ" + "/incomePlanCZ";
+    }
+
+    //支出查询页面跳转
+    @RequiresPermissions("module:outcomePlanCZ:view")
+    @GetMapping("/outcomePlanCZ")
+    public String outcomePlanCZ()
+    {
+        return "module/outcomePlanCZ" + "/outcomePlanCZ";
+    }
+
+    //基金拨付申请页面跳转
+    @RequiresPermissions("module:fundApply:view")
+    @GetMapping("/fundApply")
+    public String fundApply()
+    {
+        return "module/fundApply" + "/fundApply";
     }
 }
