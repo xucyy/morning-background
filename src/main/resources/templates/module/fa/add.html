@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-fa-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">核定表号(主键)：</label>
+				<div class="col-sm-8">
+					<input id="bAE001" name="bAE001" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">社会保险经办机构编码：</label>
+				<div class="col-sm-8">
+					<input id="aAB034" name="aAB034" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">缴费主体类型(1：单位、
+2：个人)
+：</label>
+				<div class="col-sm-8">
+					<input id="aAA028" name="aAA028" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">缴费主体编号（aab001、aac001）：</label>
+				<div class="col-sm-8">
+					<input id="aAZ010" name="aAZ010" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">缴费主体身份代码（社会保障号、单位社会信用代码）：</label>
+				<div class="col-sm-8">
+					<input id="aAB003" name="aAB003" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">缴费主体名称：</label>
+				<div class="col-sm-8">
+					<input id="aAB069" name="aAB069" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">结算期：</label>
+				<div class="col-sm-8">
+					<input id="aAE002" name="aAE002" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">费款所属期：</label>
+				<div class="col-sm-8">
+					<input id="aAE003" name="aAE003" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">险种代码：</label>
+				<div class="col-sm-8">
+					<input id="aAE140" name="aAE140" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">业务编码：</label>
+				<div class="col-sm-8">
+					<input id="aAA116" name="aAA116" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">应收金额合计：</label>
+				<div class="col-sm-8">
+					<input id="aAE020" name="aAE020" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">应缴笔数：</label>
+				<div class="col-sm-8">
+					<input id="aAB119" name="aAB119" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">实缴金额：</label>
+				<div class="col-sm-8">
+					<input id="aAE080" name="aAE080" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">核销标志：</label>
+				<div class="col-sm-8">
+					<input id="aAE017" name="aAE017" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">核销时间：</label>
+				<div class="col-sm-8">
+					<input id="aAE018" name="aAE018" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">缴费方式(银行：银行号
+税务：99999
+)：</label>
+				<div class="col-sm-8">
+					<input id="aAC128" name="aAC128" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">到账标志(1：到账
+0：未到账
+)：</label>
+				<div class="col-sm-8">
+					<input id="aAB190" name="aAB190" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">到帐日期：</label>
+				<div class="col-sm-8">
+					<input id="aAB191" name="aAB191" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">经办人：</label>
+				<div class="col-sm-8">
+					<input id="aAE011" name="aAE011" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">经办日期：</label>
+				<div class="col-sm-8">
+					<input id="aAE036" name="aAE036" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">接收入库时间：</label>
+				<div class="col-sm-8">
+					<input id="recieveDate" name="recieveDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发送状态（00：刚接收未发送财政
+	  01：已发送财政）：</label>
+				<div class="col-sm-8">
+					<input id="sendStatus" name="sendStatus" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button onclick="$.modal.close()" class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "module/fa"
+		$("#form-fa-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			submitHandler: function(form) {
+				$.operate.save(prefix + "/add", $('#form-fa-add').serialize());
+			}
+		});
+	</script>
+</body>
+</html>
