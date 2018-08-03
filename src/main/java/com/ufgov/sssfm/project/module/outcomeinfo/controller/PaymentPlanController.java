@@ -48,5 +48,13 @@ public class PaymentPlanController {
             return jsonObject.toString();
         }
 
-        //修改主表信息的
+        //修改主表信息的数据的银行信息
+        @PostMapping("/update_Gra_BankInfo")
+        public String update_Gra_BankInfo(List AAZ031List,String bankCode,String bankAccount){
+            JSONObject jsonObject=new JSONObject();
+
+
+            jsonObject.put("result","");
+            return jsonObject.toString();
+        }
 }
