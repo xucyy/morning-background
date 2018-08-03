@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>基金拨付申请</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--引入公共CSS JS文件-->
+    <link rel="stylesheet" type="text/css" href="../../../static/css/resource/jquery-confirm.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/resource/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/resource/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/modules/fundApply/fundApply.css">
+</head>
+<body>
+<div id="workspace">
+    <div class="box">
+        <!--头部-->
+        <div class="header">
+            <div class="collect">
+                <!--下拉框-->
+                <div class="month">
+                    <span>编制日期：</span>
+                    <input type="text" class="datetimepicker" size="20" id="startTime">
+                    <span class="glyphicon glyphicon-time" id="timeIconOne"></span>
+                    <span style="left: -9px;position: relative;">至</span>
+                    <input type="text" class="datetimepicker" size="20" id="endTime">
+                    <span class="glyphicon glyphicon-time" id="timeIconTwo"></span>
+                </div>
+                <div class="queryModel">
+                    <button id="btn-query" class="btn btn-primary">查询</button>
+                </div>
+                <div class="queryModel">
+                    <button id="btn-add" class="btn btn-primary">新增</button>
+                </div>
+            </div>
+        </div>
+        <!--center-->
+        <div class="center">
+            <table id="firstTable"></table>
+        </div>
+    </div>
+</div>
+
+<!--明细数据模态框-->
+<div class="modal fade" id="win" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <!--编辑/新增页面-->
+                <div class="editPage">
+                    <!--标题-->
+                    <div class="editTitle">
+                        <div class="editTitleCont">
+                            <h3>
+                                <input type="text" id="editTitleYear" class="editInput">
+                                <span>年度</span>
+                                <input type="text" id="editTitleMonth" class="editInput">
+                                <span>月份社会保障基金（资金）拨款申请</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <!--提示信息-->
+                    <div class="editTip">
+                        <div class="editTipCont">
+                            <div class="pull-left">
+                                <span>开户行账号：</span>
+                                <span id="bankAccount"></span>
+                            </div>
+                            <div class="pull-right">
+                                <span>单位：万元、人</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--表格-->
+                    <div>
+                        <!--第一个表格-->
+                        <div class="tableCont">
+                            <!--表格标题-->
+                            <div class="tableTitle text-center">
+                                <div>2018年度养老保险收支预算情况</div>
+                            </div>
+                            <table id="editTableOne"></table>
+                            <div class="tableAdd text-center">
+                                <div>
+                                    <button class="btn btn-primary" id="addEditOne"><i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--第二个表格-->
+                        <div class="tableCont">
+                            <!--表格标题-->
+                            <div class="tableTitle text-center">
+                                <div>2018年度1-5月份财政拨款实际收支执行情况</div>
+                            </div>
+                            <table id="editTableTwo"></table>
+                            <div class="tableAdd text-center">
+                                <div>
+                                    <button class="btn btn-primary" id="addEditTwo"><i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tableCont">
+                            <table id="editTableThree"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-save" class="btn btn-primary">保存</button>
+                <button id="btn-del" class="btn btn-primary">删除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../../../static/js/jquery.min.js"></script>
+<script src="../../../static/js/resource/jquery-confirm.min.js"></script>
+<script src="../../../static/js/bootstrap.min.js"></script>
+<script src="../../../static/js/resource/bootstrap-table.min.js"></script>
+<script src="../../../static/js/resource/bootstrap-table-locale-all.min.js"></script>
+<script src="../../../static/js/resource/bootstrap-datetimepicker.min.js"></script>
+<script src="../../../static/js/resource/commonJS.js"></script>
+<script src="../../../static/js/modules/fundApply/fundApply.js"></script>
+</body>
+</html>
