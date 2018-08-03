@@ -5,6 +5,9 @@ import com.ufgov.sssfm.project.module.outcomeinfo.service.PaymentPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Description 生成支付计划业务层
  * @Author xucy
@@ -16,6 +19,13 @@ public class PaymentPlanServiceImpl implements PaymentPlanService {
         @Autowired
         private PaymentPlanMapper paymentPlanMapper;
 
+        @Override
+        public List query_bankName() {
+                return paymentPlanMapper.query_bankName();
+        }
 
-
+        @Override
+        public List query_bankInfo(Map map) {
+                return paymentPlanMapper.query_bankInfo(map);
+        }
 }

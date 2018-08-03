@@ -1,6 +1,8 @@
 package com.ufgov.sssfm.project.module.outcomeinfo.mapper;
 
+import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Fa;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07GraFa;
+import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Son;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -37,4 +39,11 @@ public interface OutcomeMapper {
 
     //根据主表主键修改发送状态
     int updateGraSendStatusByPk(Map map);
+
+    //插入主表
+    int insert_Gra(Jf07GraFa jf07GraFa);
+    //插入子表
+    int insert_Fa(Jf07Fa jf07Fa);
+    //插入孙子表
+    int insert_Son(Jf07Son jf07Son);
 }

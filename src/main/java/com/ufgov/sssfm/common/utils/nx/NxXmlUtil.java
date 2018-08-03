@@ -11,10 +11,7 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -51,38 +48,34 @@ public class NxXmlUtil {
         return parse(map,tClass);
     }
     
-    public static <T> List<T>  xmlToBeanListAd68(String path, Class<T> tClass,String handlerType){
+    public static <T> Map  xmlToBeanList(String path, Class<T> tClass,String handlerType){
+        Map mapResult=new HashMap();
     	ArrayList<Map<String, Object>> maps = null;
     	List<T> returnList=new ArrayList<T>();
         try {
             maps = parseXmlList(new File(path),handlerType);
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
+            System.out.println("解析OSS服务器上业务要素文件失败");
             //解析出错
-            e.printStackTrace();
+            mapResult.put("errorMsg","解析OSS服务器上业务要素文件失败");
+            return mapResult;
         }
         for(int i=0;i<maps.size();i++){
-        	returnList.add(parse(maps.get(i),tClass));
+            Object obj=null;
+            try{
+                //解析报文赋值给实体Bean时报错
+                obj=parse(maps.get(i),tClass);
+            }catch (Exception e){
+                System.out.println("解析报文赋值给实体Bean时报错");
+                mapResult.put("errorMsg",e);
+                return mapResult;
+            }
+        	returnList.add((T)obj);
         }
-        return returnList;
+        mapResult.put("returnList",returnList);
+        return mapResult;
     }
     
-    public static <T> List<T>  xmlToBeanListJF07(String path, Class<T> tClass,String handlerType){
-    	ArrayList<Map<String, Object>> maps = null;
-    	List<T> returnList=new ArrayList<T>();
-        try {
-            maps = parseXmlList(new File(path),handlerType);
-        } catch (IllegalAccessException e) {
-            //解析出错
-            e.printStackTrace();
-        }
-        for(int i=0;i<maps.size();i++){
-        	maps.get(i);
-        	System.out.println(maps.get(i));
-        	returnList.add(parse(maps.get(i),tClass));
-        }
-        return returnList;
-    }
-
     /**
      *
      * @param map
@@ -108,6 +101,7 @@ public class NxXmlUtil {
             o = c.newInstance(new Object[]{});
         } catch (InstantiationException | IllegalAccessException |InvocationTargetException e) {
             e.printStackTrace();
+            throw new IllegalStateException("Constructor new实例的时候出错");
         }
         //将map中的属性赋值到对象中区
         Field[] subFields = tClass.getDeclaredFields();
@@ -143,6 +137,7 @@ public class NxXmlUtil {
                             field.set(o,results);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
+                            throw new IllegalStateException("往实例bean中赋值的时候报错");
                         }
                     }else{
                     	List<Map<String,Object>> list = (List<Map<String,Object>>)map.get("Details");
@@ -155,12 +150,13 @@ public class NxXmlUtil {
                         field.set(o,results);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
+                        throw new IllegalStateException("往实例bean中赋值的时候报错");
                     }
                 }
             }else if(type.isAssignableFrom(Date.class)){
                 try {
                     SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-                    if(map.get(field.getName()).toString().length()>0&&(!map.get(field.getName()).toString().contains("\n"))){
+                    if(map.get(field.getName()).toString().length()>8&&(!map.get(field.getName()).toString().contains("\n"))){
                     	Date date = format.parse(map.get(field.getName()).toString().substring(0,8));
                         field.set(o,date);
                     }else{
@@ -169,8 +165,10 @@ public class NxXmlUtil {
                     
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+                    throw new IllegalStateException("往实例bean中赋值的时候报错");
                 }catch (ParseException e) {
                     e.printStackTrace();
+                    throw new IllegalStateException("往实例bean中赋值的时候报错");
                 }
             }else if(type.isAssignableFrom(BigDecimal.class)){
                 try {
@@ -179,12 +177,14 @@ public class NxXmlUtil {
                     
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+                    throw new IllegalStateException("往实例bean中赋值的时候报错");
                 }
             }else {
                 try {
                     field.set(o,map.get(field.getName()));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+                    throw new IllegalStateException("往实例bean中赋值的时候报错");
                 }
             }
         }
@@ -214,7 +214,7 @@ public class NxXmlUtil {
     }
     
     //返回包含多个map的List
-    public static ArrayList<Map<String, Object>>  parseXmlList(File file,String handlerType) throws IllegalAccessException {
+    public static ArrayList<Map<String, Object>>  parseXmlList(File file,String handlerType) throws Exception {
         ArrayList<Map<String, Object>> maps = null;
         if(!file.exists()){
             throw new IllegalAccessException("文件访问不到");
@@ -227,8 +227,8 @@ public class NxXmlUtil {
             parser.parse(file.getAbsolutePath(), handler);
             maps = handler.getMaps();
         } catch (ParserConfigurationException | SAXException  |IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            throw e;
         }
         return maps;
     }

@@ -2,69 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ufgov.sssfm.project.module.outcomeinfo.mapper.PaymentPlanMapper">
-    <resultMap id="GraFaResultMap" type="com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07GraFa">
-        <result column="AAZ031"  property="aaz031" />
-        <result column="AAZ030"  property="aaz030" />
-        <result column="AAZ032"  property="aaz032" />
-        <result column="AAE008"  property="aae008" />
-        <result column="AAB070"  property="aab070" />
-        <result column="AAE009"  property="aae009" />
-        <result column="AAE010"  property="aae010" />
-        <result column="AAE140"  property="aae140" />
-        <result column="AAA079"  property="aaa079" />
-        <result column="AAE019"  property="aae019" />
-        <result column="AAE035"  property="aae035" />
-        <result column="AAE100"  property="aae100" />
-        <result column="AAB034"  property="aab034" />
-        <result column="AAE011"  property="aae011" />
-        <result column="AAE036"  property="aae036" />
-        <result column="RECIEVE_DATE"  property="recieve_date" />
-        <result column="SEND_STATUS"  property="send_status" />
-        <result column="BATCHNO"  property="batchno" />
-        <result column="PAYMENT_STATUS"  property="payment_status" />
-    </resultMap>
 
-    <resultMap id="FaResultMap" type="com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Son">
-        <result column="AAZ220"  property="aaz220" />
-        <result column="AAZ031"  property="aaz031" />
-        <result column="AAE140"  property="aae140" />
-        <result column="AAE002"  property="aae002" />
-        <result column="AAE003"  property="aae003" />
-        <result column="AAE008"  property="aae008" />
-        <result column="AAB070"  property="aab070" />
-        <result column="AAE009"  property="aae009" />
-        <result column="AAE010"  property="aae010" />
-        <result column="AAE019"  property="aae019" />
-        <result column="AAA028"  property="aaa028" />
-        <result column="AAZ010"  property="aaz010" />
-        <result column="AAB003"  property="aab003" />
-        <result column="AAB069"  property="aab069" />
-        <result column="AAE117"  property="aae117" />
-        <result column="AAE118"  property="aae118" />
-        <result column="AAE160"  property="aae160" />
-        <result column="AAE013"  property="aae013" />
-    </resultMap>
+        <select id="query_bankName" resultType="java.util.Map">
+            select bank_code val_id,bank_name val from bank_account_manager
+        </select>
 
-    <resultMap id="SonResultMap" type="com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Son">
-        <result column="AAZ219"  property="aaz219" />
-        <result column="AAZ220"  property="aaz220" />
-        <result column="AAA036"  property="aaa036" />
-        <result column="AAA085"  property="aaa085" />
-        <result column="AAA088"  property="aaa088" />
-        <result column="AAE002"  property="aae002" />
-        <result column="AAE003"  property="aae003" />
-        <result column="AAE019"  property="aae019" />
-        <result column="BIE505"  property="bie505" />
-        <result column="BIE504"  property="bie504" />
-        <result column="BIE506"  property="bie506" />
-        <result column="YW001"  property="yw001" />
-        <result column="YW002"  property="yw002" />
-        <result column="YW003"  property="yw003" />
-        <result column="YW004"  property="yw004" />
-        <result column="YW005"  property="yw005" />
-    </resultMap>
-
-
-
+        <select id="query_bankInfo" parameterType="java.util.Map" resultType="java.util.Map">
+            select bank_account val_id,(concat(bank_account,'---',bank_hm)) val from bank_account_manager
+            <where>
+                <if test="bankCode !=null">
+                    bank_code=#{bankCode}
+                </if>
+            </where>
+        </select>
 
 </mapper>

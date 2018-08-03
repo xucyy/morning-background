@@ -181,4 +181,51 @@
         where AAZ031 = #{AAZ031}
     </update>
 
+    <insert id="insert_Gra" parameterType="com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07GraFa">
+        insert into jf07_grafa (AAZ031, AAZ030, AAZ032,
+          AAE008, AAB070, AAE009,
+          AAE010, AAE140, AAA079,
+          AAE019, AAE035, AAE100,
+          AAB034, AAE011, AAE036
+          )
+        values (#{aaz031,jdbcType=VARCHAR}, #{aaz030,jdbcType=VARCHAR}, #{aaz032,jdbcType=VARCHAR},
+          #{aae008,jdbcType=VARCHAR}, #{aab070,jdbcType=VARCHAR}, #{aae009,jdbcType=VARCHAR},
+          #{aae010,jdbcType=VARCHAR}, #{aae140,jdbcType=VARCHAR}, #{aaa079,jdbcType=VARCHAR},
+          #{aae019,jdbcType=VARCHAR}, #{aae035,jdbcType=VARCHAR}, #{aae100,jdbcType=VARCHAR},
+          #{aab034,jdbcType=VARCHAR}, #{aae011,jdbcType=VARCHAR}, #{aae036,jdbcType=TIMESTAMP}
+          )
+    </insert>
+
+    <insert id="insert_Fa" parameterType="com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Fa">
+        insert into jf07_fa (AAZ220, AAZ031, AAE140,
+          AAE002, AAE003, AAE008,
+          AAB070, AAE009, AAE010,
+          AAE019, AAA028, AAZ010,
+          AAB003, AAB069, AAE117,
+          AAE118, AAE160, AAE013
+          )
+        values (#{aaz220,jdbcType=VARCHAR}, #{aaz031,jdbcType=VARCHAR}, #{aae140,jdbcType=VARCHAR},
+          #{aae002,jdbcType=VARCHAR}, #{aae003,jdbcType=VARCHAR}, #{aae008,jdbcType=VARCHAR},
+          #{aab070,jdbcType=VARCHAR}, #{aae009,jdbcType=VARCHAR}, #{aae010,jdbcType=VARCHAR},
+          #{aae019,jdbcType=VARCHAR}, #{aaa028,jdbcType=VARCHAR}, #{aaz010,jdbcType=VARCHAR},
+          #{aab003,jdbcType=VARCHAR}, #{aab069,jdbcType=VARCHAR}, #{aae117,jdbcType=VARCHAR},
+          #{aae118,jdbcType=VARCHAR}, #{aae160,jdbcType=VARCHAR}, #{aae013,jdbcType=VARCHAR}
+          )
+    </insert>
+
+    <insert id="insert_Son" parameterType="com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Son">
+        insert into jf07_son (AAZ219, AAZ220, AAA036,
+          AAA085, AAA088, AAE002,
+          AAE003, AAE019, BIE505,
+          BIE504, BIE506, YW001,
+          YW002, YW003, YW004,
+          YW005)
+        values (#{aaz219,jdbcType=VARCHAR}, #{aaz220,jdbcType=VARCHAR}, #{aaa036,jdbcType=VARCHAR},
+          #{aaa085,jdbcType=VARCHAR}, #{aaa088,jdbcType=VARCHAR}, #{aae002,jdbcType=VARCHAR},
+          #{aae003,jdbcType=VARCHAR}, #{aae019,jdbcType=DECIMAL}, #{bie505,jdbcType=VARCHAR},
+          #{bie504,jdbcType=TIMESTAMP}, #{bie506,jdbcType=VARCHAR}, #{yw001,jdbcType=VARCHAR},
+          #{yw002,jdbcType=VARCHAR}, #{yw003,jdbcType=VARCHAR}, #{yw004,jdbcType=VARCHAR},
+          #{yw005,jdbcType=VARCHAR})
+  </insert>
+
 </mapper>

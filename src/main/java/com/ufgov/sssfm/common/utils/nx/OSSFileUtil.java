@@ -114,7 +114,10 @@ public class OSSFileUtil {
      * @param path 要下载到文件夹路径
      * @return 下载下来的文件的绝对路径
      */
-    public static String download(String ossstr,FmInterfaceUtils fmInterfaceUtils){
+    public static Map download(String ossstr,FmInterfaceUtils fmInterfaceUtils){
+        //返回结果
+        Map resultMap=new HashMap();
+
         XMLRequest xmlRequest = new XMLRequest();
         xmlRequest.setEsbUrl(fmInterfaceUtils.getEsburl());		//人社政务网服务地址（调用方固定传入）
         xmlRequest.setEsbUserPwd(new String[]{fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd()}); 		//设置请求服务的用户id（身份证号码）,密码串
@@ -131,8 +134,19 @@ public class OSSFileUtil {
         xmlRequest.setParamValue(new String[]{ossstr});		//设置请求参数para部分（参数值）
 
 
+        //将发送报文放到结果集合中
+        String requestXML="";
+        try{
+            requestXML=xmlRequest.genRequestMessage(fmInterfaceUtils.getEsbuserpwdUser(),fmInterfaceUtils.getEsbuserpwdPwd())+"";
+        }catch (EsbException e){
+            requestXML="获取请求报文失败";
+        }
+        resultMap.put("requestXML",requestXML);
         EsbResponse esbRsp = xmlRequest.postXmlRequest();		//发送SOAP数据，并获取响应
         String ls_return= esbRsp.getResponseData(); 			//读取响应报文内容
+        //将接收报文放到结果集合中
+        resultMap.put("responseXML",ls_return);
+
 
         EsbQueryFactory esbServiceFactory = new EsbQueryFactory();	    //new 一个xml报文结果解释对象
         QueryListService service = null;
@@ -142,7 +156,8 @@ public class OSSFileUtil {
         } catch (EsbException e) {
             // TODO 报文解释异常
             e.printStackTrace();
-            return "";
+            resultMap.put("errorMsg","获取返回报文中的service失败");
+            return resultMap;
         }
 
 
@@ -168,18 +183,29 @@ public class OSSFileUtil {
             msg = service.getFaultString();
             System.out.println("响应描述："+msg);
 
-            Map map=service.getResultMap();
-            url=map.get("information")+"";
-            System.out.println("map："+map.get("information"));
+            if(isok){
+                Map map=service.getResultMap();
+                url=map.get("information")+"";
+                System.out.println("map："+map.get("information"));
+            }else{
+                resultMap.put("errorMsg",code+":::"+msg);
+                return resultMap;
+            }
+
         }
 
         //需要UrlEncode解码
-        String downLoadPath =getURLDecoderString(url); //获取到下载路径，下载文件
-
+        String downLoadPath =getURLDecoderString(url);
+        //获取到下载路径，下载文件
         File file = saveUrlAs(downLoadPath, fmInterfaceUtils.getDownloadpath());
-
-        return file.getAbsolutePath();
-
+        //判斷是否下載文件成功
+        if(file!=null){
+            resultMap.put("path",file.getAbsolutePath());
+            return resultMap;
+        }else {
+            resultMap.put("errorMsg","从OSS上下载文件到本地失败");
+            return resultMap;
+        }
     }
 
 
@@ -313,10 +339,11 @@ public class OSSFileUtil {
             bos.close(); 
             bis.close(); 
             conn.disconnect(); 
-       } catch (Exception e) 
+       } catch (Exception e)
        { 
             e.printStackTrace(); 
-            System.out.println("抛出异常！！"); 
+            System.out.println("抛出文件下載异常！！");
+            return null;
        } 
            
         return file; 

@@ -310,8 +310,8 @@ public class OutcomeController {
         msgBig.setOldmsgid("");
         msgBig.setSenderno(NxConstants.RS_SEND_BH);
         msgBig.setRecieverno(NxConstants.CZ_RECIEVE_BH);
-        msgBig.setBse173(NxConstants.AD68_WEB_SERVICE);
-        msgBig.setBse174(NxConstants.AD68_WEB_SERVICE);
+        msgBig.setBse173(NxConstants.JF07_WEB_SERVICE);
+        msgBig.setBse174(NxConstants.JF07_WEB_SERVICE);
         msgBig.setAae036(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         msgBig.setAbe100("");
         msgBig.setMsgtype("");

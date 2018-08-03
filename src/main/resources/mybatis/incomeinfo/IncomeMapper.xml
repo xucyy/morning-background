@@ -108,4 +108,43 @@
         </where>
     </select>
 
+    <insert id="insert_Fa" parameterType="com.ufgov.sssfm.project.module.incomeinfo.entity.Ad68Fa">
+        insert into ad68_fa (BIE001, BAE001, AAB034,
+          AAA028, AAZ010, AAB003,
+          AAB069, AAE002, AAE003,
+          AAE140, AAA116, AAE020,
+          AAB119, AAE080, AAE017,
+          AAE018, AAC128, AAB190,
+          AAB191, AAE011, AAE036
+          )
+        values (#{bie001,jdbcType=VARCHAR}, #{bae001,jdbcType=VARCHAR}, #{aab034,jdbcType=VARCHAR},
+          #{aaa028,jdbcType=VARCHAR}, #{aaz010,jdbcType=VARCHAR}, #{aab003,jdbcType=VARCHAR},
+          #{aab069,jdbcType=VARCHAR}, #{aae002,jdbcType=VARCHAR}, #{aae003,jdbcType=VARCHAR},
+          #{aae140,jdbcType=VARCHAR}, #{aaa116,jdbcType=VARCHAR}, #{aae020,jdbcType=VARCHAR},
+          #{aab119,jdbcType=VARCHAR}, #{aae080,jdbcType=VARCHAR}, #{aae017,jdbcType=VARCHAR},
+          #{aae018,jdbcType=TIMESTAMP}, #{aac128,jdbcType=VARCHAR}, #{aab190,jdbcType=VARCHAR},
+          #{aab191,jdbcType=TIMESTAMP}, #{aae011,jdbcType=VARCHAR}, #{aae036,jdbcType=TIMESTAMP}
+          )
+  </insert>
+
+    <insert id="insert" parameterType="com.ufgov.sssfm.project.module.incomeinfo.entity.Ad68Son">
+    insert into ad68_son (BIE001, AAZ223, AAA028,
+      AAZ010, AAB003, AAB069,
+      AAE002, AAE003, AAE140,
+      AAA115, AAA157, BAE151,
+      AAE180, AAE020, AAE080,
+      AAE017, AAE018, BAE181,
+      AAB114, ZBX001, ZBX002,
+      ZBX003, ZBX004, ZBX005
+      )
+    values (#{bie001,jdbcType=VARCHAR}, #{aaz223,jdbcType=VARCHAR}, #{aaa028,jdbcType=VARCHAR},
+      #{aaz010,jdbcType=VARCHAR}, #{aab003,jdbcType=VARCHAR}, #{aab069,jdbcType=VARCHAR},
+      #{aae002,jdbcType=VARCHAR}, #{aae003,jdbcType=VARCHAR}, #{aae140,jdbcType=VARCHAR},
+      #{aaa115,jdbcType=VARCHAR}, #{aaa157,jdbcType=VARCHAR}, #{bae151,jdbcType=VARCHAR},
+      #{aae180,jdbcType=VARCHAR}, #{aae020,jdbcType=VARCHAR}, #{aae080,jdbcType=VARCHAR},
+      #{aae017,jdbcType=VARCHAR}, #{aae018,jdbcType=TIMESTAMP}, #{bae181,jdbcType=VARCHAR},
+      #{aab114,jdbcType=VARCHAR}, #{zbx001,jdbcType=VARCHAR}, #{zbx002,jdbcType=VARCHAR},
+      #{zbx003,jdbcType=VARCHAR}, #{zbx004,jdbcType=VARCHAR}, #{zbx005,jdbcType=VARCHAR}
+      )
+  </insert>
 </mapper>
