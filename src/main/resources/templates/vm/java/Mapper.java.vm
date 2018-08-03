@@ -1,7 +1,8 @@
 package ${package}.mapper;
 
 import ${package}.domain.${className};
-import java.util.List;	
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * ${tableComment} 数据层
@@ -9,6 +10,7 @@ import java.util.List;
  * @author ${author}
  * @date ${datetime}
  */
+@Mapper
 public interface ${className}Mapper 
 {
 	/**
