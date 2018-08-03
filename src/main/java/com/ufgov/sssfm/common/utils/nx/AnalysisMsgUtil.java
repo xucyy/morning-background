@@ -32,12 +32,21 @@ public class AnalysisMsgUtil
 		 * 1、解析报文，读取数据
 		 *
 		 */
-		//调用XMLUtil. parseBatchData ()方法解释请求报文里的批量数据
-		List<?> infoList= XMLUtil.parseBatchData(element.getFirstElement());
-		//获取请求报文里的para参数集合
-		Map<String,String> paraMap = XMLUtil.getPara4BatchData(infoList);
-		//获取请求报文里的paralist参数集合
-		Map<String,ArrayList> pramlistMap = XMLUtil.getParalist4BatchData(infoList);
+		Map<String,String> paraMap=null;
+		Map<String,ArrayList> pramlistMap=null;
+
+		try {
+			//调用XMLUtil. parseBatchData ()方法解释请求报文里的批量数据
+			List<?> infoList= XMLUtil.parseBatchData(element.getFirstElement());
+			//获取请求报文里的para参数集合
+			paraMap= XMLUtil.getPara4BatchData(infoList);
+			//获取请求报文里的paralist参数集合
+			pramlistMap= XMLUtil.getParalist4BatchData(infoList);
+		}catch (Exception e){
+			System.out.println("解析业务方发送报文失败!");
+			throw e;
+		}
+
 
 
 		/**

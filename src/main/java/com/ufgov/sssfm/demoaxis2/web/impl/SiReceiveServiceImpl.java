@@ -1,15 +1,13 @@
 package com.ufgov.sssfm.demoaxis2.web.impl;
 
-import com.ufgov.sssfm.common.utils.nx.AnalysisMsgUtil;
-import com.ufgov.sssfm.common.utils.nx.NxConstants;
-import com.ufgov.sssfm.common.utils.nx.NxXmlUtil;
-import com.ufgov.sssfm.common.utils.nx.OSSFileUtil;
+import com.ufgov.sssfm.common.utils.nx.*;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
 import com.ufgov.sssfm.demoaxis2.web.SiReceiveService;
 import com.ufgov.sssfm.project.module.incomeinfo.entity.Ad68Fa;
 import com.ufgov.sssfm.project.module.incomeinfo.entity.Ad68Son;
 import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
+import com.ufgov.sssfm.project.module.queryutils.mapper.FmBankXmlLogMapper;
 import com.ufgov.sssfm.project.module.queryutils.mapper.FmInterfaceUtilsMapper;
 import com.ylzinfo.esb.server.ReaderSoapXmlOut4NX;
 import org.apache.axiom.om.OMElement;
@@ -31,14 +29,27 @@ public class SiReceiveServiceImpl implements SiReceiveService {
     @Autowired
     private FmInterfaceUtilsMapper fmInterfaceUtilsMapper;
 
+    @Autowired
+    private FmBankXmlLogMapper fmBankXmlLogMapper;
+
     //业务平台通过webservice发送业务数据
     public String getYWDataRecieveMessage(OMElement element) {
         /**
          * 1、解析报文，读取数据,2、数据处理，业务流程
          *
          */
-        //得到请求报文中的参数
-        AnalysisReceiveMsgBig analysisReceiveMsgBig=AnalysisMsgUtil.getRecieveMessage(element);
+        AnalysisReceiveMsgBig analysisReceiveMsgBig=null;
+        try{
+            //得到请求报文中的参数
+            analysisReceiveMsgBig=AnalysisMsgUtil.getRecieveMessage(element);
+        }catch (Exception e){
+            //插入日志表记录
+            fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","getYWDataRecieveMessage",""
+                    ,"解析业务方发送报文失败!"+e,element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "解析业务方发送报文失败！")));
+
+            return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "解析业务方发送报文失败！");
+        }
+
         //得到请求报文中的各个上传文件的信息
         List<AnalysisReceiveMsgSmall> listSmall=analysisReceiveMsgBig.getAnalysisReceiveMsgSmallList();
 
@@ -53,6 +64,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
             //根据ossstr字符串去下载文件到本地
             String filePath= OSSFileUtil.download(ossstr,fmInterfaceUtils);
+
             String bse173 = analysisReceiveMsgBig.getBse173();
 
             if(NxConstants.AD68_WEB_SERVICE.equals(bse173)){
