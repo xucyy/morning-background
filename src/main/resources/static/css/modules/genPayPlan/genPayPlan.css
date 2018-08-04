@@ -2,6 +2,9 @@
 #workspace{
     padding:10px;
 }
+.btn{
+    padding: 4px 12px!important;
+}
 /*头部*/
 .collect{
     height: 50px;
@@ -9,9 +12,6 @@
 .collect div{
     float: left;
     margin-right: 10px;
-}
-#btn-query{
-    padding: 4px 12px;
 }
 /*center*/
 .center{

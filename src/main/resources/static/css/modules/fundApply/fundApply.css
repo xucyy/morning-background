@@ -2,6 +2,9 @@
 #workspace{
     padding:10px;
 }
+.btn{
+    padding: 4px 12px!important;
+}
 /*头部*/
 .collect{
     height: 50px;
@@ -9,9 +12,6 @@
 .collect div{
     float: left;
     margin-right: 10px;
-}
-.btn-primary{
-    padding: 4px 12px;
 }
 /*center*/
 .center{
@@ -50,43 +50,38 @@ ul.dropdown-menu{
 }
 .editTitleCont{
     margin: 0 auto;
-    text-align: center;
 }
     /*调整编辑页面标题Input样式*/
 .editInput{
     width: 70px;
     border: 0;
-    border-bottom: 1px solid #e1e1e8;
+    border-bottom: 1px solid #0e9aef;
     outline: none;
     text-align: center;
+    vertical-align: bottom;
 }
 .editTipCont{
-    width:90%;
-    margin: 0 auto;
+    width: 90%;
+    margin:20px auto;
     overflow: hidden;
 }
     /*编辑页面内的表格区域样式*/
-.tableCont{
-    padding-top: 20px;
+.editTable{
+    width: 90%;
+    margin: 0 auto;
 }
-.tableTitle{
-    height:40px;
-    border: 1px solid #e1e1e8;
-    border-bottom: none;
-    border-radius: 4px;
+/*短中长表格内Input*/
+.tableInput,.tableInputM,.tableInputL{
+    width: 100px;
+    border: 0;
+    /*border-bottom: 1px solid #0e9aef;*/
+    outline: none;
+    text-align: center;
+    vertical-align: bottom;
 }
-.tableTitle div{
-    font-size: 16px;
-    position: relative;
-    top: 25%;
+.tableInputM{
+    width: 400px!important;
 }
-.tableAdd{
-    height:40px;
-    border: 1px solid #e1e1e8;
-    border-top: none;
-    border-radius: 4px;
-}
-.tableAdd div{
-    position: relative;
-    top: 10%;
+.tableInputL{
+    width: 400px!important;
 }

@@ -13,7 +13,6 @@ $(function(){
         return {
             // 加载表格
             getTab: function (id,url) {
-                // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
                     queryParams: function (params) {
@@ -23,7 +22,8 @@ $(function(){
                                 "AAE140": $('#safeSelect').selectpicker('val'),//险种
                                 "AAA079":$('#bfSelect').selectpicker('val'),//拨付类型
                                 "AAE008":$('#bankSelect').selectpicker('val'),//银行编码
-                                "AAE035": $('.datetimepicker').val().replace(/-/g, '')//拨付时间
+                                "AAE035": $('.datetimepicker').val().replace(/-/g, ''),//拨付时间
+                                "PAYMENT_STATUS":null//空参数
                         };
                     },
                     method: 'post',
@@ -266,7 +266,7 @@ $(function(){
                                 $('#myModal').modal('hide');
                                 //重新加载一次表格
                                 $('#firstTable').bootstrapTable('refresh');
-                                commonJS.confirm('消息',result.result);
+                                commonJS.confirm('消息',result.result,result.msg);
                             }
                         });
                     }

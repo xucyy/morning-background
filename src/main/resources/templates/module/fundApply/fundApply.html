@@ -29,9 +29,12 @@
                 </div>
                 <div class="queryModel">
                     <button id="btn-query" class="btn btn-primary">查询</button>
-                </div>
-                <div class="queryModel">
                     <button id="btn-add" class="btn btn-primary">新增</button>
+                    <button id="btn-appendix" class="btn btn-primary">附件</button>
+                    <button id="btn-sign" class="btn btn-primary">签章</button>
+                    <button id="btn-audit" class="btn btn-primary">审核</button>
+                    <button id="btn-approve" class="btn btn-primary">审批</button>
+                    <button id="btn-daily" class="btn btn-primary">审批日志</button>
                 </div>
             </div>
         </div>
@@ -47,20 +50,20 @@
     <div class="modal-dialog" style="width:90%">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" style="margin-left:10px">关闭</button>
+                <button id="btn-disagree" class="btn btn-primary pull-right" style="margin-left:10px">驳回</button>
+                <button id="btn-agree" class="btn btn-primary pull-right" style="margin-left:10px">同意</button>
+                <button id="btn-save" class="btn btn-primary pull-right" style="margin-left:10px">保存</button>
+                <h4 class="modal-title" id="myModalLabel">子表明细数据</h4>
+
             </div>
             <div class="modal-body">
-                <!--编辑/新增页面-->
                 <div class="editPage">
                     <!--标题-->
                     <div class="editTitle">
-                        <div class="editTitleCont">
+                        <div class="editTitleCont text-center">
                             <h3>
-                                <input type="text" id="editTitleYear" class="editInput">
-                                <span>年度</span>
-                                <input type="text" id="editTitleMonth" class="editInput">
-                                <span>月份社会保障基金（资金）拨款申请</span>
+                                宁夏回族自治区社会保障基金用款申请表
                             </h3>
                         </div>
                     </div>
@@ -68,52 +71,106 @@
                     <div class="editTip">
                         <div class="editTipCont">
                             <div class="pull-left">
-                                <span>开户行账号：</span>
-                                <span id="bankAccount"></span>
+                                <b>申请单位盖章：</b>
                             </div>
                             <div class="pull-right">
-                                <span>单位：万元、人</span>
+                                <b>申请时间：</b>
+                                <input class="editInput"><b>年</b>
+                                <input class="editInput"><b>月</b>
+                                <input class="editInput"><b>日</b>
+                            </div>
+                        </div>
+                        <div class="editTipCont">
+                            <div class="pull-left">
+                                <b>险种：</b>
+                                <input class="editInput" type="text">
+                            </div>
+                            <div class="pull-right">
+                                <b>单位：万元</b>
                             </div>
                         </div>
                     </div>
                     <!--表格-->
-                    <div>
-                        <!--第一个表格-->
-                        <div class="tableCont">
-                            <!--表格标题-->
-                            <div class="tableTitle text-center">
-                                <div>2018年度养老保险收支预算情况</div>
-                            </div>
-                            <table id="editTableOne"></table>
-                            <div class="tableAdd text-center">
-                                <div>
-                                    <button class="btn btn-primary" id="addEditOne"><i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <!--第二个表格-->
-                        <div class="tableCont">
-                            <!--表格标题-->
-                            <div class="tableTitle text-center">
-                                <div>2018年度1-5月份财政拨款实际收支执行情况</div>
-                            </div>
-                            <table id="editTableTwo"></table>
-                            <div class="tableAdd text-center">
-                                <div>
-                                    <button class="btn btn-primary" id="addEditTwo"><i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tableCont">
-                            <table id="editTableThree"></table>
-                        </div>
+                    <div class="editTable" style="overflow-x: auto">
+                        <table class="table table-bordered table-condensed">
+                            <tr class="text-center">
+                                <td>上年结余资金</td>
+                                <td>本年预算支出</td>
+                                <td>本年累计拨款</td>
+                                <td>1-6月累计用款金额</td>
+                                <td>上月末账面结余资金</td>
+                                <td>本月申请拨款金额</td>
+                                <td>备注</td>
+                            </tr>
+                            <tr class="text-center">
+                                <td><input type="text" class="tableInput"> </td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="4">特殊情况拨款</td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td rowspan="3">申请单位单位银行账户信息</td>
+                                <td colspan="2">账户名称</td>
+                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="2">银行账号</td>
+                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="2">开户银行</td>
+                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="3">财政业务（处）科室审核金额</td>
+                                <td colspan="3">大写：<input type="text" class="tableInputM"></td>
+                                <td>小写：<input type="text" class="tableInput"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td rowspan="3">财政专户银行账户信息</td>
+                                <td colspan="2">账户名称</td>
+                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="2">银行账号</td>
+                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="2">开户银行</td>
+                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="3">申请单位审批</td>
+                                <td colspan="2">财政社保部门审批</td>
+                                <td colspan="2">财政国库科审批</td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="3">负责人签字：<input type="text" class="tableInput"></td>
+                                <td colspan="2">业务主管：<input type="text" class="tableInput"></td>
+                                <td colspan="2">财政专户会计：<input type="text" class="tableInput"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="3">审核人：<input type="text" class="tableInput"></td>
+                                <td colspan="2">审核人：<input type="text" class="tableInput"></td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="3">经办人：<input type="text" class="tableInput"></td>
+                                <td colspan="2">分管领导：<input type="text" class="tableInput"></td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-save" class="btn btn-primary">保存</button>
-                <button id="btn-del" class="btn btn-primary">删除</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

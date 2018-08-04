@@ -9,10 +9,7 @@ $(function(){
     //单元格编辑事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {
-            page.getEditTab(true);
-        },
-        'click .btn-submit':function (e, value, row, index) {
-
+            page.getEditTab('editZD');
         },
         'click .btn-del':function (e, value, row, index) {
 
@@ -65,7 +62,6 @@ $(function(){
                         {field: 'AAB119', title: '状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                                 return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
                                     '<button class="btn btn-primary btn-del">删除</button>'
                             },
                         }
@@ -74,116 +70,30 @@ $(function(){
             },
 
             //可编辑表格
-            getEditTab:function(isEdit){
-                if(isEdit==false){//新增
-                    $('#btn-del').addClass('hide');//隐藏删除按钮
+            getEditTab:function(edit){
+                if(edit=='addZD'){//制单新增
                     $("#myModalLabel").html('新增拨款申请单');//改变标题
                     $('#win').modal('show');
-                    $('#editTableOne').bootstrapTable('destroy').bootstrapTable({
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns: [    //表头
-                            {field: 'AAE003', title: '单位/项目', align: 'center',editable:{
-                                type: 'text'
-                            }},
-                            {field: 'BIE001', title: '收入总额', align: 'center',editable:{
-                                type: 'text'
-                            }},
-                            {field: 'AAE140', title: '支出总额', align: 'center',editable:{
-                                type: 'text'
-                            }},
-                            {field: 'AAA116', title: '收支差额', align: 'center',editable:{
-                                type: 'text'
-                            }}
-                        ],
-                        data:[{
-                            'AAE003':'',
-                            'BIE001':'',
-                            'AAE140':'',
-                            'AAA116':''
-                        }]
-                    });
-                    $('#editTableTwo').bootstrapTable('destroy').bootstrapTable({
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns: [    //表头
-                            {field: 'AAE003', title: '单位/项目', align: 'center',editable:{
-                                    type: 'text'
-                                }},
-                            {field: 'BIE001', title: '收入总额', align: 'center',editable:{
-                                    type: 'text'
-                                }},
-                            {field: 'AAE140', title: '支出总额', align: 'center',editable:{
-                                    type: 'text'
-                                }},
-                            {field: 'AAA116', title: '收支差额', align: 'center',editable:{
-                                    type: 'text'
-                                }}
-                        ],
-                        data:[{
-                            'AAE003':'',
-                            'BIE001':'',
-                            'AAE140':'',
-                            'AAA116':''
-                        }]
-                    });
+                    $('#btn-agree,#btn-disagree').addClass('hide');
+                    $('#btn-save').removeClass('hide');
                 }
-                else{//编辑
-                    $('#btn-del').removeClass('hide');//显示删除按钮
+                else if(edit=='editZD'){//制单编辑
                     $("#myModalLabel").html('编辑拨款申请单');//改变标题
                     $('#win').modal('show');
-                    $('#editTableOne').bootstrapTable('destroy').bootstrapTable({
-                        url: '',
-                        queryParams: function (params) {
-                            return{//如果是在服务器端实现分页，limit、offset这两个参数是必须的
-                                pageSize: params.limit, // 每页显示数量
-                                pageNumber: params.offset / params.limit + 1 //当前页码
-                            };
-                        },
-                        method: 'post',
-                        contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                        dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns: [    //表头
-                            {field: 'AAE003', title: '单位/项目', align: 'center',editable:{
-                                type: 'select'
-                            }},
-                            {field: 'BIE001', title: '收入总额', align: 'center',editable:{
-                                type: 'text'
-                            }},
-                            {field: 'AAE140', title: '支出总额', align: 'center',editable:{
-                                type: 'text'
-                            }},
-                            {field: 'AAA116', title: '收支差额', align: 'center',editable:{
-                                type: 'text'
-                            }}
-                        ]
-                    });
-                    $('#editTableTwo').bootstrapTable('destroy').bootstrapTable({
-                        url: '',
-                        queryParams: function (params) {
-                            return{//如果是在服务器端实现分页，limit、offset这两个参数是必须的
-                                pageSize: params.limit, // 每页显示数量
-                                pageNumber: params.offset / params.limit + 1 //当前页码
-                            };
-                        },
-                        method: 'post',
-                        contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                        dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns: [    //表头
-                            {field: 'AAE003', title: '单位/项目', align: 'center',editable:{
-                                    type: 'text'
-                                }},
-                            {field: 'BIE001', title: '收入总额', align: 'center',editable:{
-                                    type: 'text'
-                                }},
-                            {field: 'AAE140', title: '支出总额', align: 'center',editable:{
-                                    type: 'text'
-                                }},
-                            {field: 'AAA116', title: '收支差额', align: 'center',editable:{
-                                    type: 'text'
-                                }}
-                        ]
-                    });
+                    $('#btn-agree,#btn-disagree').addClass('hide');
+                    $('#btn-save').removeClass('hide');
+                }
+                else if(edit=='SH'){//审核
+                    $("#myModalLabel").html('拨款申请单审核');//改变标题
+                    $('#btn-agree,#btn-disagree').removeClass('hide');
+                    $('#btn-save').addClass('hide');//隐藏保存按钮
+                    $('#win').modal('show');
+                }
+                else if(edit=='SP'){//审批
+                    $("#myModalLabel").html('拨款申请单审批');//改变标题
+                    $('#btn-agree,#btn-disagree').removeClass('hide');
+                    $('#btn-save').addClass('hide');//隐藏保存按钮
+                    $('#win').modal('show');
                 }
             },
 
@@ -205,16 +115,16 @@ $(function(){
 
                 //新增
                 $('#btn-add').on('click',function () {
-                    page.getEditTab(false);
+                    page.getEditTab('addZD');
                 });
 
                 //保存
                 $('#btn-save').on('click',function(){
-                    console.log($('#editTableOne').bootstrapTable('getData'));
+
                 });
 
-//				查询
-               $('#btn-query').on('click', function () {
+				//查询
+                $('#btn-query').on('click', function () {
                     $('#firstTable').bootstrapTable('refresh');
                 });
             },

@@ -2,6 +2,9 @@
 #workspace{
 	padding:10px;
 }
+.btn{
+	padding: 4px 12px!important;
+}
 /*头部*/
 .collect{
 	height: 50px;
