@@ -245,22 +245,7 @@ $(function(){
                 //发财政
                 $('#btn-sendCZ').on('click', function () {
                     if ($('#firstTable').bootstrapTable('getSelections').length==0) {
-                        $.confirm({
-                            title: '警告',
-                            content: '请选择数据！',
-                            buttons: {
-                                ok: {
-                                    text: '确认',
-                                    btnClass: 'btn-primary',
-                                    action: function() {
-                                    }
-                                },
-                                cancel: {
-                                    text: '取消',
-                                    btnClass: 'btn-primary'
-                                }
-                            }
-                        });
+                        commonJS.confirm('警告','请选择数据');
                     }
                     else {
                         //选择多条汇总id;
@@ -281,22 +266,7 @@ $(function(){
                                 $('#myModal').modal('hide');
                                 //重新加载一次表格
                                 $('#firstTable').bootstrapTable('refresh');
-                                $.confirm({
-                                    title: '消息',
-                                    content: result.result?result.result:result.msg,
-                                    buttons: {
-                                        ok: {
-                                            text: '确认',
-                                            btnClass: 'btn-primary',
-                                            action: function() {
-                                            }
-                                        },
-                                        cancel: {
-                                            text: '取消',
-                                            btnClass: 'btn-primary'
-                                        }
-                                    }
-                                });
+                                commonJS.confirm('消息',result.result);
                             }
                         });
                     }

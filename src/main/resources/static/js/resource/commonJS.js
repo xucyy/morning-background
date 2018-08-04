@@ -240,5 +240,24 @@ var commonJS={
             language:'zh',//中文
             autoclose: 1//选择后自动关闭
         }).val(val);
+    },
+
+    confirm:function(title,back){//封装提示函数
+        $.confirm({
+            title: title,
+            content: back,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function() {
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
     }
 };

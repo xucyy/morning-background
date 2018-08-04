@@ -256,22 +256,7 @@ $(function(){
                 // 批量设置开发行
                 $('#btn-bank').on('click',function () {
                     if($('#firstTable').bootstrapTable('getAllSelections').length==0&&$('#secondTable').bootstrapTable('getAllSelections').length==0){//未选择时提示
-                        $.confirm({
-                            title: '警告',
-                            content: '请选择数据！',
-                            buttons: {
-                                ok: {
-                                    text: '确认',
-                                    btnClass: 'btn-primary',
-                                    action: function() {
-                                    }
-                                },
-                                cancel: {
-                                    text: '取消',
-                                    btnClass: 'btn-primary'
-                                }
-                            }
-                        });
+                        commonJS.confirm('警告',"请选择数据！");
                     }
                     else{
                         $('#winBank').modal('show');
@@ -343,22 +328,7 @@ $(function(){
                             $('#myModal,#winBank').modal('hide');
                             //重新加载一次表格（两个都要刷新，因为不清楚目前是哪个表格）
                             $('#firstTable,#secondTable').bootstrapTable('refresh');
-                            $.confirm({
-                                title: '消息',
-                                content: result.result?result.result:result.msg,
-                                buttons: {
-                                    ok: {
-                                        text: '确认',
-                                        btnClass: 'btn-primary',
-                                        action: function() {
-                                        }
-                                    },
-                                    cancel: {
-                                        text: '取消',
-                                        btnClass: 'btn-primary'
-                                    }
-                                }
-                            });
+                            commonJS.confirm('消息',result.result);
                         }
                     });
                 });
@@ -366,22 +336,7 @@ $(function(){
                 //生成支付计划
                 $('#btn-gen').on('click',function () {
                    if($('#firstTable').bootstrapTable('getSelections').length==0){
-                       $.confirm({
-                           title: '警告',
-                           content: '请选择数据！',
-                           buttons: {
-                               ok: {
-                                   text: '确认',
-                                   btnClass: 'btn-primary',
-                                   action: function() {
-                                   }
-                               },
-                               cancel: {
-                                   text: '取消',
-                                   btnClass: 'btn-primary'
-                               }
-                           }
-                       });
+                       commonJS.confirm('警告','请选择数据！');
                    }
                    else{
                        var ids = [];
@@ -405,22 +360,7 @@ $(function(){
                                $('#myModal').modal('hide');
                                //重新加载一次表格
                                $('#firstTable').bootstrapTable('refresh');
-                               $.confirm({
-                                   title: '消息',
-                                   content: result.result?result.result:result.msg,
-                                   buttons: {
-                                       ok: {
-                                           text: '确认',
-                                           btnClass: 'btn-primary',
-                                           action: function() {
-                                           }
-                                       },
-                                       cancel: {
-                                           text: '取消',
-                                           btnClass: 'btn-primary'
-                                       }
-                                   }
-                               });
+                               commonJS.confirm('消息',result.result);
                            }
                        });
                    }
