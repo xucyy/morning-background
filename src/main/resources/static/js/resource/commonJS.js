@@ -242,10 +242,10 @@ var commonJS={
         }).val(val);
     },
 
-    confirm:function(title,back){//封装提示函数
+    confirm:function(title,back,error){//封装提示函数
         $.confirm({
             title: title,
-            content: back,
+            content: back?back:error,
             buttons: {
                 ok: {
                     text: '确认',

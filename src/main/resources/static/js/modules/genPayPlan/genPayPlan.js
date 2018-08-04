@@ -328,7 +328,7 @@ $(function(){
                             $('#myModal,#winBank').modal('hide');
                             //重新加载一次表格（两个都要刷新，因为不清楚目前是哪个表格）
                             $('#firstTable,#secondTable').bootstrapTable('refresh');
-                            commonJS.confirm('消息',result.result);
+                            commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
                 });
@@ -360,7 +360,7 @@ $(function(){
                                $('#myModal').modal('hide');
                                //重新加载一次表格
                                $('#firstTable').bootstrapTable('refresh');
-                               commonJS.confirm('消息',result.result);
+                               commonJS.confirm('消息',result.result,result.msg);
                            }
                        });
                    }
