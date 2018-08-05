@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,12 +32,19 @@ public class FundApplyController {
     @PostMapping("/insert_FmBkApply")
     public String insert_FmBkApply(String bkdJson){
         JSONObject jsonObject=new JSONObject();
-        JSONObject bkdJsonOb=JSON.parseObject(bkdJson);
-
         try{
             FmBkApply fmBkApply = JSON.parseObject(bkdJson,FmBkApply.class);
-            fmBkApply.setBkdId(UUID.randomUUID()+"");
-            fundApplyService.insert_FmBkApply(fmBkApply);
+            //判断是否存在拨款单Id,如果存在，则先删除，后插入。不存在，直接插入
+            if((fmBkApply.getBkdId().length()<=0)){
+                fmBkApply.setBkdId(UUID.randomUUID()+"");
+                fundApplyService.insert_FmBkApply(fmBkApply);
+            }else{
+                //删除
+                fundApplyService.deleteBKApplyByPK(fmBkApply.getBkdId());
+                //插入
+                fundApplyService.insert_FmBkApply(fmBkApply);
+            }
+
         }catch (Exception e){
             jsonObject.put("result","插入数据库失败");
             return jsonObject.toString();
@@ -68,6 +74,21 @@ public class FundApplyController {
         List resultList=fundApplyService.selectAllBkApplyTime(map);
 
         jsonObject.put("result",resultList);
+        return jsonObject.toString();
+    }
+
+    //根据bkd_id删除拨款申请单
+    @PostMapping("/deleteBKApplyByPK")
+    public String deleteBKApplyByPK(String bkdId){
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            fundApplyService.deleteBKApplyByPK(bkdId);
+        }catch (Exception e){
+            jsonObject.put("result","删除失败");
+            return jsonObject.toString();
+        }
+        jsonObject.put("result","删除成功");
         return jsonObject.toString();
     }
 

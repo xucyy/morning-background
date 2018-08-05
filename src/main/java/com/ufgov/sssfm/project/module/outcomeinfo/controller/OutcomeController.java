@@ -72,9 +72,7 @@ public class OutcomeController {
         map.put("AAE140",AAE140);
         map.put("AAE008",AAE008);
         map.put("AAA079",AAA079);
-        if(PAYMENT_STATUS!=null&&(PAYMENT_STATUS.length()>0)){
-            map.put("PAYMENT_STATUS",PAYMENT_STATUS);
-        }
+        map.put("PAYMENT_STATUS",PAYMENT_STATUS);
         List query_list= outcomeService.query_jf07_pagedata(map);
         int total=outcomeService.query_jf07_pagedata_total(map);
         jsonObject.put("total",total);

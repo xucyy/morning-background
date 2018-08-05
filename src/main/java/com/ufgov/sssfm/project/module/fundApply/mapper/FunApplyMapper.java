@@ -14,4 +14,6 @@ public interface FunApplyMapper {
     FmBkApply selectBKApplyByPK(String bkdId);
 
     List selectAllBkApplyTime(Map map);
+
+    int deleteBKApplyByPK(String bkdId);
 }

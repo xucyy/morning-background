@@ -57,6 +57,10 @@
         where BKD_ID = #{bkdId,jdbcType=VARCHAR}
     </select>
 
+    <delete id="deleteBKApplyByPK" parameterType="java.lang.String">
+        delete from fm_bk_apply where BKD_ID = #{bkdId,jdbcType=VARCHAR}
+    </delete>
+
     <select id="selectAllBkApplyTime" parameterType="java.util.Map" resultType="java.util.Map">
         select BKD_ID,XZ,(concat(YEAR,MONTH,DAY)) SQSJ,ACCOUNTONE,BANKONE,BANKONE,THISMONTHAPPLY FROM fm_bk_apply
     </select>

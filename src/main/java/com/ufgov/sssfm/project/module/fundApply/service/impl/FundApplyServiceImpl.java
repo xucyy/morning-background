@@ -34,4 +34,9 @@ public class FundApplyServiceImpl implements FundApplyService {
     public List selectAllBkApplyTime(Map map) {
         return funApplyMapper.selectAllBkApplyTime(map);
     }
+
+    @Override
+    public int deleteBKApplyByPK(String bkdId) {
+        return funApplyMapper.deleteBKApplyByPK(bkdId);
+    }
 }
