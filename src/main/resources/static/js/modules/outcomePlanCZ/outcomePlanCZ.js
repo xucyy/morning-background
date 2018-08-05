@@ -270,7 +270,7 @@ $(function(){
                             }
                         });
                     }
-                })
+                });
 
                 //页签中的表格初始化
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {

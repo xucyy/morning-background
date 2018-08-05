@@ -42,7 +42,7 @@ $(function(){
             }
         },
         {field: 'AAZ030', title: '业务支付计划ID', align: 'center'},
-        {field: 'CWHZPCH', title: '财务汇总批次号', align: 'center'},
+        {field: 'BATCHNO', title: '财务汇总批次号', align: 'center'},
         {field: 'AAE140', title: '险种', align: 'center'},
         {field: 'AAA079', title: '拨付方式', align: 'center'},
         {field: 'DYRKFH', title: '待遇人开户行', align: 'center'},
