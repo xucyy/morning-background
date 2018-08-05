@@ -1,7 +1,7 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        query:'../../../Incomeinfo/IncomeController/query_ad68_pagedata',//加载表格
+        query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
         save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
         edit:'../../../fundApply/FundApplyController/selectBKApplyByPK '//编辑申请单
     };
@@ -39,13 +39,6 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
-                    queryParams: function (params) {
-                        var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
-                            pageSize: params.limit, // 每页显示数量
-                            pageNumber: params.offset / params.limit + 1 //当前页码
-                        };
-                        return temp;
-                    },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
                     dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
@@ -54,7 +47,7 @@ $(function(){
                     pagination: true, // 是否分页
                     singleSelect:true,
                     clickToSelect:true,
-                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                     columns: [    //表头
@@ -138,69 +131,69 @@ $(function(){
                 //保存
                 $('#btn-save').on('click',function(){
                     // 设定条件，有未填写项时不允许保存
-                    var flag=true;
-                    for(var i=0;i<$('input').length;i++){
-                        if($('input').eq(i).val()==''){
-                            flag=false;
-                        }
-                    }
-                    if(flag==false){
-                        commonJS.confirm('警告','请填写完整！');
-                    }
-                    else{
+                    // var flag=true;
+                    // for(var i=0;i<$('input').length;i++){
+                    //     if($('input').eq(i).val()==''){
+                    //         flag=false;
+                    //     }
+                    // }
+                    // if(flag==false){
+                    //     commonJS.confirm('警告','请填写完整！');
+                    // }
+                    // else{
                         //参数
-                        var jsonObj= {
-                            "year": $('#year').val(),
-                            "month": $('#month').val(),
-                            "day": $('#day').val(),
-                            "xz": $('#xz').val(),
-                            "monthend": $('#monthend').val(),
-                            "lastyearlast": $('#lastyearlast').val(),
-                            "thisyearpre": $('#thisyearpre').val(),
-                            "thisyearplus": $('#thisyearplus').val(),
-                            "monthplus": $('#monthplus').val(),
-                            "lastmonthlast": $('#lastmonthlast').val(),
-                            "thismonthapply": $('#thismonthapply').val(),
-                            "bz": $('#bz').val(),
-                            "tsbkone": $('#tsbkone').val(),
-                            "tsbktwo": $('#tsbktwo').val(),
-                            "tsbkthree": $('#tsbkthree').val(),
-                            "accountone": $('#accountone').val(),
-                            "batchnoone": $('#batchnoone').val(),
-                            "bankone": $('#bankone').val(),
-                            "moneybig": $('#moneybig').val(),
-                            "moneysmall": $('#moneysmall').val(),
-                            "accounttwo": $('#accounttwo').val(),
-                            "batchnotwo": $('#batchnotwo').val(),
-                            "banktwo": $('#banktwo').val(),
-                            "sqdwfzr": $('#sqdwfzr').val(),
-                            "sqdwshr": $('#sqdwshr').val(),
-                            "sqdwjbr": $('#sqdwjbr').val(),
-                            "czsbzg": $('#czsbzg').val(),
-                            "czsbshr": $('#czsbshr').val(),
-                            "czsbld": $('#czsbld').val(),
-                            "gkone": $('#gkone').val(),
-                            "gktwo": $('#gktwo').val(),
-                            "gkthree": $('#gkthree').val()
-                        };
-                        $.ajax({
-                            url: allUrl.save,
-                            type:"post",
-                            dataType:'json',
-                            data:{
-                                bkdJson:JSON.stringify(jsonObj)
-                            },
-                            beforeSend:function (){
-                                $('#myModal').modal('show');
-                            },
-                            success: function(result){
-                                $('#myModal,#win').modal('hide');
-                                //重新加载一次表格
-                                $('#firstTable').bootstrapTable('refresh');
-                                commonJS.confirm('消息',result.result,result.msg);
-                            }
-                        });
-                    }
+                    var jsonObj= {
+                        "year": $('#year').val(),
+                        "month": $('#month').val(),
+                        "day": $('#day').val(),
+                        "xz": $('#xz').val(),
+                        "monthend": $('#monthend').val(),
+                        "lastyearlast": $('#lastyearlast').val(),
+                        "thisyearpre": $('#thisyearpre').val(),
+                        "thisyearplus": $('#thisyearplus').val(),
+                        "monthplus": $('#monthplus').val(),
+                        "lastmonthlast": $('#lastmonthlast').val(),
+                        "thismonthapply": $('#thismonthapply').val(),
+                        "bz": $('#bz').val(),
+                        "tsbkone": $('#tsbkone').val(),
+                        "tsbktwo": $('#tsbktwo').val(),
+                        "tsbkthree": $('#tsbkthree').val(),
+                        "accountone": $('#accountone').val(),
+                        "batchnoone": $('#batchnoone').val(),
+                        "bankone": $('#bankone').val(),
+                        "moneybig": $('#moneybig').val(),
+                        "moneysmall": $('#moneysmall').val(),
+                        "accounttwo": $('#accounttwo').val(),
+                        "batchnotwo": $('#batchnotwo').val(),
+                        "banktwo": $('#banktwo').val(),
+                        "sqdwfzr": $('#sqdwfzr').val(),
+                        "sqdwshr": $('#sqdwshr').val(),
+                        "sqdwjbr": $('#sqdwjbr').val(),
+                        "czsbzg": $('#czsbzg').val(),
+                        "czsbshr": $('#czsbshr').val(),
+                        "czsbld": $('#czsbld').val(),
+                        "gkone": $('#gkone').val(),
+                        "gktwo": $('#gktwo').val(),
+                        "gkthree": $('#gkthree').val()
+                    };
+                    $.ajax({
+                        url: allUrl.save,
+                        type:"post",
+                        dataType:'json',
+                        data:{
+                            bkdJson:JSON.stringify(jsonObj)
+                        },
+                        beforeSend:function (){
+                            $('#myModal').modal('show');
+                        },
+                        success: function(result){
+                            $('#myModal,#win').modal('hide');
+                            //重新加载一次表格
+                            $('#firstTable').bootstrapTable('refresh');
+                            commonJS.confirm('消息',result.result,result.msg);
+                        }
+                    });
+                    // }
                 });
 
 				//查询
