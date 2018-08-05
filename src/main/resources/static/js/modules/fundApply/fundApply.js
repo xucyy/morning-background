@@ -67,21 +67,23 @@ $(function(){
             if($('#firstTable').bootstrapTable('getSelections')!=0){
                 $('#firstTable').bootstrapTable('uncheckAll');
             }
-            $.ajax({
-                url: allUrl.del,
-                type:"post",
-                dataType:'json',
-                data:{
-                    bkdId:row.BKD_ID
-                },
-                beforeSend:function (){
-                    $('#myModal').modal('show');
-                },
-                success: function(result){
-                    $('#myModal').modal('hide');
-                    $('#firstTable').bootstrapTable('refresh');
-                    commonJS.confirm('提示',result.result,result.msg);
-                }
+            commonJS.confirm('提示','确认删除？','',function(){
+                $.ajax({
+                    url: allUrl.del,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('提示',result.result,result.msg);
+                    }
+                });
             });
         }
     };
@@ -143,7 +145,7 @@ $(function(){
                     $("#myModalLabel").html('新增拨款申请单');//改变标题
                     $('#win').modal('show');
                     for(var i=0;i<$('input').length;i++){
-                        $('input').eq(i).val('');//新增表格置空
+                        $('#win input').eq(i).val('');//新增表格置空
                     }
                     $('#btn-agree,#btn-disagree').addClass('hide');
                     $('#btn-save').removeClass('hide');

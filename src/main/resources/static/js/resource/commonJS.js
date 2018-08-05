@@ -242,7 +242,7 @@ var commonJS={
         }).val(val);
     },
 
-    confirm:function(title,back,error){//封装提示函数
+    confirm:function(title,back,error,okAction){//封装提示函数
         $.confirm({
             title: title,
             content: back?back:error,
@@ -250,8 +250,7 @@ var commonJS={
                 ok: {
                     text: '确认',
                     btnClass: 'btn-primary',
-                    action: function() {
-                    }
+                    action: okAction
                 },
                 cancel: {
                     text: '取消',
