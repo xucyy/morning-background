@@ -1,9 +1,8 @@
 $(function(){
 
-    var allUrlInCome={//后台交互URL
-        pullDown:'../../../queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
+    var allUrl={//后台交互URL
         query:'../../../Incomeinfo/IncomeController/query_ad68_pagedata',//加载表格
-        querySon:'../../../Incomeinfo/IncomeController/query_ad68_pagedata_item'//加载子表
+        save:'../../../fundApply/FundApplyController/insert_FmBkApply'//保存申请单
     };
 
     //单元格编辑事件
@@ -37,23 +36,25 @@ $(function(){
                     pageNumber: 1, //初始化加载第一页
                     pageSize: 10,
                     pagination: true, // 是否分页
+                    singleSelect:true,
+                    clickToSelect:true,
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                     columns: [    //表头
-                        //{field: 'ck', checkbox: true},//checkbox列
+                        {field: 'ck', checkbox: true},//checkbox列
                         {
                             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
                                 return index + 1;
                             }
                         },
-                        {field: 'AAE003', title: '险种', align: 'center'},
-                        {field: 'BIE001', title: '申请时间', align: 'center'},
-                        {field: 'AAE140', title: '申请单位账户名称', align: 'center'},
-                        {field: 'AAA116', title: '申请单位银行账号', align: 'center'},
-                        {field: 'AAA028', title: '申请单位开户行', align: 'center'},
+                        {field: 'XZ', title: '险种', align: 'center'},
+                        {field: 'SQSJ', title: '申请时间', align: 'center'},
+                        {field: 'ACCOUNTONE', title: '申请单位账户名称', align: 'center'},
+                        {field: 'BATCHNOONE', title: '申请单位银行账号', align: 'center'},
+                        {field: 'BANKONE', title: '申请单位开户行', align: 'center'},
                         {
-                            field: 'AAE020', title: '本月申请金额（万元）', align: 'right', halign: 'center',
+                            field: 'THISMONTHAPPLY', title: '本月申请金额（万元）', align: 'right', halign: 'center',
                             formatter: function (value) {
                                 var num=parseFloat(value);
                                 return commonJS.thousandPoint(num.toFixed(2));
@@ -120,7 +121,70 @@ $(function(){
 
                 //保存
                 $('#btn-save').on('click',function(){
-
+                    // 设定条件，有未填写项时不允许保存
+                    var flag=true;
+                    for(var i=0;i<$('input').length;i++){
+                        if($('input').eq(i).val()==''){
+                            flag=false;
+                        }
+                    }
+                    if(flag==false){
+                        commonJS.confirm('警告','请填写完整！');
+                    }
+                    else{
+                        //参数
+                        var jsonObj= {
+                            "year": $('#year').val(),
+                            "month": $('#month').val(),
+                            "day": $('#day').val(),
+                            "xz": $('#xz').val(),
+                            "monthEnd": $('#monthend').val(),
+                            "lastYearLast": $('#lastyearlast').val(),
+                            "thisYearPre": $('#thisyearpre').val(),
+                            "thisYearPlus": $('#thisyearplus').val(),
+                            "monthPlus": $('#monthplus').val(),
+                            "lastMonthLast": $('#lastmonthlast').val(),
+                            "thisMonthApply": $('#thismonthapply').val(),
+                            "bz": $('#bz').val(),
+                            "tsbkOne": $('#tsbkone').val(),
+                            "tsbkTwo": $('#tsbktwo').val(),
+                            "tsbkThree": $('#tsbkthree').val(),
+                            "accountOne": $('#accountone').val(),
+                            "batchNoOne": $('#batchnoone').val(),
+                            "bankOne": $('#bankone').val(),
+                            "moneyBig": $('#moneybig').val(),
+                            "moneySmall": $('#moneysmall').val(),
+                            "accountTwo": $('#accounttwo').val(),
+                            "batchNoTwo": $('#batchnotwo').val(),
+                            "bankTwo": $('#banktwo').val(),
+                            "sqdwFZR": $('#sqdwfzr').val(),
+                            "sqdwSHR": $('#sqdwshr').val(),
+                            "sqdwJBR": $('#sqdwjbr').val(),
+                            "czsbZG": $('#czsbzg').val(),
+                            "czsbSHR": $('#czsbshr').val(),
+                            "czsbLD": $('#czsbld').val(),
+                            "gkOne": $('#gkone').val(),
+                            "gkTwo": $('#gktwo').val(),
+                            "gkThree": $('#gkthree').val()
+                        };
+                        $.ajax({
+                            url: allUrl.save,
+                            type:"post",
+                            dataType:'json',
+                            data:{
+                                bkdJson:JSON.stringify(jsonObj)
+                            },
+                            beforeSend:function (){
+                                $('#myModal').modal('show');
+                            },
+                            success: function(result){
+                                $('#myModal,#win').modal('hide');
+                                //重新加载一次表格
+                                $('#firstTable').bootstrapTable('refresh');
+                                commonJS.confirm('消息',result.result,result.msg);
+                            }
+                        });
+                    }
                 });
 
 				//查询
@@ -135,7 +199,7 @@ $(function(){
                 }
                 this.getComponents();
                 //打开页面时先加载第一个表格
-                this.getTab('firstTable',allUrlInCome.query);
+                this.getTab('firstTable',allUrl.query);
                 this.onEventListener();
             }
         }

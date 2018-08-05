@@ -75,15 +75,15 @@
                             </div>
                             <div class="pull-right">
                                 <b>申请时间：</b>
-                                <input class="editInput"><b>年</b>
-                                <input class="editInput"><b>月</b>
-                                <input class="editInput"><b>日</b>
+                                <input class="editInput" id="year"><b>年</b>
+                                <input class="editInput" id="month"><b>月</b>
+                                <input class="editInput" id="day"><b>日</b>
                             </div>
                         </div>
                         <div class="editTipCont">
                             <div class="pull-left">
                                 <b>险种：</b>
-                                <input class="editInput" type="text">
+                                <input class="editInputL" type="text" id="xz">
                             </div>
                             <div class="pull-right">
                                 <b>单位：万元</b>
@@ -97,56 +97,56 @@
                                 <td>上年结余资金</td>
                                 <td>本年预算支出</td>
                                 <td>本年累计拨款</td>
-                                <td>1-6月累计用款金额</td>
+                                <td>1-<input type="text" class="tableInputSS" id="monthend">月累计用款金额</td>
                                 <td>上月末账面结余资金</td>
                                 <td>本月申请拨款金额</td>
                                 <td>备注</td>
                             </tr>
                             <tr class="text-center">
-                                <td><input type="text" class="tableInput"> </td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput" id="lastyearlast"> </td>
+                                <td><input type="text" class="tableInput" id="thisyearpre"></td>
+                                <td><input type="text" class="tableInput" id="thisyearplus"></td>
+                                <td><input type="text" class="tableInput" id="monthplus"></td>
+                                <td><input type="text" class="tableInput" id="lastmonthlast"></td>
+                                <td><input type="text" class="tableInput" id="thismonthapply"></td>
+                                <td><input type="text" class="tableInput" id="bz"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="4">特殊情况拨款</td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
-                                <td><input type="text" class="tableInput"></td>
+                                <td><input type="text" class="tableInput" id="tsbkone"></td>
+                                <td><input type="text" class="tableInput" id="tsbktwo"></td>
+                                <td><input type="text" class="tableInput" id="tsbkthree"></td>
                             </tr>
                             <tr class="text-center">
                                 <td rowspan="3">申请单位单位银行账户信息</td>
                                 <td colspan="2">账户名称</td>
-                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                                <td colspan="4"><input type="text" class="tableInputL" id="accountone"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="2">银行账号</td>
-                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                                <td colspan="4"><input type="text" class="tableInputL" id="batchnoone"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="2">开户银行</td>
-                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                                <td colspan="4"><input type="text" class="tableInputL" id="bankone"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="3">财政业务（处）科室审核金额</td>
-                                <td colspan="3">大写：<input type="text" class="tableInputM"></td>
-                                <td>小写：<input type="text" class="tableInput"></td>
+                                <td colspan="3">大写：<input type="text" class="tableInputM" id="moneybig"></td>
+                                <td>小写：<input type="text" class="tableInput" id="moneysmall"></td>
                             </tr>
                             <tr class="text-center">
                                 <td rowspan="3">财政专户银行账户信息</td>
                                 <td colspan="2">账户名称</td>
-                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                                <td colspan="4"><input type="text" class="tableInputL" id="accounttwo"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="2">银行账号</td>
-                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                                <td colspan="4"><input type="text" class="tableInputL" id="batchnotwo"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="2">开户银行</td>
-                                <td colspan="4"><input type="text" class="tableInputL"></td>
+                                <td colspan="4"><input type="text" class="tableInputL" id="banktwo"></td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="3">申请单位审批</td>
@@ -154,19 +154,19 @@
                                 <td colspan="2">财政国库科审批</td>
                             </tr>
                             <tr class="text-center">
-                                <td colspan="3">负责人签字：<input type="text" class="tableInput"></td>
-                                <td colspan="2">业务主管：<input type="text" class="tableInput"></td>
-                                <td colspan="2">财政专户会计：<input type="text" class="tableInput"></td>
+                                <td colspan="3">负责人签字：<input type="text" class="tableInput" id="sqdwfzr"></td>
+                                <td colspan="2">业务主管：<input type="text" class="tableInput" id="czsbzg"></td>
+                                <td colspan="2">财政专户会计：<input type="text" class="tableInput" id="gkone"></td>
                             </tr>
                             <tr class="text-center">
-                                <td colspan="3">审核人：<input type="text" class="tableInput"></td>
-                                <td colspan="2">审核人：<input type="text" class="tableInput"></td>
-                                <td colspan="2"></td>
+                                <td colspan="3">审核人：<input type="text" class="tableInput" id="sqdwshr"></td>
+                                <td colspan="2">审核人：<input type="text" class="tableInput" id="czsbshr"></td>
+                                <td colspan="2"><input type="text" class="tableInputS" id="gktwo"></td>
                             </tr>
                             <tr class="text-center">
-                                <td colspan="3">经办人：<input type="text" class="tableInput"></td>
-                                <td colspan="2">分管领导：<input type="text" class="tableInput"></td>
-                                <td colspan="2"></td>
+                                <td colspan="3">经办人：<input type="text" class="tableInput" id="sqdwjbr"></td>
+                                <td colspan="2">分管领导：<input type="text" class="tableInput" id="czsbld"></td>
+                                <td colspan="2"><input type="text" class="tableInputS" id="gkthree"></td>
                             </tr>
                         </table>
                     </div>
@@ -174,6 +174,13 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
+</div>
+
+<!--加载等待-->
+<div id="myModal" class="modal fade" data-keyboard="false"
+     data-backdrop="static" data-role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="loading" class="loading">发送中。。。</div>
 </div>
 
 <script th:src="@{/js/jquery.min.js}"></script>

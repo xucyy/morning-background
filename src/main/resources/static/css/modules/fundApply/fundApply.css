@@ -52,13 +52,16 @@ ul.dropdown-menu{
     margin: 0 auto;
 }
     /*调整编辑页面标题Input样式*/
-.editInput{
+.editInput,.editInputL{
     width: 70px;
     border: 0;
     border-bottom: 1px solid #0e9aef;
     outline: none;
     text-align: center;
     vertical-align: bottom;
+}
+.editInputL{
+    width:200px!important;
 }
 .editTipCont{
     width: 90%;
@@ -71,7 +74,7 @@ ul.dropdown-menu{
     margin: 0 auto;
 }
 /*短中长表格内Input*/
-.tableInput,.tableInputM,.tableInputL{
+.tableInput,.tableInputSS,.tableInputS,.tableInputM,.tableInputL{
     width: 100px;
     border: 0;
     /*border-bottom: 1px solid #0e9aef;*/
@@ -79,9 +82,36 @@ ul.dropdown-menu{
     text-align: center;
     vertical-align: bottom;
 }
+.tableInputSS{
+    width: 20px!important;
+}
+.tableInputS{
+    width: 150px!important;
+}
 .tableInputM{
-    width: 400px!important;
+    width: 300px!important;
 }
 .tableInputL{
     width: 400px!important;
+}
+
+/*加载等待*/
+.loading {
+    width: 160px;
+    height: 56px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    line-height: 56px;
+    color: #fff;
+    padding-left: 60px;
+    font-size: 15px;
+    background: #000 url(../../../img/loading2.gif) no-repeat 10px 50%;
+    opacity: 0.7;
+    z-index: 9999;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
 }
