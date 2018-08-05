@@ -4,12 +4,15 @@ $(function(){
         query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
         save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
         edit:'../../../fundApply/FundApplyController/selectBKApplyByPK ',//编辑申请单
-        del:'fundApply/FundApplyController/deleteBKApplyByPK'//删除申请单
+        del:'../../../fundApply/FundApplyController/deleteBKApplyByPK'//删除申请单
     };
 
     //单元格编辑事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {
+            if($('#firstTable').bootstrapTable('getSelections')!=0){
+                $('#firstTable').bootstrapTable('uncheckAll');
+            }
             $.ajax({
                 url: allUrl.edit,
                 type:"post",
@@ -61,6 +64,9 @@ $(function(){
             });
         },
         'click .btn-del':function (e, value, row, index) {
+            if($('#firstTable').bootstrapTable('getSelections')!=0){
+                $('#firstTable').bootstrapTable('uncheckAll');
+            }
             $.ajax({
                 url: allUrl.del,
                 type:"post",
