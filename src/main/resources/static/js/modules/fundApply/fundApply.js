@@ -2,13 +2,29 @@ $(function(){
 
     var allUrl={//后台交互URL
         query:'../../../Incomeinfo/IncomeController/query_ad68_pagedata',//加载表格
-        save:'../../../fundApply/FundApplyController/insert_FmBkApply'//保存申请单
+        save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
+        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK '//编辑申请单
     };
 
     //单元格编辑事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {
-            page.getEditTab('editZD');
+            $.ajax({
+                url: allUrl.edit,
+                type:"post",
+                dataType:'json',
+                data:{
+                    bkdId:row.BKD_ID
+                },
+                beforeSend:function (){
+                    $('#myModal').modal('show');
+                },
+                success: function(result){
+                    $('#myModal').modal('hide');
+                    //打开加载页面
+                    page.getEditTab('editZD');
+                }
+            });
         },
         'click .btn-del':function (e, value, row, index) {
 
@@ -138,34 +154,34 @@ $(function(){
                             "month": $('#month').val(),
                             "day": $('#day').val(),
                             "xz": $('#xz').val(),
-                            "monthEnd": $('#monthend').val(),
-                            "lastYearLast": $('#lastyearlast').val(),
-                            "thisYearPre": $('#thisyearpre').val(),
-                            "thisYearPlus": $('#thisyearplus').val(),
-                            "monthPlus": $('#monthplus').val(),
-                            "lastMonthLast": $('#lastmonthlast').val(),
-                            "thisMonthApply": $('#thismonthapply').val(),
+                            "monthend": $('#monthend').val(),
+                            "lastyearlast": $('#lastyearlast').val(),
+                            "thisyearpre": $('#thisyearpre').val(),
+                            "thisyearplus": $('#thisyearplus').val(),
+                            "monthplus": $('#monthplus').val(),
+                            "lastmonthlast": $('#lastmonthlast').val(),
+                            "thismonthapply": $('#thismonthapply').val(),
                             "bz": $('#bz').val(),
-                            "tsbkOne": $('#tsbkone').val(),
-                            "tsbkTwo": $('#tsbktwo').val(),
-                            "tsbkThree": $('#tsbkthree').val(),
-                            "accountOne": $('#accountone').val(),
-                            "batchNoOne": $('#batchnoone').val(),
-                            "bankOne": $('#bankone').val(),
-                            "moneyBig": $('#moneybig').val(),
-                            "moneySmall": $('#moneysmall').val(),
-                            "accountTwo": $('#accounttwo').val(),
-                            "batchNoTwo": $('#batchnotwo').val(),
-                            "bankTwo": $('#banktwo').val(),
-                            "sqdwFZR": $('#sqdwfzr').val(),
-                            "sqdwSHR": $('#sqdwshr').val(),
-                            "sqdwJBR": $('#sqdwjbr').val(),
-                            "czsbZG": $('#czsbzg').val(),
-                            "czsbSHR": $('#czsbshr').val(),
-                            "czsbLD": $('#czsbld').val(),
-                            "gkOne": $('#gkone').val(),
-                            "gkTwo": $('#gktwo').val(),
-                            "gkThree": $('#gkthree').val()
+                            "tsbkone": $('#tsbkone').val(),
+                            "tsbktwo": $('#tsbktwo').val(),
+                            "tsbkthree": $('#tsbkthree').val(),
+                            "accountone": $('#accountone').val(),
+                            "batchnoone": $('#batchnoone').val(),
+                            "bankone": $('#bankone').val(),
+                            "moneybig": $('#moneybig').val(),
+                            "moneysmall": $('#moneysmall').val(),
+                            "accounttwo": $('#accounttwo').val(),
+                            "batchnotwo": $('#batchnotwo').val(),
+                            "banktwo": $('#banktwo').val(),
+                            "sqdwfzr": $('#sqdwfzr').val(),
+                            "sqdwshr": $('#sqdwshr').val(),
+                            "sqdwjbr": $('#sqdwjbr').val(),
+                            "czsbzg": $('#czsbzg').val(),
+                            "czsbshr": $('#czsbshr').val(),
+                            "czsbld": $('#czsbld').val(),
+                            "gkone": $('#gkone').val(),
+                            "gktwo": $('#gktwo').val(),
+                            "gkthree": $('#gkthree').val()
                         };
                         $.ajax({
                             url: allUrl.save,
