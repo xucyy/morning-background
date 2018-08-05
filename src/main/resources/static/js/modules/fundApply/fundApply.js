@@ -3,7 +3,8 @@ $(function(){
     var allUrl={//后台交互URL
         query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
         save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
-        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK '//编辑申请单
+        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK ',//编辑申请单
+        del:'fundApply/FundApplyController/deleteBKApplyByPK'//删除申请单
     };
 
     //单元格编辑事件
@@ -60,7 +61,22 @@ $(function(){
             });
         },
         'click .btn-del':function (e, value, row, index) {
-
+            $.ajax({
+                url: allUrl.del,
+                type:"post",
+                dataType:'json',
+                data:{
+                    bkdId:row.BKD_ID
+                },
+                beforeSend:function (){
+                    $('#myModal').modal('show');
+                },
+                success: function(result){
+                    $('#myModal').modal('hide');
+                    $('#firstTable').bootstrapTable('refresh');
+                    commonJS.confirm('提示',result.result,result.msg);
+                }
+            });
         }
     };
 
@@ -214,6 +230,7 @@ $(function(){
                         "gkone": $('#gkone').val(),
                         "gktwo": $('#gktwo').val(),
                         "gkthree": $('#gkthree').val(),
+                        //进行判断，新增时不会选择数据，此时BKD_ID传空
                         "bkdId":$('#firstTable').bootstrapTable('getSelections').length!=0?$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID:''
                     };
                     $.ajax({
