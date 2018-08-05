@@ -2,17 +2,32 @@ package com.ufgov.sssfm.project.module.incomeinfo.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.ufgov.sssfm.common.utils.nx.AnalysisMsgUtil;
+import com.ufgov.sssfm.common.utils.nx.NormalUtil;
+import com.ufgov.sssfm.common.utils.nx.NxConstants;
+import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
+import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
+import com.ufgov.sssfm.common.utils.nx.bean.MsgHeaderParamBean;
 import com.ufgov.sssfm.project.module.incomeinfo.service.IncomeService;
+import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
+import com.ufgov.sssfm.project.module.queryutils.service.FmBankXmlLogService;
+import com.ufgov.sssfm.project.module.queryutils.service.FmInterfaceUtilsService;
+import com.ylzinfo.analysis.service.EsbQueryFactory;
+import com.ylzinfo.analysis.service.QueryListService;
+import com.ylzinfo.esb.bas.EsbException;
+import com.ylzinfo.esb.bas.EsbResponse;
+import com.ylzinfo.esb.client.XMLRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 @RestController
@@ -20,8 +35,14 @@ import java.util.Map;
 @RequestMapping("Incomeinfo/IncomeController")
 public class IncomeController {
 
-    @Resource
+    @Autowired
     private IncomeService incomeService;
+
+    @Autowired
+    private FmInterfaceUtilsService fmInterfaceUtilsService;
+
+    @Autowired
+    private FmBankXmlLogService fmBankXmlLogService;
 
      /** @Author xucy
       * @Description 征缴页面查询表格数据
@@ -73,5 +94,4 @@ public class IncomeController {
         jsonObject.put("result",query_list);
         return jsonObject.toString();
     }
-
 }

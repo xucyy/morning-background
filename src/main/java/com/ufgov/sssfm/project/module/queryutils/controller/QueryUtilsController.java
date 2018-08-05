@@ -48,6 +48,7 @@ public class QueryUtilsController {
         return jsonObject.toString();
     }
 
+
     @PostMapping("insertFmBankXmlLog")
     @ApiOperation(value = "插入日志表",notes = "插入日志表")
     public String  insertFmBankXmlLog(){

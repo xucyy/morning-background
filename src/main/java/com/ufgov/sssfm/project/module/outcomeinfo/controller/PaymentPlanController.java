@@ -1,5 +1,6 @@
 package com.ufgov.sssfm.project.module.outcomeinfo.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ufgov.sssfm.project.module.outcomeinfo.service.PaymentPlanService;
 import io.swagger.annotations.Api;
@@ -52,7 +53,9 @@ public class PaymentPlanController {
 
         //修改主表信息的数据的银行信息
         @PostMapping("/update_Gra_BankInfo")
-        public String update_Gra_BankInfo(List AAZ031List,String bankCode,String bankAccount){
+        public String update_Gra_BankInfo(String AAZ031Json,String bankCode,String bankAccount){
+
+            List AAZ031List = JSONArray.parseArray(AAZ031Json);
             JSONObject jsonObject=new JSONObject();
             try{
                 for(int i=0;i<AAZ031List.size();i++){
@@ -73,7 +76,8 @@ public class PaymentPlanController {
 
         //生成支付计划
         @PostMapping("/update_createPaymentPlan")
-        public String update_createPaymentPlan(List AAZ031List){
+        public String update_createPaymentPlan(String AAZ031Json){
+            List AAZ031List = JSONArray.parseArray(AAZ031Json);
             JSONObject jsonObject=new JSONObject();
             try{
                 Map updateMap=new HashMap();

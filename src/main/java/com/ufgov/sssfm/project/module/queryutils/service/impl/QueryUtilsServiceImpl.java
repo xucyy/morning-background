@@ -19,6 +19,7 @@ public class QueryUtilsServiceImpl implements QueryUtilsService {
     @Autowired
     private QueryUtilsMapper queryUtilsMapper;
     public List query_combobox(Map map){
+
         return queryUtilsMapper.query_combobox(map);
     }
 

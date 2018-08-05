@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ufgov.sssfm.project.module.fundApply.mapper.FunApplyMapper">
+    <resultMap id="FunApplyResultMap" type="com.ufgov.sssfm.project.module.fundApply.entity.FmBkApply">
+        <id column="BKD_ID" jdbcType="VARCHAR" property="bkdId" />
+        <result column="YEAR" jdbcType="VARCHAR" property="year" />
+        <result column="MONTH" jdbcType="VARCHAR" property="month" />
+        <result column="DAY" jdbcType="VARCHAR" property="day" />
+        <result column="XZ" jdbcType="VARCHAR" property="xz" />
+        <result column="MONTHEND" jdbcType="VARCHAR" property="monthend" />
+        <result column="LASTYEARLAST" jdbcType="VARCHAR" property="lastyearlast" />
+        <result column="THISYEARPRE" jdbcType="VARCHAR" property="thisyearpre" />
+        <result column="THISYEARPLUS" jdbcType="VARCHAR" property="thisyearplus" />
+        <result column="MONTHPLUS" jdbcType="VARCHAR" property="monthplus" />
+        <result column="LASTMONTHLAST" jdbcType="VARCHAR" property="lastmonthlast" />
+        <result column="THISMONTHAPPLY" jdbcType="VARCHAR" property="thismonthapply" />
+        <result column="BZ" jdbcType="VARCHAR" property="bz" />
+        <result column="TSBKONE" jdbcType="VARCHAR" property="tsbkone" />
+        <result column="TSBKTWO" jdbcType="VARCHAR" property="tsbktwo" />
+        <result column="TSBKTHREE" jdbcType="VARCHAR" property="tsbkthree" />
+        <result column="ACCOUNTONE" jdbcType="VARCHAR" property="accountone" />
+        <result column="BATCHNOONE" jdbcType="VARCHAR" property="batchnoone" />
+        <result column="BANKONE" jdbcType="VARCHAR" property="bankone" />
+        <result column="MONEYBIG" jdbcType="VARCHAR" property="moneybig" />
+        <result column="MONEYSMALL" jdbcType="VARCHAR" property="moneysmall" />
+        <result column="ACCOUNTTWO" jdbcType="VARCHAR" property="accounttwo" />
+        <result column="BATCHNOTWO" jdbcType="VARCHAR" property="batchnotwo" />
+        <result column="BANKTWO" jdbcType="VARCHAR" property="banktwo" />
+    </resultMap>
+
+    <insert id="insert_FmBkApply" parameterType="com.ufgov.sssfm.project.module.fundApply.entity.FmBkApply">
+        insert into fm_bk_apply (BKD_ID, YEAR, MONTH,
+          DAY, XZ, MONTHEND,
+          LASTYEARLAST, THISYEARPRE, THISYEARPLUS,
+          monthPlus, LASTMONTHLAST, THISMONTHAPPLY,
+          BZ, TSBKONE, TSBKTWO,
+          TSBKTHREE, ACCOUNTONE, BATCHNOONE,
+          BANKONE, MONEYBIG, MONEYSMALL,
+          ACCOUNTTWO, BATCHNOTWO, BANKTWO
+          )
+        values (#{bkdId,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR},
+          #{day,jdbcType=VARCHAR}, #{xz,jdbcType=VARCHAR}, #{monthend,jdbcType=VARCHAR},
+          #{lastyearlast,jdbcType=VARCHAR}, #{thisyearpre,jdbcType=VARCHAR}, #{thisyearplus,jdbcType=VARCHAR},
+          #{monthplus,jdbcType=VARCHAR}, #{lastmonthlast,jdbcType=VARCHAR}, #{thismonthapply,jdbcType=VARCHAR},
+          #{bz,jdbcType=VARCHAR}, #{tsbkone,jdbcType=VARCHAR}, #{tsbktwo,jdbcType=VARCHAR},
+          #{tsbkthree,jdbcType=VARCHAR}, #{accountone,jdbcType=VARCHAR}, #{batchnoone,jdbcType=VARCHAR},
+          #{bankone,jdbcType=VARCHAR}, #{moneybig,jdbcType=VARCHAR}, #{moneysmall,jdbcType=VARCHAR},
+          #{accounttwo,jdbcType=VARCHAR}, #{batchnotwo,jdbcType=VARCHAR}, #{banktwo,jdbcType=VARCHAR}
+          )
+    </insert>
+
+
+    <select id="selectBKApplyByPK" parameterType="java.lang.String" resultMap="FunApplyResultMap">
+        select *
+        from fm_bk_apply
+        where BKD_ID = #{bkdId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllBkApplyTime" parameterType="java.util.Map" resultType="java.util.Map">
+        select BKD_ID,XZ,(concat(YEAR,MONTH,DAY)) SQSJ,ACCOUNTONE,BANKONE,BANKONE,THISMONTHAPPLY FROM fm_bk_apply
+    </select>
+
+</mapper>

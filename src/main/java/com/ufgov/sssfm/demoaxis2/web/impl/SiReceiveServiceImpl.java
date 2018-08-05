@@ -4,12 +4,14 @@ import com.ufgov.sssfm.common.utils.nx.*;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
 import com.ufgov.sssfm.demoaxis2.web.SiReceiveService;
+import com.ufgov.sssfm.project.module.AsyncSendTo.service.AsyncSendToService;
 import com.ufgov.sssfm.project.module.incomeinfo.entity.Ad68Fa;
 import com.ufgov.sssfm.project.module.incomeinfo.entity.Ad68Son;
 import com.ufgov.sssfm.project.module.incomeinfo.mapper.IncomeMapper;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Fa;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07GraFa;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Son;
+import com.ufgov.sssfm.project.module.outcomeinfo.controller.OutcomeController;
 import com.ufgov.sssfm.project.module.outcomeinfo.mapper.OutcomeMapper;
 import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
 import com.ufgov.sssfm.project.module.queryutils.mapper.FmBankXmlLogMapper;
@@ -19,6 +21,7 @@ import org.apache.axiom.om.OMElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +46,9 @@ public class SiReceiveServiceImpl implements SiReceiveService {
     @Autowired
     private OutcomeMapper outcomeMapper;
 
+    @Autowired
+    private AsyncSendToService asyncSendToService;
+
     //业务平台通过webservice发送业务数据
     public String getYWDataRecieveMessage(OMElement element) {
         /**
@@ -50,6 +56,10 @@ public class SiReceiveServiceImpl implements SiReceiveService {
          *
          */
         AnalysisReceiveMsgBig analysisReceiveMsgBig=null;
+
+        //将业务传过来报文中的oss以及文件名存起来 用于自动转发财政时拼接报文
+        List<String> ossstrList=new ArrayList();
+        List<String> filePathList=new ArrayList();
         try{
             //得到请求报文中的参数
             analysisReceiveMsgBig=AnalysisMsgUtil.getRecieveMessage(element);
@@ -61,6 +71,9 @@ public class SiReceiveServiceImpl implements SiReceiveService {
             return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "解析业务方发送报文失败！");
         }
 
+        //得到业务代码bse173，根据业务代码判断是哪一种业务场景，分不同业务场景进行不同操作
+        String bse173 = analysisReceiveMsgBig.getBse173();
+
         //得到请求报文中的各个上传文件的信息
         List<AnalysisReceiveMsgSmall> listSmall=analysisReceiveMsgBig.getAnalysisReceiveMsgSmallList();
 
@@ -71,7 +84,12 @@ public class SiReceiveServiceImpl implements SiReceiveService {
             AnalysisReceiveMsgSmall analysisReceiveMsgSmall=new AnalysisReceiveMsgSmall();
             analysisReceiveMsgSmall=listSmall.get(z);
 
+            //将报文中的关于文件信息存起来
             String ossstr=analysisReceiveMsgSmall.getOssstr();
+            String filePath=analysisReceiveMsgSmall.getOssstr();
+
+            ossstrList.add(ossstr);
+            filePathList.add(filePath);
 
             //根据ossstr字符串去下载文件到本地
             Map mapFilePath= OSSFileUtil.download(ossstr,fmInterfaceUtils);
@@ -82,8 +100,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
                 return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此ossstr："+ossstr+"下载时报错:::"+mapFilePath.get("errorMsg"));
             }
-            //得到业务代码bse173，根据业务代码判断是哪一种业务场景，分不同业务场景进行不同操作
-            String bse173 = analysisReceiveMsgBig.getBse173();
+
             if(NxConstants.AD68_WEB_SERVICE.equals(bse173)){
                 long start = System.currentTimeMillis();
                 Map mapResult = NxXmlUtil.xmlToBeanList(mapFilePath.get("path")+"", Ad68Fa.class, NxConstants.AD68_SAX_HANDLER);
@@ -183,7 +200,10 @@ public class SiReceiveServiceImpl implements SiReceiveService {
         }
         /**
          * 3、启动线程，将业务要素自动转发财政
+         *    通过对业务类别的判断，去拼装支出或者收入报文
          */
+
+        asyncSendToService.send_outcome_intcome_to_czsb(ossstrList,filePathList,bse173);
 
 
         /**

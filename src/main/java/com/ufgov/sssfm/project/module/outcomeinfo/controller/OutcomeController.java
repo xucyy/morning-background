@@ -21,6 +21,7 @@ import com.ylzinfo.esb.client.XMLRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,9 +72,9 @@ public class OutcomeController {
         map.put("AAE140",AAE140);
         map.put("AAE008",AAE008);
         map.put("AAA079",AAA079);
-        map.put("PAYMENT_STATUS",PAYMENT_STATUS);
-
-
+        if(PAYMENT_STATUS!=null&&(PAYMENT_STATUS.length()>0)){
+            map.put("PAYMENT_STATUS",PAYMENT_STATUS);
+        }
         List query_list= outcomeService.query_jf07_pagedata(map);
         int total=outcomeService.query_jf07_pagedata_total(map);
         jsonObject.put("total",total);
@@ -134,10 +135,10 @@ public class OutcomeController {
      **/
     @PostMapping("/send_outcome_to_czsb")
     @ApiOperation(value="发送财政", notes="发送财政")
-    private String send_outcome_to_czsb(String AAZ301Json){
+    private String send_outcome_to_czsb(String AAZ031Json){
 
         JSONObject jsonObject = new JSONObject();
-        List listAAZ031 = JSONArray.parseArray(AAZ301Json);
+        List listAAZ031 = JSONArray.parseArray(AAZ031Json);
         // 1.组织数据到本地路径存储
         List<String> filePathList= collageDataToLocal(listAAZ031);
         if(filePathList.size()==0 ||filePathList==null){
