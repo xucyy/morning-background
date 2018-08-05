@@ -214,7 +214,7 @@ $(function(){
                         "gkone": $('#gkone').val(),
                         "gktwo": $('#gktwo').val(),
                         "gkthree": $('#gkthree').val(),
-                        "bkdId":$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID?$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID:''
+                        "bkdId":$('#firstTable').bootstrapTable('getSelections').length!=0?$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID:''
                     };
                     $.ajax({
                         url: allUrl.save,
