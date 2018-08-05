@@ -22,8 +22,7 @@ $(function(){
                                 "AAE140": $('#safeSelect').selectpicker('val'),//险种
                                 "AAA079":$('#bfSelect').selectpicker('val'),//拨付类型
                                 "AAE008":$('#bankSelect').selectpicker('val'),//银行编码
-                                "AAE035": $('.datetimepicker').val().replace(/-/g, ''),//拨付时间
-                                "PAYMENT_STATUS":''//空参数
+                                "AAE035": $('.datetimepicker').val().replace(/-/g, '')//拨付时间
                         };
                     },
                     method: 'post',

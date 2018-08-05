@@ -73,7 +73,8 @@ $(function(){
                             pageNumber: params.offset / params.limit + 1,//当前页码
                             "AAE140": $('#safeSelect').selectpicker('val'),//险种
                             "AAA079":$('#bfSelect').selectpicker('val'),//拨付方式
-                            "AAE035": $('.datetimepicker').val().replace(/-/g, '')//拨付时间
+                            "AAE035": $('.datetimepicker').val().replace(/-/g, ''),//拨付时间
+                            "PAYMENT_STATUS":status
                         };
                     },
                     method: 'post',
