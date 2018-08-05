@@ -45,6 +45,9 @@ ul.dropdown-menu{
     max-height: 200px!important;
 }
 /*编辑页面*/
+#win{
+    overflow-y: auto;
+}
 .editPage{
     width: 100%;
 }

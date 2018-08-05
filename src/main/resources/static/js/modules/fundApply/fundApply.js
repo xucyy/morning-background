@@ -23,6 +23,39 @@ $(function(){
                     $('#myModal').modal('hide');
                     //打开加载页面
                     page.getEditTab('editZD');
+                    // 插数
+                    $('#year').val(result.year);
+                    $('#month').val(result.month);
+                    $('#day').val(result.day);
+                    $('#xz').val(result.xz);
+                    $('#monthend').val(result.monthend);
+                    $('#lastyearlast').val(result.lastyearlast);
+                    $('#thisyearpre').val(result.thisyearpre);
+                    $('#thisyearplus').val(result.thisyearplus);
+                    $('#monthplus').val(result.monthplus);
+                    $('#lastmonthlast').val(result.lastmonthlast);
+                    $('#thismonthapply').val(result.thismonthapply);
+                    $('#bz').val(result.bz);
+                    $('#tsbkone').val(result.tsbkone);
+                    $('#tsbktwo').val(result.tsbktwo);
+                    $('#tsbkthree').val(result.tsbkthree);
+                    $('#accountone').val(result.accountone);
+                    $('#batchnoone').val(result.batchnoone);
+                    $('#bankone').val(result.bankone);
+                    $('#moneybig').val(result.moneybig);
+                    $('#moneysmall').val(result.moneysmall);
+                    $('#accounttwo').val(result.accounttwo);
+                    $('#batchnotwo').val(result.batchnotwo);
+                    $('#banktwo').val(result.banktwo);
+                    $('#sqdwfzr').val(result.sqdwfzr);
+                    $('#sqdwshr').val(result.sqdwshr);
+                    $('#sqdwjbr').val(result.sqdwjbr);
+                    $('#czsbld').val(result.czsbld);
+                    $('#czsbshr').val(result.czsbshr);
+                    $('#czsbzg').val(result.czsbzg);
+                    $('#gkone').val(result.gkone);
+                    $('#gktwo').val(result.gktwo);
+                    $('#gkthree').val(result.gkthree);
                 }
             });
         },
@@ -39,6 +72,9 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
+                    queryParams: function (params) {
+
+                    },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
                     dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
@@ -47,7 +83,7 @@ $(function(){
                     pagination: true, // 是否分页
                     singleSelect:true,
                     clickToSelect:true,
-                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                     columns: [    //表头
@@ -84,6 +120,9 @@ $(function(){
                 if(edit=='addZD'){//制单新增
                     $("#myModalLabel").html('新增拨款申请单');//改变标题
                     $('#win').modal('show');
+                    for(var i=0;i<$('input').length;i++){
+                        $('input').eq(i).val('');//新增表格置空
+                    }
                     $('#btn-agree,#btn-disagree').addClass('hide');
                     $('#btn-save').removeClass('hide');
                 }
@@ -174,7 +213,8 @@ $(function(){
                         "czsbld": $('#czsbld').val(),
                         "gkone": $('#gkone').val(),
                         "gktwo": $('#gktwo').val(),
-                        "gkthree": $('#gkthree').val()
+                        "gkthree": $('#gkthree').val(),
+                        "bkdId":$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID?$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID:''
                     };
                     $.ajax({
                         url: allUrl.save,
