@@ -48,6 +48,9 @@ ul.dropdown-menu{
 #win{
     overflow-y: auto;
 }
+#win input{
+    font-weight: bold;
+}
 .editPage{
     width: 100%;
 }

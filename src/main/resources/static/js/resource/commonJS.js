@@ -258,5 +258,44 @@ var commonJS={
                 }
             }
         });
+    },
+
+    //深度克隆
+    deepClone:function(origin, target){
+        var target = target ||{},
+
+            toStr = Object.prototype.toString,
+
+            arrArray = '[object Array]';
+
+        for(var prop in origin){
+
+            if(origin.hasOwnProperty(prop)){
+
+                if(typeof(origin[prop]) == 'object'){
+
+                    if(toStr.call(origin[prop]) == arrArray){
+
+                        target[prop] = [];
+
+                    }else{
+
+                        target[prop] ={}
+
+                    }
+
+                    arguments.callee(origin[prop], target[prop])
+
+                }else{
+
+                    target[prop] = origin[prop]
+
+                }
+
+            }
+
+        }
+
+        return target;
     }
 };

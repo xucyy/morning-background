@@ -12,6 +12,7 @@ $(function(){
         'click .btn-edit': function (e, value, row, index) {
             //编辑前将选中事件清空
             $('#firstTable').bootstrapTable('uncheckAll');
+            page.getEditTab('editZD');
             $.ajax({
                 url: allUrl.edit,
                 type:"post",
@@ -25,7 +26,7 @@ $(function(){
                 success: function(result){
                     $('#myModal').modal('hide');
                     //打开加载页面
-                    page.getEditTab('editZD');
+
                     // 插数
                     $('#year').val(result.year);
                     $('#month').val(result.month);
@@ -103,7 +104,6 @@ $(function(){
                     pageNumber: 1, //初始化加载第一页
                     pageSize: 10,
                     pagination: true, // 是否分页
-                    singleSelect:true,
                     clickToSelect:true,
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
@@ -149,24 +149,34 @@ $(function(){
                     }
                     $('#btn-agree,#btn-disagree').addClass('hide');
                     $('#btn-save').removeClass('hide');
+                    $('#win input').attr('readonly',false);//签章可编辑
                 }
                 else if(edit=='editZD'){//制单编辑
                     $('#win').modal('show');
                     $("#myModalLabel").html('编辑拨款申请单');//改变标题
                     $('#btn-agree,#btn-disagree').addClass('hide');
                     $('#btn-save').removeClass('hide');
+                    $('#win input').attr('readonly',false);//签章可编辑
                 }
                 else if(edit=='SH'){//审核
                     $('#win').modal('show');
                     $("#myModalLabel").html('拨款申请单审核');//改变标题
                     $('#btn-agree,#btn-disagree').removeClass('hide');
                     $('#btn-save').addClass('hide');//隐藏保存按钮
+                    $('#win input').attr('readonly','readonly');//签章只读
                 }
                 else if(edit=='SP'){//审批
                     $('#win').modal('show');
                     $("#myModalLabel").html('拨款申请单审批');//改变标题
                     $('#btn-agree,#btn-disagree').removeClass('hide');
                     $('#btn-save').addClass('hide');//隐藏保存按钮
+                    $('#win input').attr('readonly','readonly');//签章只读
+                }
+                else if(edit='editPDF'){//生成PDF
+                    $('#win').modal('show');
+                    $("#myModalLabel").html('拨款申请单盖章');//改变标题
+                    $('#btn-agree,#btn-disagree,#btn-save').addClass('hide');
+                    $('#win input').attr('readonly',false);//签章可编辑
                 }
             },
 
@@ -265,6 +275,127 @@ $(function(){
                 $('#btn-query').on('click', function () {
                     $('#firstTable').bootstrapTable('refresh');
                 });
+
+                //签章
+                $('#btn-sign').on('click',function () {
+                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择数据！');
+                    }
+                    else if($('#firstTable').bootstrapTable('getSelections').length>1){
+                        commonJS.confirm('警告','只能选择一条数据！');
+                    }
+                    else{
+                        page.getEditTab('editPDF');
+                        $.ajax({
+                            url: allUrl.edit,
+                            type:"post",
+                            dataType:'json',
+                            data:{
+                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID
+                            },
+                            beforeSend:function (){
+                                $('#myModal').modal('show');
+                            },
+                            success: function(result){
+                                $('#myModal').modal('hide');
+                                // 插数
+                                $('#year').val(result.year);
+                                $('#month').val(result.month);
+                                $('#day').val(result.day);
+                                $('#xz').val(result.xz);
+                                $('#monthend').val(result.monthend);
+                                $('#lastyearlast').val(result.lastyearlast);
+                                $('#thisyearpre').val(result.thisyearpre);
+                                $('#thisyearplus').val(result.thisyearplus);
+                                $('#monthplus').val(result.monthplus);
+                                $('#lastmonthlast').val(result.lastmonthlast);
+                                $('#thismonthapply').val(result.thismonthapply);
+                                $('#bz').val(result.bz);
+                                $('#tsbkone').val(result.tsbkone);
+                                $('#tsbktwo').val(result.tsbktwo);
+                                $('#tsbkthree').val(result.tsbkthree);
+                                $('#accountone').val(result.accountone);
+                                $('#batchnoone').val(result.batchnoone);
+                                $('#bankone').val(result.bankone);
+                                $('#moneybig').val(result.moneybig);
+                                $('#moneysmall').val(result.moneysmall);
+                                $('#accounttwo').val(result.accounttwo);
+                                $('#batchnotwo').val(result.batchnotwo);
+                                $('#banktwo').val(result.banktwo);
+                                $('#sqdwfzr').val(result.sqdwfzr);
+                                $('#sqdwshr').val(result.sqdwshr);
+                                $('#sqdwjbr').val(result.sqdwjbr);
+                                $('#czsbld').val(result.czsbld);
+                                $('#czsbshr').val(result.czsbshr);
+                                $('#czsbzg').val(result.czsbzg);
+                                $('#gkone').val(result.gkone);
+                                $('#gktwo').val(result.gktwo);
+                                $('#gkthree').val(result.gkthree);
+                                $('#win input').attr('readonly','readonly');//签章只读
+                            }
+                        });
+                    }
+                });
+
+                //生成pdf
+                $('#btn-pdf').on('click',function () {
+                    var printPdf=$('#win .modal-body');
+                    var height = printPdf.height();
+                    //克隆节点，默认为false，不复制方法属性，为true是全部复制。
+                    var cloneDom =printPdf.clone(true);
+                    //设置克隆节点的css属性，因为之前的层级为0，我们只需要比被克隆的节点层级低即可。
+                    cloneDom.css({
+                        "background-color": "white",
+                        "position": "absolute",
+                        "top": "0px",
+                        "z-index": "-1",
+                        "height": height
+                    });
+                    //将克隆节点动态追加到body后面。
+                    $("body").append(cloneDom);
+                    //插件生成base64img图片。
+                    html2canvas(cloneDom, {
+                        //Whether to allow cross-origin images to taint the canvas
+                        allowTaint: true,
+                        //Whether to test each image if it taints the canvas before drawing them
+                        taintTest: false,
+                        onrendered: function(canvas) {
+                            var contentWidth = canvas.width;
+                            var contentHeight = canvas.height;
+                            //一页pdf显示html页面生成的canvas高度;
+                            var pageHeight = contentWidth / 592.28 * 841.89;
+                            //未生成pdf的html页面高度
+                            var leftHeight = contentHeight;
+                            //页面偏移
+                            var position = 0;
+                            //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                            var imgWidth = 595.28;
+                            var imgHeight = 592.28 / contentWidth * contentHeight;
+                            var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                            //注①
+                            var pdf = new jsPDF('', 'pt', 'a4');
+                            //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                            //当内容未超过pdf一页显示的范围，无需分页
+                            if(leftHeight < pageHeight) {
+                                pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth,imgHeight);
+                            } else {
+                                while(leftHeight > 0) {
+                                    //arg3-->距离左边距;arg4-->距离上边距;arg5-->宽度;arg6-->高度
+                                    pdf.addImage(pageData, 'JPEG', 0, position,imgWidth, imgHeight);
+                                    leftHeight -= pageHeight;
+                                    position -= 841.89;
+                                    //避免添加空白页
+                                    if(leftHeight > 0) {
+                                        pdf.addPage();
+                                    }
+                                }
+                            }
+                            pdf.save('拨款申请单.pdf');
+                            //移除浅度克隆多出来的节点
+                            $('.modal-body')[1].remove();
+                        }
+                    });
+                })
             },
 
             init: function () {
