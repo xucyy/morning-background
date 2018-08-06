@@ -10,9 +10,8 @@ $(function(){
     //单元格编辑事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {
-            if($('#firstTable').bootstrapTable('getSelections')!=0){
-                $('#firstTable').bootstrapTable('uncheckAll');
-            }
+            //编辑前将选中事件清空
+            $('#firstTable').bootstrapTable('uncheckAll');
             $.ajax({
                 url: allUrl.edit,
                 type:"post",
@@ -64,9 +63,8 @@ $(function(){
             });
         },
         'click .btn-del':function (e, value, row, index) {
-            if($('#firstTable').bootstrapTable('getSelections')!=0){
-                $('#firstTable').bootstrapTable('uncheckAll');
-            }
+            //删除前将选中事件清空
+            $('#firstTable').bootstrapTable('uncheckAll');
             commonJS.confirm('提示','确认删除？','',function(){
                 $.ajax({
                     url: allUrl.del,
@@ -142,8 +140,10 @@ $(function(){
             //可编辑表格
             getEditTab:function(edit){
                 if(edit=='addZD'){//制单新增
-                    $("#myModalLabel").html('新增拨款申请单');//改变标题
+                    //新增时取消所有勾选项
+                    $('#firstTable').bootstrapTable('uncheckAll');
                     $('#win').modal('show');
+                    $("#myModalLabel").html('新增拨款申请单');//改变标题
                     for(var i=0;i<$('input').length;i++){
                         $('#win input').eq(i).val('');//新增表格置空
                     }
@@ -151,22 +151,22 @@ $(function(){
                     $('#btn-save').removeClass('hide');
                 }
                 else if(edit=='editZD'){//制单编辑
-                    $("#myModalLabel").html('编辑拨款申请单');//改变标题
                     $('#win').modal('show');
+                    $("#myModalLabel").html('编辑拨款申请单');//改变标题
                     $('#btn-agree,#btn-disagree').addClass('hide');
                     $('#btn-save').removeClass('hide');
                 }
                 else if(edit=='SH'){//审核
+                    $('#win').modal('show');
                     $("#myModalLabel").html('拨款申请单审核');//改变标题
                     $('#btn-agree,#btn-disagree').removeClass('hide');
                     $('#btn-save').addClass('hide');//隐藏保存按钮
-                    $('#win').modal('show');
                 }
                 else if(edit=='SP'){//审批
+                    $('#win').modal('show');
                     $("#myModalLabel").html('拨款申请单审批');//改变标题
                     $('#btn-agree,#btn-disagree').removeClass('hide');
                     $('#btn-save').addClass('hide');//隐藏保存按钮
-                    $('#win').modal('show');
                 }
             },
 
