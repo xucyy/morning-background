@@ -18,9 +18,6 @@
     clear: both;
     margin-top: 20px;
 }
-#myTabContent{
-    padding-top: 15px;
-}
 .glyphicon-time{
     left: -25px;
     cursor: pointer;
@@ -50,7 +47,7 @@
 .editTitleCont{
     margin: 0 auto;
 }
-    /*调整编辑页面标题Input样式*/
+/*调整编辑页面标题Input样式*/
 .editInput,.editInputL{
     width: 70px;
     border: 0;
@@ -67,7 +64,7 @@
     margin:20px auto;
     overflow: hidden;
 }
-    /*编辑页面内的表格区域样式*/
+/*编辑页面内的表格区域样式*/
 .editTable{
     width: 90%;
     margin: 0 auto;

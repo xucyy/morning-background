@@ -3,17 +3,96 @@ $(function(){
     var allUrl={//后台交互URL
         query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
         save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
-        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK ',//编辑申请单
+        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
         del:'../../../fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
-        sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal'//向后台发送PDF编码
+        sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
+        sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb'//发财政地址
     };
 
-    //单元格编辑事件
+    //单元格按钮事件
     window.operateEvents = {
-        'click .btn-edit': function (e, value, row, index) {
+        'click .btn-edit': function (e, value, row, index) {//编辑
             //编辑前将选中事件清空
             $('#firstTable').bootstrapTable('uncheckAll');
-            page.getEditTab('editZD');
+            if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可再次编辑
+                commonJS.confirm('警告','已审核不可编辑！')
+            }
+            else{
+                page.getEditTab('editZD');
+                $.ajax({
+                    url: allUrl.edit,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        // 插数
+                        $('#year').val(result.year);
+                        $('#month').val(result.month);
+                        $('#day').val(result.day);
+                        $('#xz').val(result.xz);
+                        $('#monthend').val(result.monthend);
+                        $('#lastyearlast').val(result.lastyearlast);
+                        $('#thisyearpre').val(result.thisyearpre);
+                        $('#thisyearplus').val(result.thisyearplus);
+                        $('#monthplus').val(result.monthplus);
+                        $('#lastmonthlast').val(result.lastmonthlast);
+                        $('#thismonthapply').val(result.thismonthapply);
+                        $('#bz').val(result.bz);
+                        $('#tsbkone').val(result.tsbkone);
+                        $('#tsbktwo').val(result.tsbktwo);
+                        $('#tsbkthree').val(result.tsbkthree);
+                        $('#accountone').val(result.accountone);
+                        $('#batchnoone').val(result.batchnoone);
+                        $('#bankone').val(result.bankone);
+                        $('#moneybig').val(result.moneybig);
+                        $('#moneysmall').val(result.moneysmall);
+                        $('#accounttwo').val(result.accounttwo);
+                        $('#batchnotwo').val(result.batchnotwo);
+                        $('#banktwo').val(result.banktwo);
+                        $('#sqdwfzr').val(result.sqdwfzr);
+                        $('#sqdwshr').val(result.sqdwshr);
+                        $('#sqdwjbr').val(result.sqdwjbr);
+                        $('#czsbld').val(result.czsbld);
+                        $('#czsbshr').val(result.czsbshr);
+                        $('#czsbzg').val(result.czsbzg);
+                        $('#gkone').val(result.gkone);
+                        $('#gktwo').val(result.gktwo);
+                        $('#gkthree').val(result.gkthree);
+                    }
+                });
+            }
+        },
+        'click .btn-del':function (e, value, row, index) {//删除
+            //删除前将选中事件清空
+            $('#firstTable').bootstrapTable('uncheckAll');
+            commonJS.confirm('提示','确认删除？','',function(){
+                $.ajax({
+                    url: allUrl.del,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('提示',result.result,result.msg);
+                    }
+                });
+            });
+
+        },
+        'click .btn-see':function (e, value, row, index) {//查看
+            page.getEditTab('CK');
             $.ajax({
                 url: allUrl.edit,
                 type:"post",
@@ -63,41 +142,72 @@ $(function(){
                     $('#gkthree').val(result.gkthree);
                 }
             });
-        },
-        'click .btn-del':function (e, value, row, index) {
-            //删除前将选中事件清空
-            $('#firstTable').bootstrapTable('uncheckAll');
-            commonJS.confirm('提示','确认删除？','',function(){
-                $.ajax({
-                    url: allUrl.del,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        bkdId:row.BKD_ID
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
-                        commonJS.confirm('提示',result.result,result.msg);
-                    }
-                });
-            });
         }
     };
+
+    var colOne=[    //表头
+        {field: 'ck', checkbox: true},//checkbox列
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'XZ', title: '险种', align: 'center'},
+        {field: 'SQSJ', title: '申请时间', align: 'center'},
+        {field: 'ACCOUNTONE', title: '申请单位账户名称', align: 'center'},
+        {field: 'BATCHNOONE', title: '申请单位银行账号', align: 'center'},
+        {field: 'BANKONE', title: '申请单位开户行', align: 'center'},
+        {
+            field: 'THISMONTHAPPLY', title: '本月申请金额（万元）', align: 'right', halign: 'center',
+            formatter: function (value) {
+                var num=parseFloat(value);
+                return commonJS.thousandPoint(num.toFixed(2));
+            }
+        },
+        {field: 'PDF_ADDRES', title: '生成PDF地址', align: 'center'},
+        {field: 'SP_STATUS', title: '状态', align: 'center'},
+        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+                return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
+                    '<button class="btn btn-primary btn-del">删除</button>'
+            },
+        }
+    ];
+    var colTwo=[    //表头
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'XZ', title: '险种', align: 'center'},
+        {field: 'SQSJ', title: '申请时间', align: 'center'},
+        {field: 'ACCOUNTONE', title: '申请单位账户名称', align: 'center'},
+        {field: 'BATCHNOONE', title: '申请单位银行账号', align: 'center'},
+        {field: 'BANKONE', title: '申请单位开户行', align: 'center'},
+        {
+            field: 'THISMONTHAPPLY', title: '本月申请金额（万元）', align: 'right', halign: 'center',
+            formatter: function (value) {
+                var num=parseFloat(value);
+                return commonJS.thousandPoint(num.toFixed(2));
+            }
+        },
+        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+                return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
+            },
+        }
+    ];
 
     var page = function () {
 
         return {
             // 加载表格
-            getTab: function (id,url) {
+            getTab: function (id,url,cols,sta) {
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
-                    queryParams: function (params) {
-
+                    queryParams: {
+                        timeStart:$('#startTime').val().replace(/-/g, ''),
+                        timeEnd:$('#endTime').val().replace(/-/g, ''),
+                        send_status:sta
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -109,32 +219,7 @@ $(function(){
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                    columns: [    //表头
-                        {field: 'ck', checkbox: true},//checkbox列
-                        {
-                            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                                return index + 1;
-                            }
-                        },
-                        {field: 'XZ', title: '险种', align: 'center'},
-                        {field: 'SQSJ', title: '申请时间', align: 'center'},
-                        {field: 'ACCOUNTONE', title: '申请单位账户名称', align: 'center'},
-                        {field: 'BATCHNOONE', title: '申请单位银行账号', align: 'center'},
-                        {field: 'BANKONE', title: '申请单位开户行', align: 'center'},
-                        {
-                            field: 'THISMONTHAPPLY', title: '本月申请金额（万元）', align: 'right', halign: 'center',
-                            formatter: function (value) {
-                                var num=parseFloat(value);
-                                return commonJS.thousandPoint(num.toFixed(2));
-                            }
-                        },
-                        {field: 'AAB119', title: '状态', align: 'center'},
-                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
-                                return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-del">删除</button>'
-                            },
-                        }
-                    ]
+                    columns:cols
                 });
             },
 
@@ -147,37 +232,29 @@ $(function(){
                     for(var i=0;i<$('#win input').length;i++){
                         $('#win input').eq(i).val('');//新增表格置空
                     }
-                    $('#btn-agree,#btn-disagree,#btn-pdf').addClass('hide');
+                    $('#btn-pdf').addClass('hide');
                     $('#btn-save').removeClass('hide');
-                    $('#win input').attr('readonly',false);//签章可编辑
+                    $('#win input').attr('readonly',false);//input可编辑
                 }
                 else if(edit=='editZD'){//制单编辑
                     $('#win').modal('show');
                     $("#myModalLabel").html('编辑拨款申请单');//改变标题
-                    $('#btn-agree,#btn-disagree,#btn-pdf').addClass('hide');
+                    $('#btn-pdf').addClass('hide');
                     $('#btn-save').removeClass('hide');
                     $('#win input').attr('readonly',false);//input可编辑
                 }
-                else if(edit=='SH'){//审核
-                    $('#win').modal('show');
-                    $("#myModalLabel").html('拨款申请单审核');//改变标题
-                    $('#btn-save,#btn-pdf').addClass('hide');
-                    $('#btn-agree,#btn-disagree').removeClass('hide');
-                    $('#win input').attr('readonly','readonly');//input只读
-                }
-                else if(edit=='SP'){//审批
-                    $('#win').modal('show');
-                    $("#myModalLabel").html('拨款申请单审批');//改变标题
-                    $('#btn-save,#btn-pdf').addClass('hide');
-                    $('#btn-agree,#btn-disagree').removeClass('hide');
-                    $('#win input').attr('readonly','readonly');//input只读
-                }
-                else if(edit='QZ'){//签章
+                else if(edit=='QZ'){//签章
                     $('#win').modal('show');
                     $("#myModalLabel").html('拨款申请单盖章');//改变标题
-                    $('#btn-agree,#btn-disagree,#btn-save').addClass('hide');
+                    $('#btn-save').addClass('hide');
                     $('#btn-pdf').removeClass('hide');
-                    $('#win input').attr('readonly',false);//input可编辑
+                    $('#win input').attr('readonly','readonly');//input不可编辑
+                }
+                else if(edit='CK'){//查看
+                    $('#win').modal('show');
+                    $("#myModalLabel").html('查看已发财政拨款单');//改变标题
+                    $('#btn-save,#btn-pdf').addClass('hide');
+                    $('#win input').attr('readonly','readonly');//input不可编辑
                 }
             },
 
@@ -204,17 +281,6 @@ $(function(){
 
                 //保存
                 $('#btn-save').on('click',function(){
-                    // 设定条件，有未填写项时不允许保存
-                    // var flag=true;
-                    // for(var i=0;i<$('input').length;i++){
-                    //     if($('input').eq(i).val()==''){
-                    //         flag=false;
-                    //     }
-                    // }
-                    // if(flag==false){
-                    //     commonJS.confirm('警告','请填写完整！');
-                    // }
-                    // else{
                         //参数
                     var jsonObj= {
                         "year": $('#year').val(),
@@ -269,7 +335,6 @@ $(function(){
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
-                    // }
                 });
 
 				//查询
@@ -374,14 +439,8 @@ $(function(){
                             //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
                             var imgWidth = 595.28;
                             var imgHeight = 595.28/contentWidth * contentHeight;
-
-
                             var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-
                             var pdf = new jsPDF('', 'pt', 'a4');
-
-
                             //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
                             //当内容未超过pdf一页显示的范围，无需分页
                             if (leftHeight < pageHeight) {
@@ -403,7 +462,8 @@ $(function(){
                                 type:"post",
                                 dataType:'json',
                                 data:{
-                                    base64Pdf:fileCode
+                                    base64Pdf:fileCode,
+                                    bkdId:$("#firstTable").bootstrapTable('getSelections')[0].BKD_ID
                                 },
                                 beforeSend:function (){
                                     $('#myModal').modal('show');
@@ -412,14 +472,62 @@ $(function(){
                                     //移除浅度克隆多出来的节点
                                     $('.modal-body')[1].remove();
                                     $('#myModal,#win').modal('hide');
-                                    //重新加载一次表格
                                     $('#firstTable').bootstrapTable('refresh');
                                     commonJS.confirm('消息',result.result,result.msg);
                                 }
                             });
                         }
                     });
-                })
+                });
+
+                //发送财政
+                $('#btn-sendCZ').on('click',function () {
+                    var flag=true;//判断是否满足发财政条件
+                    var sends=[];
+                    var selections=$('#firstTable').bootstrapTable('getSelections');
+                    for(var i=0;i<selections.length;i++){
+                        sends.push(selections.BKD_ID);
+                        if(selections[i].SP_STATUS!='02'||selections[i].PDF_ADDRESS==''){
+                            flag=false;
+                        }
+                    }
+                    if(flag==false){
+                        commonJS.confirm('警告','有数据不满足发财政条件，请重新选择！')
+                    }
+                    else{
+                        $.ajax({
+                            url: allUrl.sendCZ,
+                            type:"post",
+                            dataType:'json',
+                            data:{
+                                bkdJson:JSON.stringify(sends)
+                            },
+                            beforeSend:function (){
+                                $('#myModal').modal('show');
+                            },
+                            success: function(result){
+                                $('#myModal').modal('hide');
+                                //重新加载一次表格
+                                $('#firstTable').bootstrapTable('refresh');
+                                commonJS.confirm('消息',result.result,result.msg);
+                            }
+                        });
+                    }
+                });
+
+                //页签中的表格初始化
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    // 获取已激活的标签页的名称
+                    var activeTab = $(e.target).text();
+                    if (activeTab == '未发财政') {
+                        $('#firstTable').bootstrapTable('refresh');
+                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ').prop('disabled',false);
+                    }
+                    else{
+                        $('#secondTable').bootstrapTable('refresh');
+                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ').prop('disabled',true);
+                    }
+                });
             },
 
             init: function () {
@@ -428,7 +536,8 @@ $(function(){
                 }
                 this.getComponents();
                 //打开页面时先加载第一个表格
-                this.getTab('firstTable',allUrl.query);
+                this.getTab('firstTable',allUrl.query,colOne,'00');
+                this.getTab('secondTable',allUrl.query,colTwo,'01');
                 this.onEventListener();
             }
         }

@@ -31,9 +31,6 @@
 .datetimepicker{
     border: 1px solid #BBBBBB;
 }
-.tab-content{
-    padding-top: 10px;
-}
 /*模态框*/
 #win,#winTwo{
     width:100%;
