@@ -191,7 +191,7 @@ $(function(){
                 return commonJS.thousandPoint(num.toFixed(2));
             }
         },
-        {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center',class:'txt'},
+        {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
         {field: 'SP_STATUS', title: '状态', align: 'center'},
         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
