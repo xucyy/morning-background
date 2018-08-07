@@ -525,12 +525,12 @@ $(function(){
                         var selections=$('#firstTable').bootstrapTable('getSelections');
                         for(var i=0;i<selections.length;i++){
                             sends.push(selections.BKD_ID);
-                            if(selections[i].SP_STATUS!='02'||selections[i].PDF_ADDRESS==''){
+                            if(selections[i].SP_STATUS!='03'||selections[i].PDF_ADDRESS==''){
                                 flag=false;
                             }
                         }
                         if(flag==false){
-                            commonJS.confirm('警告','有数据不满足发财政条件，请重新选择！')
+                            commonJS.confirm('警告','未审核或未审批导致无法发送财政')
                         }
                         else{
                             $.ajax({
