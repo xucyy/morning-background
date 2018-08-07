@@ -1,6 +1,6 @@
 /**
  * 通用方法封装处理
- * Copyright (c) 2018 ruoyi
+ * Copyright (c) 2018
  */
 (function ($) {
     $.extend({
