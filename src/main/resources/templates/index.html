@@ -32,7 +32,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                         <img th:src="(${user.avatar} == '') ? '/profile/' + ${user.avatar} : '/img/profile.jpg'  " alt="image" class="img-circle" height="60" width="60"/></span>
+                         <img th:src="(${user.avatar} == '') ? '/profile/' + ${user.avatar} : '/img/yonyou.png'  " alt="image" class="img-circle" height="60" width="60"/></span>
                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <span class="clear"><span class="block m-t-xs"><strong class="font-bold">[[${user.userName}]]</strong></span>
                          <span class="text-muted text-xs block"><span th:if="${not #strings.isEmpty(user.dept)}">[[${user.dept.deptName}]]</span> <b class="caret"></b></span> </span> </a>
