@@ -6,6 +6,7 @@ $(function(){
         edit:'../../../fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
         del:'../../../fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
         sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
+        zd:'../../../fundApply/FundApplyController/updateBkdSpStatus',//制单
         sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb'//发财政地址
     };
 
@@ -164,7 +165,7 @@ $(function(){
                 return commonJS.thousandPoint(num.toFixed(2));
             }
         },
-        {field: 'PDF_ADDRES', title: '生成PDF地址', align: 'center'},
+        {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
         {field: 'SP_STATUS', title: '状态', align: 'center'},
         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                 return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
@@ -190,6 +191,8 @@ $(function(){
                 return commonJS.thousandPoint(num.toFixed(2));
             }
         },
+        {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
+        {field: 'SP_STATUS', title: '状态', align: 'center'},
         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
             },
@@ -480,27 +483,23 @@ $(function(){
                     });
                 });
 
-                //发送财政
-                $('#btn-sendCZ').on('click',function () {
-                    var flag=true;//判断是否满足发财政条件
-                    var sends=[];
-                    var selections=$('#firstTable').bootstrapTable('getSelections');
-                    for(var i=0;i<selections.length;i++){
-                        sends.push(selections.BKD_ID);
-                        if(selections[i].SP_STATUS!='02'||selections[i].PDF_ADDRESS==''){
-                            flag=false;
-                        }
+                //制单
+                $('#btn-zd').on('click',function () {
+                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择数据！');
                     }
-                    if(flag==false){
-                        commonJS.confirm('警告','有数据不满足发财政条件，请重新选择！')
+                    else if($('#firstTable').bootstrapTable('getSelections').length>1){
+                        commonJS.confirm('警告','只能选择一条数据！');
                     }
                     else{
                         $.ajax({
-                            url: allUrl.sendCZ,
+                            url: allUrl.zd,
                             type:"post",
                             dataType:'json',
                             data:{
-                                bkdJson:JSON.stringify(sends)
+                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
+                                sp_status:'01',
+                                sp_name:'制单'
                             },
                             beforeSend:function (){
                                 $('#myModal').modal('show');
@@ -515,17 +514,57 @@ $(function(){
                     }
                 });
 
+                //发送财政
+                $('#btn-sendCZ').on('click',function () {
+                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择数据！');
+                    }
+                    else{
+                        var flag=true;//判断是否满足发财政条件
+                        var sends=[];
+                        var selections=$('#firstTable').bootstrapTable('getSelections');
+                        for(var i=0;i<selections.length;i++){
+                            sends.push(selections.BKD_ID);
+                            if(selections[i].SP_STATUS!='02'||selections[i].PDF_ADDRESS==''){
+                                flag=false;
+                            }
+                        }
+                        if(flag==false){
+                            commonJS.confirm('警告','有数据不满足发财政条件，请重新选择！')
+                        }
+                        else{
+                            $.ajax({
+                                url: allUrl.sendCZ,
+                                type:"post",
+                                dataType:'json',
+                                data:{
+                                    bkdJson:JSON.stringify(sends)
+                                },
+                                beforeSend:function (){
+                                    $('#myModal').modal('show');
+                                },
+                                success: function(result){
+                                    $('#myModal').modal('hide');
+                                    //重新加载一次表格
+                                    $('#firstTable').bootstrapTable('refresh');
+                                    commonJS.confirm('消息',result.result,result.msg);
+                                }
+                            });
+                        }
+                    }
+                });
+
                 //页签中的表格初始化
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                     // 获取已激活的标签页的名称
                     var activeTab = $(e.target).text();
                     if (activeTab == '未发财政') {
                         $('#firstTable').bootstrapTable('refresh');
-                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ').prop('disabled',false);
+                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ,#btn-zd').prop('disabled',false);
                     }
                     else{
                         $('#secondTable').bootstrapTable('refresh');
-                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ').prop('disabled',true);
+                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ,#btn-zd').prop('disabled',true);
                     }
                 });
             },

@@ -148,7 +148,7 @@ $(function(){
                            dataType:'json',
                            data:{
                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
-                               sp_status:'01',
+                               sp_status:'02',
                                sp_name:'审核'
                            },
                            beforeSend:function (){
