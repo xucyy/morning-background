@@ -118,3 +118,7 @@
 .pull-right.pagination-detail{
     display:none;
 }
+/*取消bootstrap自动换行*/
+#firstTable td,#secondTable td{
+    white-space :nowrap
+}

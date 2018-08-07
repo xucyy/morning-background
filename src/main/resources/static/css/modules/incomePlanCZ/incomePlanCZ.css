@@ -40,3 +40,6 @@
 ul.dropdown-menu{
 	max-height: 200px!important;
 }
+td{
+	white-space :nowrap
+}
