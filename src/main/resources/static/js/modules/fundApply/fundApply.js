@@ -524,7 +524,7 @@ $(function(){
                         var sends=[];
                         var selections=$('#firstTable').bootstrapTable('getSelections');
                         for(var i=0;i<selections.length;i++){
-                            sends.push(selections.BKD_ID);
+                            sends.push(selections[i].BKD_ID);
                             if(selections[i].SP_STATUS!='03'||selections[i].PDF_ADDRESS==''){
                                 flag=false;
                             }
