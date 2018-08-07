@@ -172,7 +172,59 @@ public class AnalysisMsgUtil
 		
 		return "拼装成功";
 	}
-	
+
+	/**
+	 * 拼装拨款单发送报文
+	 */
+
+	public static String[] CompleteBkdMsg(Object objFa,Class clazz){
+		String[] result=new String[2];
+		StringBuilder sb=new StringBuilder();
+		try {
+			sb.append("<Data>");
+			for(int z=0;z<((List<Object>) objFa).size();z++){
+				sb.append("<Main>");
+				//拼装业务数据报文
+				Field[] fields = getBeanChildName(clazz);
+				for(Field f : fields) {
+					f.setAccessible(true);
+					try {
+						Object object = f.get(((List<Object>) objFa).get(z));
+						if(object==null){
+							sb.append("<"+f.getName()+">"+""+"</"+f.getName()+">");
+						}else if(object instanceof String){
+							sb.append("<"+f.getName()+">"+object+"</"+f.getName()+">");
+						}else if(object instanceof Date){
+							sb.append("<"+f.getName()+">"+object+"</"+f.getName()+">");
+						}else if(object instanceof BigDecimal){
+							sb.append("<"+f.getName()+">"+object+"</"+f.getName()+">");
+						}else if(object instanceof List){
+
+						}
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					}
+					System.out.println(f.getName());//打印每个属性的类型名字
+				}
+				sb.append("</Main>");
+			}
+
+			sb.append("</Data>");
+		} catch (Exception e) {
+			System.out.println("拼装拨款单报文的时候出错");
+			result[0]="01";
+			result[1]="拼装拨款单报文的时候出错";
+			e.printStackTrace();
+			return result;
+		}
+		result[0]="00";
+		result[1]=sb.toString();
+		return result;
+	}
+
+
 	/**
 	 * 拼装上传到oss上的xml文件
 	 */

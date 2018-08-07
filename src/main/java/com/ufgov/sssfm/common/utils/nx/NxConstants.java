@@ -15,6 +15,8 @@ public class NxConstants {
 
     public static String JF07_WEB_SERVICE = "jf07";
 
+    public static String BKD_WEB_SERVICE="bkd";
+
     //发送方编号
     public static String RS_SEND_BH = "RS001";
 

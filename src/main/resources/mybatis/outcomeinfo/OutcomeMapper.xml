@@ -178,7 +178,7 @@
         </where>
     </select>
 
-    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+    <update id="updateGraSendStatusByPk" parameterType="java.util.Map">
         update jf07_grafa
         set SEND_STATUS = '01'
         where AAZ031 = #{AAZ031}

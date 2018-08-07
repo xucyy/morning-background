@@ -4,6 +4,9 @@
 <mapper namespace="com.ufgov.sssfm.project.module.fundApply.mapper.FunApplyMapper">
     <resultMap id="FunApplyResultMap" type="com.ufgov.sssfm.project.module.fundApply.entity.FmBkApply">
         <id column="BKD_ID" jdbcType="VARCHAR" property="bkdId" />
+        <result column="SEND_STATUS" jdbcType="VARCHAR" property="sendstatus" />
+        <result column="SP_STATUS" jdbcType="VARCHAR" property="spstatus" />
+        <result column="PDF_ADDRESS" jdbcType="VARCHAR" property="pdfaddress" />
         <result column="YEAR" jdbcType="VARCHAR" property="year" />
         <result column="MONTH" jdbcType="VARCHAR" property="month" />
         <result column="DAY" jdbcType="VARCHAR" property="day" />
@@ -62,7 +65,36 @@
     </delete>
 
     <select id="selectAllBkApplyTime" parameterType="java.util.Map" resultType="java.util.Map">
-        select BKD_ID,XZ,(concat(YEAR,MONTH,DAY)) SQSJ,ACCOUNTONE,BANKONE,BANKONE,THISMONTHAPPLY FROM fm_bk_apply
+        select BKD_ID,XZ,(concat(YEAR,MONTH,DAY)) SQSJ,ACCOUNTONE,BANKONE,BANKONE,THISMONTHAPPLY,SEND_STATUS,SP_STATUS,PDF_ADDRESS FROM fm_bk_apply
+        <where>
+            <if test="send_status !=null">
+                SEND_STATUS=#{send_status}
+            </if>
+            <if test="sp_status =='01'">
+                SP_STATUS in('01','02','03')
+            </if>
+            <if test="sp_status =='02'">
+                SP_STATUS in('02','03')
+            </if>
+        </where>
     </select>
+
+    <update id="updateBkdSpStatus" parameterType="java.util.Map">
+
+        update fm_bk_apply set SP_STATUS=#{sp_status} where BKD_ID=#{bkdId}
+
+    </update>
+
+    <update id="updateBkdSendStatus" parameterType="java.lang.String">
+
+        update fm_bk_apply set SEND_STATUS='01' where BKD_ID=#{bkdId}
+
+    </update>
+
+    <update id="updateBkdPdfAddress" parameterType="java.util.Map">
+
+        update fm_bk_apply set PDF_ADDRESS=#{fileName} where BKD_ID=#{bkdId}
+
+    </update>
 
 </mapper>

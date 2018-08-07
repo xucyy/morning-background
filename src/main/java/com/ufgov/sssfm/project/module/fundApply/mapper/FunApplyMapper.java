@@ -16,4 +16,10 @@ public interface FunApplyMapper {
     List selectAllBkApplyTime(Map map);
 
     int deleteBKApplyByPK(String bkdId);
+
+    int updateBkdSpStatus(Map map);
+
+    int updateBkdPdfAddress(Map map);
+
+    int updateBkdSendStatus(String bkdId);
 }

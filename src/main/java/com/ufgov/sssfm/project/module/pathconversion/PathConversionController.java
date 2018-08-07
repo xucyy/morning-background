@@ -45,4 +45,20 @@ public class PathConversionController {
     {
         return "module/fundApply" + "/fundApply";
     }
+
+    //审核页面跳转
+    @RequiresPermissions("module:fundApplySH:view")
+    @GetMapping("/fundApplySH")
+    public String fundApplySH()
+    {
+        return "module/fundApplySH" + "/fundApplySH";
+    }
+
+    //审批页面跳转
+    @RequiresPermissions("module:fundApplySP:view")
+    @GetMapping("/fundApplySP")
+    public String fundApplySP()
+    {
+        return "module/fundApplySP" + "/fundApplySP";
+    }
 }

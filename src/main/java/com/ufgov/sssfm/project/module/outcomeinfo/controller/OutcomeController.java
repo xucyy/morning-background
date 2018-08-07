@@ -232,16 +232,13 @@ public class OutcomeController {
 
     //2.将文件上传到OSS服务器上,返回一个ossstr 用于通知财政或其他系统  上OSS上拿文件
     public List<String> uoloadFileToOSS(List<String> filePathList){
-        Map queryMap=new HashMap();
-        queryMap.put("TRANSTOWHERE", "rs_cz");
-        queryMap.put("USERTOWHERE", "upload");
+
+        //拼装上传文件报文头，并上传文件
+        FmInterfaceUtils fmInterfaceUtils=getRequestParam("rs_cz","upload");
 
         List<String> ossstrList=new ArrayList<String>();
 
         for(int i=0;i<filePathList.size();i++){
-
-            //拼装上传文件报文头，并上传文件
-            FmInterfaceUtils fmInterfaceUtils=getRequestParam("rs_cz","sendrequest");
 
             Map resultMap=OSSFileUtil.upload(fmInterfaceUtils,filePathList.get(i));
 
@@ -314,7 +311,7 @@ public class OutcomeController {
         msgBig.setBse174(NxConstants.JF07_WEB_SERVICE);
         msgBig.setAae036(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         msgBig.setAbe100("");
-        msgBig.setMsgtype("");
+        msgBig.setMsgtype("2");
         msgBig.setMsgcontent("");
         msgBig.setMd5msgcode("");
         msgBig.setFjnum(ossstrList.size()+"");

@@ -8,6 +8,12 @@ package com.ufgov.sssfm.project.module.fundApply.entity;
 public class FmBkApply {
     private String bkdId;
 
+    private String sendstatus;
+
+    private String spstatus;
+
+    private String pdfaddress;
+
     private String year;
 
     private String month;
@@ -54,12 +60,37 @@ public class FmBkApply {
 
     private String banktwo;
 
+
     public String getBkdId() {
         return bkdId;
     }
 
     public void setBkdId(String bkdId) {
         this.bkdId = bkdId == null ? null : bkdId.trim();
+    }
+
+    public String getSendstatus() {
+        return sendstatus;
+    }
+
+    public void setSendstatus(String sendstatus) {
+        this.sendstatus = sendstatus;
+    }
+
+    public String getSpstatus() {
+        return spstatus;
+    }
+
+    public void setSpstatus(String spstatus) {
+        this.spstatus = spstatus;
+    }
+
+    public String getPdfaddress() {
+        return pdfaddress;
+    }
+
+    public void setPdfaddress(String pdfaddress) {
+        this.pdfaddress = pdfaddress;
     }
 
     public String getYear() {

@@ -14,4 +14,10 @@ public interface FundApplyService {
     List selectAllBkApplyTime(Map map);
 
     int deleteBKApplyByPK(String bkdId);
+
+    int updateBkdSpStatus(Map map);
+
+    int updateBkdPdfAddress(Map map);
+
+    int updateBkdSendStatus(String bkdId);
 }

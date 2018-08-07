@@ -39,4 +39,19 @@ public class FundApplyServiceImpl implements FundApplyService {
     public int deleteBKApplyByPK(String bkdId) {
         return funApplyMapper.deleteBKApplyByPK(bkdId);
     }
+
+    @Override
+    public int updateBkdSpStatus(Map map) {
+        return funApplyMapper.updateBkdSpStatus(map);
+    }
+
+    @Override
+    public int updateBkdPdfAddress(Map map) {
+        return funApplyMapper.updateBkdPdfAddress(map);
+    }
+
+    @Override
+    public int updateBkdSendStatus(String bkdId) {
+        return funApplyMapper.updateBkdSendStatus(bkdId);
+    }
 }
