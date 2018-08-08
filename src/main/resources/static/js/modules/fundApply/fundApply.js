@@ -16,7 +16,7 @@ $(function(){
             //编辑前将选中事件清空
             $('#firstTable').bootstrapTable('uncheckAll');
             if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可再次编辑
-                commonJS.confirm('警告','已审核不可编辑！')
+                commonJS.confirm('警告','已制单不可编辑！')
             }
             else{
                 page.getEditTab('editZD');
@@ -72,25 +72,29 @@ $(function(){
         'click .btn-del':function (e, value, row, index) {//删除
             //删除前将选中事件清空
             $('#firstTable').bootstrapTable('uncheckAll');
-            commonJS.confirm('提示','确认删除？','',function(){
-                $.ajax({
-                    url: allUrl.del,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        bkdId:row.BKD_ID
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
-                        commonJS.confirm('提示',result.result,result.msg);
-                    }
+            if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可删除
+                commonJS.confirm('警告','已制单不可删除！')
+            }
+            else{
+                commonJS.confirm('提示','确认删除？','',function(){
+                    $.ajax({
+                        url: allUrl.del,
+                        type:"post",
+                        dataType:'json',
+                        data:{
+                            bkdId:row.BKD_ID
+                        },
+                        beforeSend:function (){
+                            $('#myModal').modal('show');
+                        },
+                        success: function(result){
+                            $('#myModal').modal('hide');
+                            $('#firstTable').bootstrapTable('refresh');
+                            commonJS.confirm('提示',result.result,result.msg);
+                        }
+                    });
                 });
-            });
-
+            }
         },
         'click .btn-see':function (e, value, row, index) {//查看
             page.getEditTab('CK');
@@ -485,11 +489,15 @@ $(function(){
 
                 //制单
                 $('#btn-zd').on('click',function () {
-                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                    var sel=$('#firstTable').bootstrapTable('getSelections');
+                    if(sel.length==0){
                         commonJS.confirm('警告','请选择数据！');
                     }
-                    else if($('#firstTable').bootstrapTable('getSelections').length>1){
+                    else if(sel.length>1){
                         commonJS.confirm('警告','只能选择一条数据！');
+                    }
+                    else if(sel[0].SP_STATUS!='00'){
+                        commonJS.confirm('警告','已制单，不可再次制单！');
                     }
                     else{
                         $.ajax({

@@ -105,7 +105,7 @@ $(function(){
                                 return commonJS.thousandPoint(num.toFixed(2));
                             }
                         },
-                        {field: 'PDF_ADDRES', title: '生成PDF地址', align: 'center'},
+                        {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
                         {field: 'SP_STATUS', title: '状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
@@ -141,6 +141,9 @@ $(function(){
                     if($('#firstTable').bootstrapTable('getSelections').length==0){
                         commonJS.confirm('警告','请选择数据！');
                     }
+                    else if($('#firstTable').bootstrapTable('getSelections')[0].SP_STATUS!='02'){
+                        commonJS.confirm('警告','已审批，不可再次审批！');
+                    }
                     else{
                         $.ajax({
                             url: allUrl.sp,
@@ -150,6 +153,37 @@ $(function(){
                                 bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
                                 sp_status:'03',
                                 sp_name:'审批'
+                            },
+                            beforeSend:function (){
+                                $('#myModal').modal('show');
+                            },
+                            success: function(result){
+                                $('#myModal').modal('hide');
+                                //重新加载一次表格
+                                $('#firstTable').bootstrapTable('refresh');
+                                commonJS.confirm('消息',result.result,result.msg);
+                            }
+                        });
+                    }
+                });
+
+                //驳回
+                $('#btn-disagree').on('click',function () {
+                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择数据！');
+                    }
+                    else if($('#firstTable').bootstrapTable('getSelections')[0].SEND_STATUS=='01'){
+                        commonJS.confirm('警告','已发送财政，不可驳回！');
+                    }
+                    else{
+                        $.ajax({
+                            url: allUrl.sp,
+                            type:"post",
+                            dataType:'json',
+                            data:{
+                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
+                                sp_status:'00',
+                                sp_name:'驳回'
                             },
                             beforeSend:function (){
                                 $('#myModal').modal('show');
