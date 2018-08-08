@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>基本养老保险调剂金申请</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--引入公共CSS JS文件-->
+    <link rel="stylesheet" th:href="@{/css/resource/jquery-confirm.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/resource/bootstrap-table.min.css}">
+    <link rel="stylesheet" th:href="@{/css/resource/bootstrap-datetimepicker.min.css}">
+    <link rel="stylesheet" th:href="@{/css/modules/pensionAdjust/pensionAdjust.css}">
+</head>
+<body>
+<div id="workspace">
+    <div class="box">
+        <!--头部-->
+        <div class="header">
+            <div class="collect">
+                <!--下拉框-->
+                <div class="month">
+                    <span>编制日期：</span>
+                    <input type="text" class="datetimepicker" size="20" id="startTime">
+                    <span class="glyphicon glyphicon-time" id="timeIconOne"></span>
+                    <span style="left: -9px;position: relative;">至</span>
+                    <input type="text" class="datetimepicker" size="20" id="endTime">
+                    <span class="glyphicon glyphicon-time" id="timeIconTwo"></span>
+                </div>
+                <div class="queryModel">
+                    <button id="btn-query" class="btn btn-primary">查询</button>
+                    <button id="btn-add" class="btn btn-primary">新增</button>
+                    <button id="btn-appendix" class="btn btn-primary">附件</button>
+                </div>
+            </div>
+        </div>
+        <!--center-->
+        <div class="center">
+            <table id="firstTable"></table>
+        </div>
+    </div>
+</div>
+
+<!--明细数据模态框-->
+<div class="modal fade" id="win" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" style="padding-left: 10px;">关闭</button>
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">保存</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="editPage">
+                    <!--标题-->
+                    <div class="editTitle">
+                        <div class="editTitleCont text-center">
+                            <h3>
+                                宁夏回族自治区社会保障基金用款申请表
+                            </h3>
+                        </div>
+                    </div>
+                    <!--提示信息-->
+                    <div class="editTip">
+                        <div class="editTipCont">
+                            <div class="pull-left">
+                                <b>编制单位：宁夏回族自治区社会保险事业管理局</b>
+                            </div>
+                            <div class="pull-right">
+                                <b>单位：万元</b>
+                            </div>
+                        </div>
+                    </div>
+                    <!--表格-->
+                    <div class="editTable">
+                        <table id="modalTable"></table>
+                        <table class="table table-bordered table-condensed"></table>
+                    </div>
+                    <div class="editTip">
+                        <div class="editTipCont">
+                            <b>备注：</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--加载等待-->
+<div id="myModal" class="modal fade" data-keyboard="false"
+     data-backdrop="static" data-role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="loading" class="loading">处理中。。。</div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/resource/jquery-confirm.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/resource/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/resource/bootstrap-table-locale-all.min.js}"></script>
+<script th:src="@{/js/resource/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/resource/commonJS.js}"></script>
+<script th:src="@{/js/modules/pensionAdjust/pensionAdjust.js}"></script>
+</body>
+</html>

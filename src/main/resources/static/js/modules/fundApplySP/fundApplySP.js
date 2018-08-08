@@ -9,7 +9,7 @@ $(function(){
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-see':function (e, value, row, index) {//查看
-            $('#firstTable').bootstrapTable('uncheckAll'); //新增时取消所有勾选项
+            $('#firstTable').bootstrapTable('uncheckAll'); //取消所有勾选项
             $('#win').modal('show');
             $('#win input').attr('readonly','readonly');//不可编辑
             $.ajax({
@@ -73,7 +73,8 @@ $(function(){
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
                         timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        sp_status:'02'
+                        sp_status:'02',
+                        send_status:'00'
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！

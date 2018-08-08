@@ -13,8 +13,7 @@ $(function(){
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {//编辑
-            //编辑前将选中事件清空
-            $('#firstTable').bootstrapTable('uncheckAll');
+            $('#firstTable').bootstrapTable('uncheckAll');//编辑前将选中事件清空
             if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可再次编辑
                 commonJS.confirm('警告','已制单不可编辑！')
             }
@@ -70,7 +69,6 @@ $(function(){
             }
         },
         'click .btn-del':function (e, value, row, index) {//删除
-            //删除前将选中事件清空
             $('#firstTable').bootstrapTable('uncheckAll');
             if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可删除
                 commonJS.confirm('警告','已制单不可删除！')
