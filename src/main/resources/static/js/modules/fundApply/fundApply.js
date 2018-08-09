@@ -12,8 +12,8 @@ $(function(){
         fileList:'/module/files/list'//fileList
     };
 
-    var fileCount = 0;
-
+    var fileCount = 1;
+    var billId = ''
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {//编辑
@@ -233,11 +233,11 @@ $(function(){
             },
 
             //加载查看附件表格
-            fileListTable:function(id,url){
+            fileListTable:function(id,url,bId){
                 $('#'+id).bootstrapTable({
                     url: url,
-                    queryParams: function (params) {
-
+                    queryParams: {
+                        'billId':bId
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -312,19 +312,16 @@ $(function(){
 
             //初始化文件上传
             initUploadOption: function () {
-                var param = {
-                    'billId':'1231233',
-                    'seqNo':fileCount,
-                };
                 $("#myDropzone").dropzone({
                     url: "/module/files/uploadFile",
-                    params:param,
                     headers:{
-                        'billId':'2222222'
+                        'billId':billId
                     },
                     init:function () {
                         this.on('success',function (file) {
                             console.log(file)
+                            commonJS.confirm('消息','上传成功');
+                            this.removeFile(file)
                             fileCount++
                         });
                         this.on('removedfile',function (file) {
@@ -332,6 +329,11 @@ $(function(){
                             if ((_ref = file.previewElement) != null) {
                                 _ref.parentNode.removeChild(file.previewElement);
                             }
+                        });
+                        this.on('sending',function (data, xhr, formData) {
+                            formData.append('billId', billId);
+                            formData.append('seqNo', fileCount);
+                            console.log(formData)
                         })
                     }
                 })
@@ -354,30 +356,46 @@ $(function(){
 
                 //附件上传
                 $('#btn-appendix').on('click',function () {
-                    layer.open({
-                        type: 1,
-                        title: false,
-                        closeBtn: 0,
-                        area: ['850px', '480px'],
-                        shadeClose: true,
-                        skin: 'yourclass',
-                        content: $('#file')
-                    });
-                    this.initUploadOption()
+                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择数据！');
+                    }
+                    else if($('#firstTable').bootstrapTable('getSelections').length>1){
+                        commonJS.confirm('警告','只能选择一条数据！');
+                    }else {
+                        billId = $('#firstTable').bootstrapTable('getSelections')[0].BKD_ID
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 0,
+                            area: ['850px', '480px'],
+                            shadeClose: true,
+                            skin: 'yourclass',
+                            content: $('#file')
+                        });
+                    }
                 });
 
                 // 附件查看
                 $('#btn-fileList').on('click',function () {
-                    layer.open({
-                        type: 1,
-                        title: '附件列表',
-                        closeBtn: 0,
-                        area: ['850px', '480px'],
-                        shadeClose: true,
-                        skin: 'yourclass',
-                        content: $('#fileList')
-                    });
-                   page.fileListTable('fileListTabl',allUrl.fileList)
+                    if($('#firstTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择数据！');
+                    }
+                    else if($('#firstTable').bootstrapTable('getSelections').length>1){
+                        commonJS.confirm('警告','只能选择一条数据！');
+                    }else {
+                        billId = $('#firstTable').bootstrapTable('getSelections')[0].BKD_ID
+                        layer.open({
+                            type: 1,
+                            title: '附件列表',
+                            closeBtn: 0,
+                            area: ['850px', '480px'],
+                            shadeClose: true,
+                            skin: 'yourclass',
+                            content: $('#fileList')
+                        });
+                        page.fileListTable('fileListTabl',allUrl.fileList,billId)
+                    }
+
                 });
 
                 //保存
@@ -679,7 +697,7 @@ $(function(){
                 //打开页面时先加载第一个表格
                 this.getTab('firstTable',allUrl.query,colOne,'00');
                 this.getTab('secondTable',allUrl.query,colTwo,'01');
-
+                this.initUploadOption()
                 this.onEventListener();
             }
         }
