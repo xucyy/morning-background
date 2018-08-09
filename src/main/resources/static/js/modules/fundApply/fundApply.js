@@ -170,7 +170,7 @@ $(function(){
             }
         },
         {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
-        {field: 'SP_STATUS', title: '状态', align: 'center'},
+        {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                 return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
                     '<button class="btn btn-primary btn-del">删除</button>'
@@ -196,7 +196,7 @@ $(function(){
             }
         },
         {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
-        {field: 'SP_STATUS', title: '状态', align: 'center'},
+        {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
             },
@@ -666,8 +666,9 @@ $(function(){
                 }
                 this.getComponents();
                 //打开页面时先加载第一个表格
-                this.getTab('firstTable',allUrl.query)
-
+                this.getTab('firstTable',allUrl.query,colOne,'00')
+                this.getTab('secondTable',allUrl.query,colTwo,'01')
+                this.initUploadOption()
                 this.onEventListener();
             }
         }
