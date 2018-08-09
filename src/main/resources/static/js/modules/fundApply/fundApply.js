@@ -1,3 +1,4 @@
+var fileCount = 0;
 $(function(){
 
     var allUrl={//后台交互URL
@@ -7,7 +8,8 @@ $(function(){
         del:'../../../fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
         sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
         zd:'../../../fundApply/FundApplyController/updateBkdSpStatus',//制单
-        sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb'//发财政地址
+        sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
+        fileList:'/module/files/list'//fileList
     };
 
     //单元格按钮事件
@@ -227,7 +229,41 @@ $(function(){
                     columns:cols
                 });
             },
+            fileListTable:function(id,url){
+                $('#'+id).bootstrapTable({
+                    url: url,
+                    queryParams: function (params) {
 
+                    },
+                    method: 'post',
+                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                    dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
+                    pageNumber: 1, //初始化加载第一页
+                    pageSize: 10,
+                    pagination: true, // 是否分页
+                    clickToSelect:true,
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                    columns: [    //表头
+                        {field: 'ck', checkbox: true},//checkbox列
+                        {
+                            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                                return index + 1;
+                            }
+                        },
+                        {field: 'XZ', title: '文件名', align: 'center'},
+                        {field: 'SQSJ', title: '上传时间', align: 'center'},
+                        {field: 'ACCOUNTONE', title: '上传人', align: 'center'},
+                        {field: 'AAB119', title: '状态', align: 'center'},
+                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+                                return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
+                                    '<button class="btn btn-primary btn-del">删除</button>'
+                            },
+                        }
+                    ]
+                });
+            },
             //可编辑表格
             getEditTab:function(edit){
                 if(edit=='addZD'){//制单新增
@@ -268,7 +304,32 @@ $(function(){
                 //时间显示到日
                 commonJS.showMonth('yyyy-mm-dd',2,'month',nowTime);
             },
-
+            //初始化文件上传
+            initUploadOption: function () {
+                var param = {
+                    'billId':'1231233',
+                    'seqNo':fileCount,
+                }
+                $("#myDropzone").dropzone({
+                    url: "/module/files/uploadFile",
+                    params:param,
+                    headers:{
+                        'billId':'2222222'
+                    },
+                    init:function () {
+                        this.on('success',function (file) {
+                            console.log(file)
+                            fileCount++
+                        });
+                        this.on('removedfile',function (file) {
+                            var _ref;
+                            if ((_ref = file.previewElement) != null) {
+                                _ref.parentNode.removeChild(file.previewElement);
+                            }
+                        })
+                    }
+                })
+            },
             //初始化点击事件
             onEventListener: function () {
                 //事件图标触发日期选择
@@ -283,7 +344,31 @@ $(function(){
                 $('#btn-add').on('click',function () {
                     page.getEditTab('addZD');
                 });
-
+                //附件上传
+                $('#btn-appendix').on('click',function () {
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        closeBtn: 0,
+                        area: ['850px', '480px'],
+                        shadeClose: true,
+                        skin: 'yourclass',
+                        content: $('#file')
+                    });
+                })
+                // 附件查看
+                $('#btn-fileList').on('click',function () {
+                    layer.open({
+                        type: 1,
+                        title: '附件列表',
+                        closeBtn: 0,
+                        area: ['850px', '480px'],
+                        shadeClose: true,
+                        skin: 'yourclass',
+                        content: $('#fileList')
+                    });
+                   page.fileListTable('fileListTabl',allUrl.fileList)
+                })
                 //保存
                 $('#btn-save').on('click',function(){
                         //参数
@@ -581,8 +666,8 @@ $(function(){
                 }
                 this.getComponents();
                 //打开页面时先加载第一个表格
-                this.getTab('firstTable',allUrl.query,colOne,'00');
-                this.getTab('secondTable',allUrl.query,colTwo,'01');
+                this.getTab('firstTable',allUrl.query)
+
                 this.onEventListener();
             }
         }
