@@ -73,6 +73,9 @@ public class FundApplyController {
             fmBkApplyList.add(fmBkApply);
         }
 
+        //拼装拨款单发送报文
+        String[] resultBkd=AnalysisMsgUtil.CompleteBkdMsg(fmBkApplyList,FmBkApply.class);
+
         //2.将文件上传到OSS服务器上,返回一个ossstr 用于通知财政或其他系统  上OSS上拿文件
         List<String> ossstrList=uoloadFileToOSS(filePathList);
         if(ossstrList==null || ossstrList.size()==0 ){
@@ -103,7 +106,7 @@ public class FundApplyController {
     public List<String> uoloadFileToOSS(List<String> filePathList){
 
         //拼装上传文件报文头，并上传文件
-        FmInterfaceUtils fmInterfaceUtils=getRequestParam("rs_cz","upload");
+        FmInterfaceUtils fmInterfaceUtils=getRequestParam("rs_cz","uploadpdf");
 
         List<String> ossstrList=new ArrayList<String>();
 
@@ -171,6 +174,7 @@ public class FundApplyController {
         msgBig.setAae036(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         msgBig.setAbe100("");
         msgBig.setMsgtype("1");
+        //拼装拨款单发送报文
         String[] resultBkd=AnalysisMsgUtil.CompleteBkdMsg(fmBkApplyList,FmBkApply.class);
         //判断是否为
         if(!resultBkd[0].equals("00")){
@@ -357,8 +361,7 @@ public class FundApplyController {
                     b[i] += 256;
                 }
             }
-//            String imgFilePath = NormalUtil.getWebRootUrlSpringboot()+"/static/upload/bkdpdf/"+bkdId+".pdf";
-            String imgFilePath = "D:/"+bkdId+".pdf";
+            String imgFilePath = NormalUtil.getWebRootUrlSpringboot()+"/static/upload/bkdpdf/"+bkdId+".pdf";
 
             OutputStream out = new FileOutputStream(imgFilePath);
             out.write(b);

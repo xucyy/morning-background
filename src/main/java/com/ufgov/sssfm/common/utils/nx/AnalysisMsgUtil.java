@@ -181,9 +181,9 @@ public class AnalysisMsgUtil
 		String[] result=new String[2];
 		StringBuilder sb=new StringBuilder();
 		try {
-			sb.append("<Data>");
+			sb.append("<?xml version=\"1.0\" encoding=\"GBK\" ?><Main><Details>");
 			for(int z=0;z<((List<Object>) objFa).size();z++){
-				sb.append("<Main>");
+				sb.append("<Detail>");
 				//拼装业务数据报文
 				Field[] fields = getBeanChildName(clazz);
 				for(Field f : fields) {
@@ -202,16 +202,24 @@ public class AnalysisMsgUtil
 
 						}
 					} catch (IllegalArgumentException e) {
+						System.out.println("拼装拨款单报文的时候出错");
+						result[0]="01";
+						result[1]="拼装拨款单报文的时候出错";
 						e.printStackTrace();
+						return result;
 					} catch (IllegalAccessException e) {
+						System.out.println("拼装拨款单报文的时候出错");
+						result[0]="01";
+						result[1]="拼装拨款单报文的时候出错";
 						e.printStackTrace();
+						return result;
 					}
 					System.out.println(f.getName());//打印每个属性的类型名字
 				}
-				sb.append("</Main>");
+				sb.append("</Detail>");
 			}
 
-			sb.append("</Data>");
+			sb.append("</Details></Main>");
 		} catch (Exception e) {
 			System.out.println("拼装拨款单报文的时候出错");
 			result[0]="01";

@@ -47,18 +47,6 @@
 .editTitleCont{
     margin: 0 auto;
 }
-/*调整编辑页面标题Input样式*/
-.editInput,.editInputL{
-    width: 70px;
-    border: 0;
-    border-bottom: 1px solid #0e9aef;
-    outline: none;
-    text-align: center;
-    vertical-align: bottom;
-}
-.editInputL{
-    width:200px!important;
-}
 .editTipCont{
     width: 90%;
     margin:20px auto;
