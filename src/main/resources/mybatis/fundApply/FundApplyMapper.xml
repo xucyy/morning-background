@@ -65,10 +65,12 @@
     </delete>
 
     <select id="selectAllBkApplyTime" parameterType="java.util.Map" resultType="java.util.Map">
-        select BKD_ID,XZ,(concat(YEAR,MONTH,DAY)) SQSJ,ACCOUNTONE,BANKONE,BANKONE,THISMONTHAPPLY,SEND_STATUS,SP_STATUS,PDF_ADDRESS FROM fm_bk_apply
+        select BKD_ID,XZ,(concat(YEAR,MONTH,DAY)) SQSJ,ACCOUNTONE,BANKONE,BANKONE,THISMONTHAPPLY,SEND_STATUS,SP_STATUS,PDF_ADDRESS
+            FROM fm_bk_apply a,fm_as_val b
         <where>
+            a.SP_STATUS=b.VAL_ID and b.VALSET_ID='SP_STATUS'
             <if test="send_status !=null">
-                SEND_STATUS=#{send_status}
+                and SEND_STATUS=#{send_status}
             </if>
             <if test="sp_status =='01'">
                 and SP_STATUS in('01','02','03')

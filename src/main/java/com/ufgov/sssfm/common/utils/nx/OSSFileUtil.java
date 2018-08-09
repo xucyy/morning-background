@@ -200,7 +200,7 @@ public class OSSFileUtil {
         File file = saveUrlAs(downLoadPath, fmInterfaceUtils.getDownloadpath());
         //判斷是否下載文件成功
         if(file!=null){
-            resultMap.put("path",file.getAbsolutePath());
+            resultMap.put("path",fmInterfaceUtils.getDownloadpath());
             return resultMap;
         }else {
             resultMap.put("errorMsg","从OSS上下载文件到本地失败");

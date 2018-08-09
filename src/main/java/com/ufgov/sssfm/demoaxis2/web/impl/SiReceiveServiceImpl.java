@@ -11,7 +11,6 @@ import com.ufgov.sssfm.project.module.incomeinfo.mapper.IncomeMapper;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Fa;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07GraFa;
 import com.ufgov.sssfm.project.module.outcomeinfo.bean.Jf07Son;
-import com.ufgov.sssfm.project.module.outcomeinfo.controller.OutcomeController;
 import com.ufgov.sssfm.project.module.outcomeinfo.mapper.OutcomeMapper;
 import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
 import com.ufgov.sssfm.project.module.queryutils.mapper.FmBankXmlLogMapper;
@@ -57,9 +56,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
          */
         AnalysisReceiveMsgBig analysisReceiveMsgBig=null;
 
-        //将业务传过来报文中的oss以及文件名存起来 用于自动转发财政时拼接报文
-        List<String> ossstrList=new ArrayList();
-        List<String> filePathList=new ArrayList();
+
         try{
             //得到请求报文中的参数
             analysisReceiveMsgBig=AnalysisMsgUtil.getRecieveMessage(element);
@@ -70,6 +67,26 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
             return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "解析业务方发送报文失败！");
         }
+
+        //得到业务代码bse173，根据业务代码判断是哪一种业务场景，分不同业务场景进行不同操作
+        String bse173 = analysisReceiveMsgBig.getBse173();
+        if(bse173.equals(NxConstants.AD68_WEB_SERVICE) || bse173.equals(NxConstants.JF07_WEB_SERVICE)){
+            return ad68OrJf07Request(element,analysisReceiveMsgBig);
+        }else{
+            //插入日志表记录
+            fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","getYWDataRecieveMessage",""
+                    ,"没有对应匹配的业务代码!",element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "没有对应匹配的业务代码！")));
+            return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "没有对应匹配的业务代码！");
+        }
+
+    }
+
+    //收入要素支出要素接收
+    public String ad68OrJf07Request(OMElement element,AnalysisReceiveMsgBig analysisReceiveMsgBig){
+
+        //将业务传过来报文中的oss以及文件名存起来 用于自动转发财政时拼接报文
+        List<String> ossstrList=new ArrayList();
+        List<String> filePathList=new ArrayList();
 
         //得到业务代码bse173，根据业务代码判断是哪一种业务场景，分不同业务场景进行不同操作
         String bse173 = analysisReceiveMsgBig.getBse173();
@@ -93,6 +110,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
             //根据ossstr字符串去下载文件到本地
             Map mapFilePath= OSSFileUtil.download(ossstr,fmInterfaceUtils);
+            String dowloadPath=mapFilePath.get("path")+"/"+analysisReceiveMsgSmall.getFjid();
             if(mapFilePath.get("errorMsg")!=null){
                 //插入日志表记录
                 fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","download",""
@@ -103,7 +121,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
             if(NxConstants.AD68_WEB_SERVICE.equals(bse173)){
                 long start = System.currentTimeMillis();
-                Map mapResult = NxXmlUtil.xmlToBeanList(mapFilePath.get("path")+"", Ad68Fa.class, NxConstants.AD68_SAX_HANDLER);
+                Map mapResult = NxXmlUtil.xmlToBeanList(dowloadPath, Ad68Fa.class, NxConstants.AD68_SAX_HANDLER);
                 if(mapResult.get("errorMsg")!=null){
                     //插入日志表记录
                     fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
@@ -143,7 +161,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
             }else if(NxConstants.JF07_WEB_SERVICE.equals(bse173)){
                 long start = System.currentTimeMillis();
-                Map mapResult = NxXmlUtil.xmlToBeanList(mapFilePath.get("path")+"", Jf07GraFa.class, NxConstants.JF07_SAX_HANDLER);
+                Map mapResult = NxXmlUtil.xmlToBeanList(dowloadPath, Jf07GraFa.class, NxConstants.JF07_SAX_HANDLER);
                 if(mapResult.get("errorMsg")!=null){
                     //插入日志表记录
                     fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
@@ -220,7 +238,6 @@ public class SiReceiveServiceImpl implements SiReceiveService {
         }
 
     }
-
 
     //得到请求报文中的header信息，不对外暴露
     private FmInterfaceUtils getRequestParam(String transtowhere,String  usertowhere ){

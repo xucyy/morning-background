@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ufgov.sssfm.project.module.pensionAdjust.mapper.PensionAdjustMapper">
+
+    <resultMap id="glodResultMap" type="com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold">
+        <id column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="YEAR" jdbcType="VARCHAR" property="year" />
+        <result column="QUARTER" jdbcType="VARCHAR" property="quarter" />
+        <result column="SBJZ" jdbcType="VARCHAR" property="sbjz" />
+        <result column="SBLD" jdbcType="VARCHAR" property="sbld" />
+        <result column="SBCZ" jdbcType="VARCHAR" property="sbcz" />
+        <result column="SBJBR" jdbcType="VARCHAR" property="sbjbr" />
+        <result column="CZLD" jdbcType="VARCHAR" property="czld" />
+        <result column="CZZR" jdbcType="VARCHAR" property="czzr" />
+        <result column="CZJBR" jdbcType="VARCHAR" property="czjbr" />
+        <result column="BZDATE" jdbcType="VARCHAR" property="bzdate" />
+        <result column="SHDATE" jdbcType="VARCHAR" property="shdate" />
+        <result column="SP_STATUS" jdbcType="VARCHAR" property="spStatus" />
+        <result column="SEND_STATUS" jdbcType="VARCHAR" property="sendStatus" />
+    </resultMap>
+
+    <resultMap id="glodItemResultMap" type="com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGoldItem">
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="DWMC" jdbcType="VARCHAR" property="dwmc" />
+        <result column="SNJJJY" jdbcType="VARCHAR" property="snjjjy" />
+        <result column="DNJJSR" jdbcType="VARCHAR" property="dnjjsr" />
+        <result column="DNJJZC" jdbcType="VARCHAR" property="dnjjzc" />
+        <result column="YSJJJE" jdbcType="VARCHAR" property="ysjjje" />
+        <result column="YJJJJY" jdbcType="VARCHAR" property="yjjjjy" />
+        <result column="YJJJSR" jdbcType="VARCHAR" property="yjjjsr" />
+        <result column="DNYJZC" jdbcType="VARCHAR" property="dnyjzc" />
+        <result column="YJSZJY" jdbcType="VARCHAR" property="yjszjy" />
+        <result column="SBKZS" jdbcType="VARCHAR" property="sbkzs" />
+        <result column="SXJE" jdbcType="VARCHAR" property="sxje" />
+        <result column="SBJE" jdbcType="VARCHAR" property="sbje" />
+        <result column="CZJE" jdbcType="VARCHAR" property="czje" />
+    </resultMap>
+
+
+</mapper>
