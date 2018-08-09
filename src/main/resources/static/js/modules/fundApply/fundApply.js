@@ -389,7 +389,6 @@ $(function(){
                 $("#myDropzone").dropzone({
                     url: "/module/files/uploadFile",
                     addRemoveLinks: true,
-                    dictDefaultMessage:'拖动文件至此或者点击上传',
                     dictCancelUploadConfirmation:'你确定要取消上传吗？',
                     dictResponseError: '文件上传失败!',
                     dictCancelUpload: "取消上传",

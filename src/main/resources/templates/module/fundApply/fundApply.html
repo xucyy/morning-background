@@ -32,11 +32,11 @@
                 <div class="queryModel">
                     <button id="btn-query" class="btn btn-primary">查询</button>
                     <button id="btn-add" class="btn btn-primary">新增</button>
-                    <button id="btn-appendix" class="btn btn-primary">上传附件</button>
-                    <button id="btn-fileList" class="btn btn-primary">查看附件</button>
-                    <button id="btn-sign" class="btn btn-primary">签章</button>
+                    <!--<button id="btn-appendix" class="btn btn-primary">上传附件</button>-->
+                    <!--<button id="btn-fileList" class="btn btn-primary">查看附件</button>-->
+                    <!--<button id="btn-sign" class="btn btn-primary">签章</button>-->
                     <!--<button id="btn-appendix" class="btn btn-primary">附件</button>-->
-                    <button id="btn-zd" class="btn btn-primary">制单</button>
+                    <!--<button id="btn-zd" class="btn btn-primary">制单</button>-->
                     <button id="btn-sendCZ" class="btn btn-primary">发财政</button>
                     <button id="btn-daily" class="btn btn-primary">审批日志</button>
                 </div>
@@ -203,29 +203,26 @@
 <!--电子附件-->
 <div id="file" style="display: none">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>文件上传</h5>
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <!--<form id="my-awesome-dropzone" class="dropzone" action="/module/files/uploadFile">-->
+                <div id="myDropzone" class="dropzone">
                 </div>
-                <div class="ibox-content">
-                    <!--<form id="my-awesome-dropzone" class="dropzone" action="/module/files/uploadFile">-->
-                    <div id="myDropzone" class="dropzone" style="">
-                    </div>
-                    <div class="dropzone-previews"></div>
-                        <!--<button type="submit"    class="btn btn-primary pull-right" id="btn_submit">提交</button>-->
-                    <!--</form>-->
-                </div>
+                <div class="dropzone-previews"></div>
+                    <!--<button type="submit"    class="btn btn-primary pull-right" id="btn_submit">提交</button>-->
+                <!--</form>-->
             </div>
         </div>
     </div>
 </div>
+
 <!--附件列表-->
 <div id="fileList" style="display: none">
     <div class="center">
         <table id="fileListTabl"></table>
     </div>
 </div>
+
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/resource/jquery-confirm.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>

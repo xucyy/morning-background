@@ -57,26 +57,14 @@
     width: 90%;
     margin: 0 auto;
 }
-/*短中长表格内Input*/
-.tableInput,.tableInputSS,.tableInputS,.tableInputM,.tableInputL{
-    width: 100px;
+/*标题Input*/
+.titleInput{
+    width: 70px;
     border: 0;
-    /*border-bottom: 1px solid #0e9aef;*/
+    border-bottom: 1px solid #0e9aef;
     outline: none;
     text-align: center;
     vertical-align: bottom;
-}
-.tableInputSS{
-    width: 20px!important;
-}
-.tableInputS{
-    width: 150px!important;
-}
-.tableInputM{
-    width: 300px!important;
-}
-.tableInputL{
-    width: 400px!important;
 }
 
 /*加载等待*/
