@@ -79,5 +79,13 @@ public class FilesServiceImpl implements IFilesService
 	{
 		return filesMapper.deleteFilesByIds(Convert.toStrArray(ids));
 	}
-	
+
+
+	/**
+	 * 根据单据id查询附件列表
+	 */
+	@Override
+	public List<Files>  selectFilesListByBillId(String  billId){
+		return filesMapper.selectFilesListByBillId(billId);
+	}
 }

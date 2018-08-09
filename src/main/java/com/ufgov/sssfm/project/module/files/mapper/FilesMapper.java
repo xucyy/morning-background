@@ -60,5 +60,10 @@ public interface FilesMapper
      * @return 结果
      */
 	public int deleteFilesByIds(String[] fileIds);
+
+	/**
+	 * 根据单据id查询附件列表
+	 */
+	public List<Files>  selectFilesListByBillId(String  billId);
 	
 }
