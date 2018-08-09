@@ -71,10 +71,10 @@
                 SEND_STATUS=#{send_status}
             </if>
             <if test="sp_status =='01'">
-                SP_STATUS in('01','02','03')
+                and SP_STATUS in('01','02','03')
             </if>
             <if test="sp_status =='02'">
-                SP_STATUS in('02','03')
+                and SP_STATUS in('02','03')
             </if>
         </where>
     </select>

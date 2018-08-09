@@ -7,6 +7,7 @@ spring:
     url: jdbc:mysql://10.10.5.62:3308/springboot0801?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
     #url: jdbc:mysql://172.30.134.56:3306/dsjfx03?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
     #username: rootq61l
+    #password: ufgov1234
     username: root
     password: root
     # 初始化大小，最小，最大
