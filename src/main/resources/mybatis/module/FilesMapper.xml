@@ -37,6 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectFilesVo"/>
         where file_id = #{fileId}
     </select>
+
+    <select id="selectFilesListByBillId" parameterType="String" resultMap="FilesResult">
+        <include refid="selectFilesVo"/>
+        where bill_id = #{fileId}
+    </select>
         
     <insert id="insertFiles" parameterType="Files">
         insert into fm_files

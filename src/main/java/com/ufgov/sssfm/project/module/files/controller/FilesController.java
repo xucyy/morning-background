@@ -26,7 +26,9 @@ import com.ufgov.sssfm.framework.web.controller.BaseController;
 import com.ufgov.sssfm.framework.web.page.TableDataInfo;
 import com.ufgov.sssfm.framework.web.domain.AjaxResult;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -120,10 +122,11 @@ public class FilesController extends BaseController {
      * 上传附件
      */
 //    @Log(title = "个人信息", action = BusinessType.UPDATE)
-    @PostMapping("/uploadFile")
-    @ResponseBody
-    @ApiOperation(value = "上传附件", notes = "上传附件")
-    public AjaxResult updateAvatar(Files files, @RequestParam("avatarfile") MultipartFile file) {
+    public AjaxResult updateAvatar(HttpServletRequest request) {
+        MultipartFile file = ((MultipartHttpServletRequest)request).getFile("file");
+        String billId = request.getParameter("billId");
+        Files files = new Files();
+        files.setFileId(billId);
         try {
             if (!file.isEmpty()) {
                 //获取文件类型
@@ -131,7 +134,7 @@ public class FilesController extends BaseController {
                 //获取文件类型
                 String suffix = file.getContentType();
                 String avatar = FileUploadUtils.upload(file);
-//                String avatar1 = FileUploadUtils.upload("/statics",file);
+//              String avatar1 = FileUploadUtils.upload("/statics",file);
                 files.setFileId(UUID.randomUUID().toString().trim().replace("-", ""));
                 files.setFilePath(avatar);
                 files.setFileName(fileName);
@@ -147,6 +150,16 @@ public class FilesController extends BaseController {
         }
     }
 
+    /**
+     * 根据单据id查询附件列表
+     */
+    @PostMapping("/listByBillId")
+    @ResponseBody
+    @ApiOperation(value = "根据单据id查询附件列表", notes = "根据单据id查询附件列表")
+    public List<Files> listByBillId(@RequestParam("billId") String billId) {
+        List<Files> list = filesService.selectFilesListByBillId(billId);
+        return list;
+    }
 
 
 

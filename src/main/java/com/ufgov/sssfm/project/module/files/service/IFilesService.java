@@ -50,5 +50,10 @@ public interface IFilesService
      * @return 结果
      */
 	public int deleteFilesByIds(String ids);
+
+	/**
+	 * 根据单据id查询附件列表
+	 */
+	public List<Files>  selectFilesListByBillId(String  billId);
 	
 }
