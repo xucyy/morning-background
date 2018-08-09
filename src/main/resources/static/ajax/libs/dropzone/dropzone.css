@@ -190,7 +190,11 @@
   }
 }
 .dropzone .dz-default.dz-message span {
-  display: none;
+  /*display: none;*/
+  font-size: 20px;
+  font-family: unset;
+  display: block;
+  line-height: 130px;
 }
 .dropzone.dz-square .dz-default.dz-message {
   background-position: 0 -123px;
