@@ -9,7 +9,7 @@ $(function(){
         sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
         zd:'../../../fundApply/FundApplyController/updateBkdSpStatus',//制单
         sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
-        fileList:'/module/files/list'//fileList
+        fileList:'/module/files/listByBillId'//fileList
     };
 
     var fileCount = 0;
@@ -149,7 +149,113 @@ $(function(){
                     $('#gkthree').val(result.gkthree);
                 }
             });
-        }
+        },
+        'click .btn-appendix':function (e, value, row, index) {//上传附件
+            $('#firstTable').bootstrapTable('uncheckAll');
+            layer.open({
+                type: 1,
+                title: '文件上传',
+                closeBtn: 1,
+                area: ['850px', '480px'],
+                shadeClose: true,
+                skin: 'yourclass',
+                content: $('#file')
+            });
+            page.initUploadOption(row.BKD_ID);
+        },
+        'click .btn-fileList':function (e, value, row, index) {//查看附件
+            $('#firstTable').bootstrapTable('uncheckAll');
+            layer.open({
+                type: 1,
+                title: '附件列表',
+                closeBtn: 1,
+                area: ['850px', '480px'],
+                shadeClose: true,
+                skin: 'yourclass',
+                content: $('#fileList')
+            });
+            page.fileListTable('fileListTabl',allUrl.fileList,row.BKD_ID);
+        },
+        'click .btn-sign':function (e, value, row, index) {//签章
+            $('#firstTable').bootstrapTable('uncheckAll');
+            page.getEditTab('QZ');
+            $.ajax({
+                url: allUrl.edit,
+                type:"post",
+                dataType:'json',
+                data:{
+                    bkdId:row.BKD_ID
+                },
+                beforeSend:function (){
+                    $('#myModal').modal('show');
+                },
+                success: function(result){
+                    $('#myModal').modal('hide');
+                    // 插数
+                    $('#year').val(result.year);
+                    $('#month').val(result.month);
+                    $('#day').val(result.day);
+                    $('#xz').val(result.xz);
+                    $('#monthend').val(result.monthend);
+                    $('#lastyearlast').val(result.lastyearlast);
+                    $('#thisyearpre').val(result.thisyearpre);
+                    $('#thisyearplus').val(result.thisyearplus);
+                    $('#monthplus').val(result.monthplus);
+                    $('#lastmonthlast').val(result.lastmonthlast);
+                    $('#thismonthapply').val(result.thismonthapply);
+                    $('#bz').val(result.bz);
+                    $('#tsbkone').val(result.tsbkone);
+                    $('#tsbktwo').val(result.tsbktwo);
+                    $('#tsbkthree').val(result.tsbkthree);
+                    $('#accountone').val(result.accountone);
+                    $('#batchnoone').val(result.batchnoone);
+                    $('#bankone').val(result.bankone);
+                    $('#moneybig').val(result.moneybig);
+                    $('#moneysmall').val(result.moneysmall);
+                    $('#accounttwo').val(result.accounttwo);
+                    $('#batchnotwo').val(result.batchnotwo);
+                    $('#banktwo').val(result.banktwo);
+                    $('#sqdwfzr').val(result.sqdwfzr);
+                    $('#sqdwshr').val(result.sqdwshr);
+                    $('#sqdwjbr').val(result.sqdwjbr);
+                    $('#czsbld').val(result.czsbld);
+                    $('#czsbshr').val(result.czsbshr);
+                    $('#czsbzg').val(result.czsbzg);
+                    $('#gkone').val(result.gkone);
+                    $('#gktwo').val(result.gktwo);
+                    $('#gkthree').val(result.gkthree);
+                    $('#win input').attr('readonly','readonly');//签章只读
+                }
+            });
+        },
+        'click .btn-zd':function (e, value, row, index) {//制单
+            $('#firstTable').bootstrapTable('uncheckAll');
+            if(row.SP_STATUS!='00'){
+                commonJS.confirm('警告','已制单，不可再次制单！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.zd,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID,
+                        sp_status:'01',
+                        sp_name:'制单'
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        //重新加载一次表格
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
+        },
+
     };
 
     var colOne=[    //表头
@@ -175,7 +281,11 @@ $(function(){
         {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                 return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
-                    '<button class="btn btn-primary btn-del">删除</button>'
+                '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
+                '<button class="btn btn-primary btn-appendix">上传附件</button>&nbsp;'+
+                '<button class="btn btn-primary btn-fileList">查看附件</button>&nbsp;'+
+                '<button class="btn btn-primary btn-sign">签章</button>&nbsp;'+
+                '<button class="btn btn-primary btn-zd">制单</button>&nbsp;'
             },
         }
     ];
@@ -232,43 +342,6 @@ $(function(){
                 });
             },
 
-            //加载查看附件表格
-            fileListTable:function(id,url){
-                $('#'+id).bootstrapTable({
-                    url: url,
-                    queryParams: function (params) {
-
-                    },
-                    method: 'post',
-                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                    dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
-                    pageNumber: 1, //初始化加载第一页
-                    pageSize: 10,
-                    pagination: true, // 是否分页
-                    clickToSelect:true,
-                    sidePagination: 'server',//server:服务器端分页|client：前端分页
-                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                    columns: [    //表头
-                        {field: 'ck', checkbox: true},//checkbox列
-                        {
-                            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                                return index + 1;
-                            }
-                        },
-                        {field: 'XZ', title: '文件名', align: 'center'},
-                        {field: 'SQSJ', title: '上传时间', align: 'center'},
-                        {field: 'ACCOUNTONE', title: '上传人', align: 'center'},
-                        {field: 'AAB119', title: '状态', align: 'center'},
-                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
-                                return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-del">删除</button>'
-                            },
-                        }
-                    ]
-                });
-            },
-
             //可编辑表格
             getEditTab:function(edit){
                 if(edit=='addZD'){//制单新增
@@ -311,30 +384,75 @@ $(function(){
             },
 
             //初始化文件上传
-            initUploadOption: function () {
-                var param = {
-                    'billId':'1231233',
-                    'seqNo':fileCount,
-                };
+            initUploadOption: function (param) {
+                Dropzone.autoDiscover = false;//解决两次实例Dropzone错误，可在控制台看到该错误
                 $("#myDropzone").dropzone({
                     url: "/module/files/uploadFile",
-                    params:param,
+                    addRemoveLinks: true,
+                    dictDefaultMessage:'拖动文件至此或者点击上传',
+                    dictCancelUploadConfirmation:'你确定要取消上传吗？',
+                    dictResponseError: '文件上传失败!',
+                    dictCancelUpload: "取消上传",
+                    dictCancelUploadConfirmation: "你确定要取消上传吗?",
+                    dictRemoveFile: "移除文件",
                     headers:{
-                        'billId':'2222222'
+                        'billId':param
                     },
                     init:function () {
                         this.on('success',function (file) {
-                            console.log(file)
-                            fileCount++
+                            console.log(file);
+                            commonJS.confirm('消息','上传成功！');
+                            this.removeFile(file);
                         });
                         this.on('removedfile',function (file) {
                             var _ref;
                             if ((_ref = file.previewElement) != null) {
                                 _ref.parentNode.removeChild(file.previewElement);
                             }
+                        });
+                        this.on('sending',function(data,xhr,formData){
+                            formData.append('billId',param);
+                            formData.append('seqNo',fileCount);
+                            console.log(formData);
                         })
                     }
-                })
+                });
+            },
+
+            //加载查看附件表格
+            fileListTable:function(id,url,param){
+                $('#'+id).bootstrapTable({
+                    url: url,
+                    queryParams:{
+
+                    },
+                    method: 'post',
+                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                    dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
+                    pageNumber: 1, //初始化加载第一页
+                    pageSize: 10,
+                    pagination: true, // 是否分页
+                    clickToSelect:true,
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                    columns: [    //表头
+                        // {field: 'ck', checkbox: true},//checkbox列
+                        {
+                            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                                return index + 1;
+                            }
+                        },
+                        {field: 'XZ', title: '文件名', align: 'center'},
+                        {field: 'SQSJ', title: '上传时间', align: 'center'},
+                        {field: 'ACCOUNTONE', title: '上传人', align: 'center'}
+                        // {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+                        //         return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
+                        //             '<button class="btn btn-primary btn-del">删除</button>'
+                        //     },
+                        // }
+                    ]
+                });
             },
 
             //初始化点击事件
@@ -350,34 +468,6 @@ $(function(){
                 //新增
                 $('#btn-add').on('click',function () {
                     page.getEditTab('addZD');
-                });
-
-                //附件上传
-                $('#btn-appendix').on('click',function () {
-                    layer.open({
-                        type: 1,
-                        title: false,
-                        closeBtn: 0,
-                        area: ['850px', '480px'],
-                        shadeClose: true,
-                        skin: 'yourclass',
-                        content: $('#file')
-                    });
-                    this.initUploadOption()
-                });
-
-                // 附件查看
-                $('#btn-fileList').on('click',function () {
-                    layer.open({
-                        type: 1,
-                        title: '附件列表',
-                        closeBtn: 0,
-                        area: ['850px', '480px'],
-                        shadeClose: true,
-                        skin: 'yourclass',
-                        content: $('#fileList')
-                    });
-                   page.fileListTable('fileListTabl',allUrl.fileList)
                 });
 
                 //保存
@@ -452,55 +542,7 @@ $(function(){
                         commonJS.confirm('警告','只能选择一条数据！');
                     }
                     else{
-                        page.getEditTab('QZ');
-                        $.ajax({
-                            url: allUrl.edit,
-                            type:"post",
-                            dataType:'json',
-                            data:{
-                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID
-                            },
-                            beforeSend:function (){
-                                $('#myModal').modal('show');
-                            },
-                            success: function(result){
-                                $('#myModal').modal('hide');
-                                // 插数
-                                $('#year').val(result.year);
-                                $('#month').val(result.month);
-                                $('#day').val(result.day);
-                                $('#xz').val(result.xz);
-                                $('#monthend').val(result.monthend);
-                                $('#lastyearlast').val(result.lastyearlast);
-                                $('#thisyearpre').val(result.thisyearpre);
-                                $('#thisyearplus').val(result.thisyearplus);
-                                $('#monthplus').val(result.monthplus);
-                                $('#lastmonthlast').val(result.lastmonthlast);
-                                $('#thismonthapply').val(result.thismonthapply);
-                                $('#bz').val(result.bz);
-                                $('#tsbkone').val(result.tsbkone);
-                                $('#tsbktwo').val(result.tsbktwo);
-                                $('#tsbkthree').val(result.tsbkthree);
-                                $('#accountone').val(result.accountone);
-                                $('#batchnoone').val(result.batchnoone);
-                                $('#bankone').val(result.bankone);
-                                $('#moneybig').val(result.moneybig);
-                                $('#moneysmall').val(result.moneysmall);
-                                $('#accounttwo').val(result.accounttwo);
-                                $('#batchnotwo').val(result.batchnotwo);
-                                $('#banktwo').val(result.banktwo);
-                                $('#sqdwfzr').val(result.sqdwfzr);
-                                $('#sqdwshr').val(result.sqdwshr);
-                                $('#sqdwjbr').val(result.sqdwjbr);
-                                $('#czsbld').val(result.czsbld);
-                                $('#czsbshr').val(result.czsbshr);
-                                $('#czsbzg').val(result.czsbzg);
-                                $('#gkone').val(result.gkone);
-                                $('#gktwo').val(result.gktwo);
-                                $('#gkthree').val(result.gkthree);
-                                $('#win input').attr('readonly','readonly');//签章只读
-                            }
-                        });
+
                     }
                 });
 
@@ -581,41 +623,6 @@ $(function(){
                     });
                 });
 
-                //制单
-                $('#btn-zd').on('click',function () {
-                    var sel=$('#firstTable').bootstrapTable('getSelections');
-                    if(sel.length==0){
-                        commonJS.confirm('警告','请选择数据！');
-                    }
-                    else if(sel.length>1){
-                        commonJS.confirm('警告','只能选择一条数据！');
-                    }
-                    else if(sel[0].SP_STATUS!='00'){
-                        commonJS.confirm('警告','已制单，不可再次制单！');
-                    }
-                    else{
-                        $.ajax({
-                            url: allUrl.zd,
-                            type:"post",
-                            dataType:'json',
-                            data:{
-                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
-                                sp_status:'01',
-                                sp_name:'制单'
-                            },
-                            beforeSend:function (){
-                                $('#myModal').modal('show');
-                            },
-                            success: function(result){
-                                $('#myModal').modal('hide');
-                                //重新加载一次表格
-                                $('#firstTable').bootstrapTable('refresh');
-                                commonJS.confirm('消息',result.result,result.msg);
-                            }
-                        });
-                    }
-                });
-
                 //发送财政
                 $('#btn-sendCZ').on('click',function () {
                     if($('#firstTable').bootstrapTable('getSelections').length==0){
@@ -662,11 +669,11 @@ $(function(){
                     var activeTab = $(e.target).text();
                     if (activeTab == '未发财政') {
                         $('#firstTable').bootstrapTable('refresh');
-                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ,#btn-zd').prop('disabled',false);
+                        $('#btn-add,#btn-daily,#btn-sendCZ').prop('disabled',false);
                     }
                     else{
                         $('#secondTable').bootstrapTable('refresh');
-                        $('#btn-add,#btn-sign,#btn-appendix,#btn-daily,#btn-sendCZ,#btn-zd').prop('disabled',true);
+                        $('#btn-add,#btn-daily,#btn-sendCZ').prop('disabled',true);
                     }
                 });
             },
@@ -676,10 +683,9 @@ $(function(){
                     $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
                 }
                 this.getComponents();
-                //打开页面时先加载第一个表格
                 this.getTab('firstTable',allUrl.query,colOne,'00');
                 this.getTab('secondTable',allUrl.query,colTwo,'01');
-
+                Dropzone.autoDiscover = false;
                 this.onEventListener();
             }
         }
