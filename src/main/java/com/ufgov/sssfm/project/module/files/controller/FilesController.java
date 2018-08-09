@@ -122,6 +122,9 @@ public class FilesController extends BaseController {
      * 上传附件
      */
 //    @Log(title = "个人信息", action = BusinessType.UPDATE)
+    @PostMapping("/uploadFile")
+    @ResponseBody
+    @ApiOperation(value = "附件上传", notes = "附件上传")
     public AjaxResult updateAvatar(HttpServletRequest request) {
         MultipartFile file = ((MultipartHttpServletRequest)request).getFile("file");
         String billId = request.getParameter("billId");
