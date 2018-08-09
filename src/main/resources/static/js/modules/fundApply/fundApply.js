@@ -2,18 +2,19 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
-        save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
-        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
-        del:'../../../fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
-        sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
-        zd:'../../../fundApply/FundApplyController/updateBkdSpStatus',//制单
-        sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
-        fileList:'/module/files/listByBillId'//fileList
+        query: ctx+'/fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
+        save:ctx+'/fundApply/FundApplyController/insert_FmBkApply',//保存申请单
+        edit:ctx+'/fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
+        del:ctx+'/fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
+        sendPdf:ctx+'/fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
+        zd:ctx+'/fundApply/FundApplyController/updateBkdSpStatus',//制单
+        sendCZ:ctx+'/fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
+        fileList:ctx+'/module/files/listByBillId',//fileList
+        uploadFile:ctx+'/module/files/uploadFile'
     };
 
     var fileCount = 0;
-
+    var billId = ''
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {//编辑
@@ -161,7 +162,8 @@ $(function(){
                 skin: 'yourclass',
                 content: $('#file')
             });
-            page.initUploadOption(row.BKD_ID);
+            // page.initUploadOption(row.BKD_ID);
+            billId = row.BKD_ID
         },
         'click .btn-fileList':function (e, value, row, index) {//查看附件
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -387,7 +389,7 @@ $(function(){
             initUploadOption: function (param) {
                 Dropzone.autoDiscover = false;//解决两次实例Dropzone错误，可在控制台看到该错误
                 $("#myDropzone").dropzone({
-                    url: "/module/files/uploadFile",
+                    url: allUrl.uploadFile,
                     addRemoveLinks: true,
                     dictCancelUploadConfirmation:'你确定要取消上传吗？',
                     dictResponseError: '文件上传失败!',
@@ -403,14 +405,8 @@ $(function(){
                             commonJS.confirm('消息','上传成功！');
                             this.removeFile(file);
                         });
-                        this.on('removedfile',function (file) {
-                            var _ref;
-                            if ((_ref = file.previewElement) != null) {
-                                _ref.parentNode.removeChild(file.previewElement);
-                            }
-                        });
                         this.on('sending',function(data,xhr,formData){
-                            formData.append('billId',param);
+                            formData.append('billId',billId);
                             formData.append('seqNo',fileCount);
                             console.log(formData);
                         })
@@ -420,10 +416,15 @@ $(function(){
 
             //加载查看附件表格
             fileListTable:function(id,url,param){
+                try{
+                    $('#'+id).bootstrapTable('destroy')
+                }catch (e) {
+
+                }
                 $('#'+id).bootstrapTable({
                     url: url,
                     queryParams:{
-
+                        'billId':param
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -685,6 +686,7 @@ $(function(){
                 this.getTab('firstTable',allUrl.query,colOne,'00');
                 this.getTab('secondTable',allUrl.query,colTwo,'01');
                 Dropzone.autoDiscover = false;
+                this.initUploadOption()
                 this.onEventListener();
             }
         }
