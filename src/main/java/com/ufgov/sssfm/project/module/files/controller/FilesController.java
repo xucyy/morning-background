@@ -1,9 +1,6 @@
 package com.ufgov.sssfm.project.module.files.controller;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -142,6 +139,7 @@ public class FilesController extends BaseController {
                 files.setFilePath(avatar);
                 files.setFileName(fileName);
                 files.setFileType(suffix);
+                files.setCreatTime(new Date());
             }
             if (filesService.insertFiles(files) > 0) {
                 return success();
