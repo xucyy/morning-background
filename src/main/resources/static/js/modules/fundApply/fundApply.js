@@ -1,4 +1,4 @@
-var fileCount = 0;
+
 $(function(){
 
     var allUrl={//后台交互URL
@@ -11,6 +11,8 @@ $(function(){
         sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
         fileList:'/module/files/list'//fileList
     };
+
+    var fileCount = 0;
 
     //单元格按钮事件
     window.operateEvents = {
@@ -229,6 +231,8 @@ $(function(){
                     columns:cols
                 });
             },
+
+            //加载查看附件表格
             fileListTable:function(id,url){
                 $('#'+id).bootstrapTable({
                     url: url,
@@ -264,6 +268,7 @@ $(function(){
                     ]
                 });
             },
+
             //可编辑表格
             getEditTab:function(edit){
                 if(edit=='addZD'){//制单新增
@@ -304,12 +309,13 @@ $(function(){
                 //时间显示到日
                 commonJS.showMonth('yyyy-mm-dd',2,'month',nowTime);
             },
+
             //初始化文件上传
             initUploadOption: function () {
                 var param = {
                     'billId':'1231233',
                     'seqNo':fileCount,
-                }
+                };
                 $("#myDropzone").dropzone({
                     url: "/module/files/uploadFile",
                     params:param,
@@ -330,6 +336,7 @@ $(function(){
                     }
                 })
             },
+
             //初始化点击事件
             onEventListener: function () {
                 //事件图标触发日期选择
@@ -344,6 +351,7 @@ $(function(){
                 $('#btn-add').on('click',function () {
                     page.getEditTab('addZD');
                 });
+
                 //附件上传
                 $('#btn-appendix').on('click',function () {
                     layer.open({
@@ -355,7 +363,9 @@ $(function(){
                         skin: 'yourclass',
                         content: $('#file')
                     });
-                })
+                    this.initUploadOption()
+                });
+
                 // 附件查看
                 $('#btn-fileList').on('click',function () {
                     layer.open({
@@ -368,7 +378,8 @@ $(function(){
                         content: $('#fileList')
                     });
                    page.fileListTable('fileListTabl',allUrl.fileList)
-                })
+                });
+
                 //保存
                 $('#btn-save').on('click',function(){
                         //参数
@@ -666,9 +677,9 @@ $(function(){
                 }
                 this.getComponents();
                 //打开页面时先加载第一个表格
-                this.getTab('firstTable',allUrl.query,colOne,'00')
-                this.getTab('secondTable',allUrl.query,colTwo,'01')
-                this.initUploadOption()
+                this.getTab('firstTable',allUrl.query,colOne,'00');
+                this.getTab('secondTable',allUrl.query,colTwo,'01');
+
                 this.onEventListener();
             }
         }
