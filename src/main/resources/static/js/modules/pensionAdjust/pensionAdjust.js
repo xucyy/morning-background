@@ -96,8 +96,7 @@ $(function(){
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        spStatus:'00'
+                        timeEnd:$('#endTime').val().replace(/-/g, '')
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
