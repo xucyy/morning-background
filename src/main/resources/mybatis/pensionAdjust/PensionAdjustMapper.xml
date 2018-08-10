@@ -76,5 +76,19 @@
           #{yjszjy,jdbcType=VARCHAR}, #{sbkzs,jdbcType=VARCHAR}, #{sxje,jdbcType=VARCHAR},
           #{sbje,jdbcType=VARCHAR}, #{czje,jdbcType=VARCHAR})
       </insert>
+    <select id="query_persionAdjust_pagedata" parameterType="java.util.Map"  resultType="java.util.HashMap"  >
 
-    </mapper>
+        select * from fm_adjust_gold
+        <where>
+            <if test="(timeStart !=null and timeStart != '')"><!-- 开始时间检索 -->
+                and date_format(BZDATE,'%y%m%d')>= date_format(#{timeStart},'%y%m%d')
+            </if>
+            <if test="(timeEnd !=null and timeEnd != '')"><!-- 结束时间检索 -->
+                and date_format(#{timeEnd},'%y%m%d') >= date_format(BZDATE,'%y%m%d')
+            </if>
+        </where>
+
+
+    </select>
+
+</mapper>

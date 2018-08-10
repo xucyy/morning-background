@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,6 +35,17 @@ public class PensionAdjustController {
 
         @Autowired
         private FmBankXmlLogService fmBankXmlLogService;
+        @PostMapping("/query_persionAdjust_pagedata")
+        public String  query_persionAdjust_pagedata(String timeStart, String timeEnd){
+                JSONObject jsonObject = new JSONObject();
+                Map map = new HashMap();
+                map.put("timeStart", timeStart);
+                map.put("timeEnd", timeEnd);
+                List query_list= pensionAdjustService.query_persionAdjust_pagedata(map);
+                jsonObject.put("result",query_list);
+                return jsonObject.toString();
+        }
+
         @PostMapping("/insert_PensionAdjust")
         //新增和编辑  的保存
         public String insert_PensionAdjust(String pensionAdjustJson){

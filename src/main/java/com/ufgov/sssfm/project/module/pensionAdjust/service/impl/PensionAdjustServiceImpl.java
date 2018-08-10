@@ -36,4 +36,8 @@ public class PensionAdjustServiceImpl implements PensionAdjustService {
     public int deletefmAdjustGoldByPK(String Id) {
         return pensionAdjustMapper.deletepensionAdjustMapperZhuByPK(Id);
     }
+    @Override
+     public List  query_persionAdjust_pagedata(Map map){
+        return pensionAdjustMapper.query_persionAdjust_pagedata(map);
+    }
 }

@@ -28,4 +28,5 @@ public interface PensionAdjustMapper {
     int insert_fmAdjustGold(FmAdjustGold fmAdjustGold);
     int deletepensionAdjustMapperZhuByPK(String id);
     int deletepensionAdjustMapperByPK(String id);
+    List query_persionAdjust_pagedata(Map map);
 }
