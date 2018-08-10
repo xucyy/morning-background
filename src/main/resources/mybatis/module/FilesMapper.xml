@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="filePath != null and filePath != ''"> and file_path = #{filePath}</if>
              <if test="billId != null and billId != ''"> and bill_id = #{billId}</if>
              <if test="seqNo != null and seqNo != ''"> and seq_no = #{seqNo}</if>
-             <if test="creatTime != null and creatTime != ''"> and creat_time = #{creatTime}</if>
+             <if test="creatTime != null "> and creat_time = #{creatTime}</if>
              <if test="remark != null and remark != ''"> and remark = #{remark}</if>
          </where>
     </select>
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="filePath != null and filePath != '' ">file_path,</if>
 			<if test="billId != null and billId != '' ">bill_id,</if>
 			<if test="seqNo != null and seqNo != '' ">seq_no,</if>
-			<if test="creatTime != null and creatTime != '' ">creat_time,</if>
+			<if test="creatTime != null">creat_time,</if>
 			<if test="remark != null and remark != '' ">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="filePath != null and filePath != ''">#{filePath},</if>
 			<if test="billId != null and billId != ''">#{billId},</if>
 			<if test="seqNo != null and seqNo != ''">#{seqNo},</if>
-			<if test="creatTime != null and creatTime != ''">#{creatTime},</if>
+			<if test="creatTime != null ">#{creatTime},</if>
 			<if test="remark != null and remark != ''">#{remark},</if>
          </trim>
     </insert>

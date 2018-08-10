@@ -124,10 +124,11 @@ public class FilesController extends BaseController {
     @ApiOperation(value = "附件上传", notes = "附件上传")
     public AjaxResult updateAvatar(HttpServletRequest request) {
         MultipartFile file = ((MultipartHttpServletRequest)request).getFile("file");
-        String billId = request.getParameter("billId");
+
         Files files = new Files();
-        files.setFileId(billId);
+
         try {
+            String billId = request.getParameter("billId");
             if (!file.isEmpty()) {
                 //获取文件类型
                 String fileName = file.getOriginalFilename();
@@ -140,6 +141,7 @@ public class FilesController extends BaseController {
                 files.setFileName(fileName);
                 files.setFileType(suffix);
                 files.setCreatTime(new Date());
+                files.setBillId(billId);
             }
             if (filesService.insertFiles(files) > 0) {
                 return success();
