@@ -51,7 +51,23 @@ $(function(){
                 },
                 success: function(result){
                     $('#myModal').modal('hide');
-                    $('#modalTable').bootstrapTable('load',result.TABLE);
+                    $('#modalTable').bootstrapTable('destroy').bootstrapTable({
+                        url: allUrl.edit,
+                        queryParams: {
+                            id:row.ID
+                        },
+                        method: 'post',
+                        contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                        dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
+                        pageNumber: 1, //初始化加载第一页
+                        pageSize: 10,
+                        pagination: true, // 是否分页
+                        clickToSelect:true,
+                        sidePagination: 'server',//server:服务器端分页|client：前端分页
+                        paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                        columns:cols
+                    });
                     $('#year').val(result.result[0].YEAR);
                     $('#quarter').val(result.result[0].QUARTER);
                     $('#bzDate').val(result.result[0].BZDATE);
@@ -79,7 +95,7 @@ $(function(){
                     success: function(result){
                         console.log(row.ID);
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('load',result);
+                        $('#modalTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -103,7 +119,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('load',result);
+                        $('#modalTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -111,8 +127,11 @@ $(function(){
         },
         'click .btn-sh':function (e, value, row, index) {//审核
             $('#firstTable').bootstrapTable('uncheckAll');
-            if(row.SP_STATUS!='01'){
-                commonJS.confirm('警告','已经审核，不可再次审核！');
+            if(row.SP_STATUS='00'){
+                commonJS.confirm('警告','请先提交！');
+            }
+            else if(row.SP_STATUS!='01'){
+                commonJS.confirm('警告','已审核，不可再次审核！');
             }
             else{
                 $.ajax({
@@ -128,7 +147,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('load',result);
+                        $('#modalTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
