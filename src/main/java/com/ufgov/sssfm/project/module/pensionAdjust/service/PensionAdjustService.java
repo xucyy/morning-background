@@ -21,4 +21,6 @@ public interface PensionAdjustService {
     List query_persionAdjust_item(String id);
     //提交
     List tijiao_persionAdjust(FmAdjustGold fmAdjustGold);
+
+    List query_persionAdjust_item_table(String id);
 }

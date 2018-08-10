@@ -1,6 +1,7 @@
 package com.ufgov.sssfm.project.module.pensionAdjust.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGoldItem;
 import com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold;
@@ -51,7 +52,10 @@ public class PensionAdjustController {
         public String  query_persionAdjust_item(String id){
             JSONObject jsonObject = new JSONObject();
             List query_list= pensionAdjustService.query_persionAdjust_item(id);
+            List TABLE = pensionAdjustService.query_persionAdjust_item_table(id);
+            //query_list.add(TABLE);
             jsonObject.put("result",query_list);
+            jsonObject.put("TABLE",TABLE);
             return jsonObject.toString();
         }
         //养老调剂金修提交
@@ -74,27 +78,33 @@ public class PensionAdjustController {
                 JSONObject jsonObject=new JSONObject();
                 try{
                         FmAdjustGold fmAdjustGold = JSON.parseObject(pensionAdjustJson,FmAdjustGold.class);
-                        FmAdjustGoldItem fmAdjustGoldItem = JSON.parseObject(pensionAdjustJson,FmAdjustGoldItem.class);
+                        JSONObject jsonObject1=(JSONObject)JSONArray.parseObject(pensionAdjustJson);
+                         JSONArray personObject = (JSONArray) jsonObject1.get("table");
                         //判断是否存在拨款单Id,如果存在，则先删除，后插入。不存在，直接插入
                         String id = (UUID.randomUUID()+"").replaceAll("-","");
                         if((fmAdjustGold.getId().length()<=0)){
                                 fmAdjustGold.setId(id);
                                 pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
+                                for(int i=0;i<personObject.size();i++){
+                                    String personOb = personObject.get(i)+"";
+                                    FmAdjustGoldItem fmAdjustGoldItem = JSON.parseObject(personOb,FmAdjustGoldItem.class);
+                                    fmAdjustGoldItem.setId(id);
+                                    pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
+                                }
                         }else{
                                 //删除
                                 pensionAdjustService.deletefmAdjustGoldByPK(fmAdjustGold.getId());
                                 //插入
                                 pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
-                        }
-                        if((fmAdjustGoldItem.getId().length()<=0)){
-                            fmAdjustGoldItem.setId(id);
-                            pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
-                        }else{
-                            //删除
-                            pensionAdjustService.deletefmAdjustGoldItemByPK(fmAdjustGoldItem.getId());
+                            pensionAdjustService.deletefmAdjustGoldItemByPK(fmAdjustGold.getId());
                             //插入
-                            pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
+                            for( int m=0;m<personObject.size();m++){
+                                String personOb = personObject.get(m)+"";
+                                FmAdjustGoldItem fmAdjustGoldItem = JSON.parseObject(personOb,FmAdjustGoldItem.class);
+                                pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
+                            }
                         }
+
                 }catch (Exception e){
                         jsonObject.put("result","插入数据库失败");
                         return jsonObject.toString();
