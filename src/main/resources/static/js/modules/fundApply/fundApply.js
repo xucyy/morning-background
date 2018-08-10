@@ -2,15 +2,15 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        query: '../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
-        save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
-        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
-        del:'../../../fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
-        sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
-        zd:'../../../fundApply/FundApplyController/updateBkdSpStatus',//制单
-        sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
-        uploadFile:'../../../module/files/uploadFile',//上传附件
-        fileList:'../../../module/files/listByBillId'//查看附件
+        query: ctx + 'fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
+        save:ctx + 'fundApply/FundApplyController/insert_FmBkApply',//保存申请单
+        edit:ctx + 'fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
+        del:ctx + 'fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
+        sendPdf:ctx + 'fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
+        zd:ctx + 'fundApply/FundApplyController/updateBkdSpStatus',//制单
+        sendCZ:ctx + 'fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
+        uploadFile:ctx + 'module/files/uploadFile',//上传附件
+        fileList:ctx + 'module/files/listByBillId'//查看附件
     };
 
     var fileCount = 0;//文件数量判断
