@@ -50,8 +50,11 @@ $(function(){
                 success: function(result){
                     console.log(row.ID);
                     $('#myModal').modal('hide');
-                    $('#modalTable').bootstrapTable('load',result);
-                    $('#year').val(result.YEAR);
+                    $('#modalTable').bootstrapTable('load',result[0].TABLE);
+                    $('#year').val(result[0].YEAR);
+                    $('#quarter').val(result[0].QUARTER);
+                    $('#bzDate').val(result[0].BZDATE);
+                    $('#shDate').val(result[0].SHDATE);
                 }
             });
         },
