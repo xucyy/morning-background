@@ -2,7 +2,7 @@ $(function(){
 
     var allUrl={//后台交互URL
         save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
-        query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
+        query:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
         sh:'../../../fundApply/FundApplyController/updateBkdSpStatus',//审核
         edit:'../../../fundApply/FundApplyController/selectBKApplyByPK'//查看
     };
@@ -26,7 +26,7 @@ $(function(){
         {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'DELID', title: '删除行', align: 'center',visible:false}//删除一行预定ID列
+        {field: 'DELID', title: '删除行', align: 'center',visible:false,formatter(value,row,index){return value+1}}//删除一行预定ID列
     ];
 
     //单元格按钮事件
@@ -39,8 +39,7 @@ $(function(){
                 url: allUrl.query,
                 queryParams: {
                     timeStart:$('#startTime').val().replace(/-/g, ''),
-                    timeEnd:$('#endTime').val().replace(/-/g, ''),
-                    sp_status:'01'
+                    timeEnd:$('#endTime').val().replace(/-/g, '')
                 },
                 method: 'post',
                 contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -55,8 +54,6 @@ $(function(){
                 paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                 columns:cols
             });
-            $('#modalTable').bootstrapTable('insertRow',
-                {index:$('#modalTable').bootstrapTable('getData').length,row:{}})
         },
         'click .btn-submit':function (e, value, row, index) {//提交
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -76,8 +73,7 @@ $(function(){
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        sp_status:'01'
+                        timeEnd:$('#endTime').val().replace(/-/g, '')
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -139,6 +135,8 @@ $(function(){
                     $('#firstTable').bootstrapTable('uncheckAll');
                     $('#win').modal('show');
                     $('#myModalLabel').html('新增审核表');
+                    $('#win input').val('');//新增置空
+                    $('#win td span').html('');//新增置空
                     $("#modalTable").bootstrapTable('destroy').bootstrapTable({
                         pageNumber: 1, //初始化加载第一页
                         pageSize: 10,
