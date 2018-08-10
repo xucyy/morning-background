@@ -94,11 +94,8 @@
 
     </select>
     <select id="query_persionAdjust_item" parameterType="java.lang.String"  resultType="java.util.Map" >
-        select ID, DWMC, SNJJJY,
-        DNJJSR, DNJJZC, YSJJJE,
-        YJJJJY, YJJJSR, DNYJZC,
-        YJSZJY, SBKZS, SXJE,
-        SBJE, CZJE from fm_adjust_gold_item
+        SELECT M.*, R.*  FROM fm_adjust_gold_item M
+      LEFT JOIN fm_adjust_gold R ON R.ID = M.ID
         where  ID = #{id,jdbcType=VARCHAR}
     </select>
 </mapper>
