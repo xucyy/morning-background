@@ -34,6 +34,6 @@ public class PensionAdjustServiceImpl implements PensionAdjustService {
     }
     @Override
     public int deletefmAdjustGoldByPK(String Id) {
-        return pensionAdjustMapper.deletepensionAdjustMapperByPK(Id);
+        return pensionAdjustMapper.deletepensionAdjustMapperZhuByPK(Id);
     }
 }
