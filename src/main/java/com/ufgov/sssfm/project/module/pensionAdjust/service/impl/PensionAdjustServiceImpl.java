@@ -51,4 +51,11 @@ public class PensionAdjustServiceImpl implements PensionAdjustService {
     public  List tijiao_persionAdjust(FmAdjustGold fmAdjustGold){
         return pensionAdjustMapper.update_fmAdjustGold(fmAdjustGold);
     }
+    public int delete_persionAdjust(String id){
+        return pensionAdjustMapper.delete_persionAdjust(id);
+    }
+    public int delete_persionAdjust_item(String id){
+        return pensionAdjustMapper.delete_persionAdjust_item(id);
+    }
+
 }

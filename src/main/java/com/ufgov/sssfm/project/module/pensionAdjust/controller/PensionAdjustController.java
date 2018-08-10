@@ -72,6 +72,20 @@ public class PensionAdjustController {
             jsonObject.put("result","养老调剂金单提交成功");
             return jsonObject.toString();
         }
+        //养老调剂金删除
+        @PostMapping("/tijiao_persionAdjust")
+        public String  delete_persionAdjust(String id){
+            JSONObject jsonObject = new JSONObject();
+            try{
+                pensionAdjustService.delete_persionAdjust(id);
+                pensionAdjustService.delete_persionAdjust_item(id);
+            }catch (Exception e){
+                jsonObject.put("result","数据库删除失败");
+                return jsonObject.toString();
+            }
+            jsonObject.put("result","养老调剂金单删除成功");
+            return jsonObject.toString();
+        }
         @PostMapping("/insert_PensionAdjust")
         //新增和编辑  的保存
         public String insert_PensionAdjust(String pensionAdjustJson){

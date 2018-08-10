@@ -106,4 +106,12 @@
         update fm_adjust_gold    set SP_STATUS =  #{SP_STATUS}
         where ID = #{id,jdbcType=VARCHAR}
       </update>
+    <delete id="delete_persionAdjust" parameterType="java.lang.String">
+            delete from fm_adjust_gold
+            where ID = #{id,jdbcType=VARCHAR}
+        </delete>
+    <delete id="delete_persionAdjust_item" parameterType="java.lang.String">
+            delete from fm_adjust_gold_item
+            where ID = #{id,jdbcType=VARCHAR}
+        </delete>
 </mapper>

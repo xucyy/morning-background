@@ -35,4 +35,8 @@ public interface PensionAdjustMapper {
     List update_fmAdjustGold(FmAdjustGold fmAdjustGold);
 
     List query_persionAdjust_item_table(String id);
+
+    int delete_persionAdjust(String id);
+
+    int delete_persionAdjust_item(String id);
 }
