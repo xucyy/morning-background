@@ -41,12 +41,7 @@
         ID, YEAR, QUARTER, SBJZ, SBLD, SBCZ, SBJBR, CZLD, CZZR, CZJBR, BZDATE, SHDATE, SP_STATUS,
         SEND_STATUS
       </sql>
-        <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-            select
-            <include refid="Base_Column_List" />
-            from fm_adjust_gold
-            where ID = #{id,jdbcType=VARCHAR}
-        </select>
+
 
         <insert id="insert_fmAdjustGold" parameterType="com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold">
         insert into fm_adjust_gold (ID, YEAR, QUARTER,
