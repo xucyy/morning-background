@@ -3,7 +3,8 @@ $(function(){
     var allUrl={//后台交互URL
         save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
         query:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
-        edit:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_item/'//编辑
+        edit:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_item',//编辑
+        submit:'../../../persionAdjust/PersionAdjustController/tijiao_persionAdjust'//提交
     };
     var cols=[    //表头
         // {field: 'ck', checkbox: true},//checkbox列
@@ -31,6 +32,7 @@ $(function(){
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit':function (e, value, row, index) {//修改
+
             $('#firstTable').bootstrapTable('uncheckAll');
             $('#win').modal('show');
             $('#myModalLabel').html('编辑审核表');
@@ -46,6 +48,7 @@ $(function(){
                     $('#myModal').modal('show');
                 },
                 success: function(result){
+                    console.log(row.ID);
                     $('#myModal').modal('hide');
                     $('#modalTable').bootstrapTable('load',result);
                     $('#year').val(result.YEAR);
@@ -54,6 +57,29 @@ $(function(){
         },
         'click .btn-submit':function (e, value, row, index) {//提交
             $('#firstTable').bootstrapTable('uncheckAll');
+            if(row.SP_STATUS!='00'){
+                commonJS.confirm('警告','已经提交，不可再次提交！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.submit,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        id:row.ID,
+                        spStatus:'01'
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        console.log(row.ID);
+                        $('#myModal').modal('hide');
+                        $('#modalTable').bootstrapTable('load',result);
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
         },
         'click .btn-del':function (e, value, row, index) {//删除
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -71,8 +97,7 @@ $(function(){
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
                         timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        spStatus:'00',
-                        sendStatus:'00'
+                        spStatus:'00'
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
