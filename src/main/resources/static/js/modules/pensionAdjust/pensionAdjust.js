@@ -49,11 +49,11 @@ $(function(){
                 },
                 success: function(result){
                     $('#myModal').modal('hide');
-                    //$('#modalTable').bootstrapTable('load',result[0].TABLE?result[0].TABLE:[]);
-                    $('#year').val(result.YEAR);
-                    $('#quarter').val(result.QUARTER);
-                    $('#bzDate').val(result.BZDATE);
-                    $('#shDate').val(result.SHDATE);
+                    $('#modalTable').bootstrapTable('load',result.TABLE);
+                    $('#year').val(result.result[0].YEAR);
+                    $('#quarter').val(result.result[0].QUARTER);
+                    $('#bzDate').val(result.result[0].BZDATE);
+                    $('#shDate').val(result.result[0].SHDATE);
                 }
             });
         },
@@ -98,7 +98,9 @@ $(function(){
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, '')
+                        timeEnd:$('#endTime').val().replace(/-/g, ''),
+                        spStatus:'00',
+                        sendStatus:'00'
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -213,6 +215,7 @@ $(function(){
                         id:$('#firstTable').bootstrapTable('getSelections').length==0?'':$('#firstTable').bootstrapTable('getSelections')[0].ID,
                         year:$('#year').val(),
                         month:$('#month').val(),
+                        quarter:$('#quarter').val(),
                         bzdate:$('#bzDate').val(),
                         shdate:$('#shDate').val(),
                         table:$('#modalTable').bootstrapTable('getData')

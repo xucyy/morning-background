@@ -437,7 +437,7 @@ $(function(){
                             }
                         },
                         {field: 'fileName', title: '文件名', align: 'center'},
-                        {field: 'filePath', title: '附件名称', align: 'center'},
+                        {field: 'filePath', title: '附件路径', align: 'center'},
                         {field: 'creatTime', title: '上传时间', align: 'center'}
                     ]
                 });
