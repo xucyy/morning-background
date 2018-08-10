@@ -17,4 +17,6 @@ public interface PensionAdjustService {
     int deletefmAdjustGoldByPK(String id);
    //查询养老调剂金主表
     List query_persionAdjust_pagedata(Map map);
+   //查询养老调剂金子表
+    List query_persionAdjust_item(String id);
 }

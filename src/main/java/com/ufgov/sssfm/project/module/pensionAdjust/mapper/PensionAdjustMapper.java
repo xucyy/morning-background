@@ -29,4 +29,6 @@ public interface PensionAdjustMapper {
     int deletepensionAdjustMapperZhuByPK(String id);
     int deletepensionAdjustMapperByPK(String id);
     List query_persionAdjust_pagedata(Map map);
+
+    List query_persionAdjust_item(String id);
 }

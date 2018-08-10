@@ -45,7 +45,13 @@ public class PensionAdjustController {
                 jsonObject.put("result",query_list);
                 return jsonObject.toString();
         }
-
+        @PostMapping("/query_persionAdjust_item")
+        public String  query_persionAdjust_item(String id){
+            JSONObject jsonObject = new JSONObject();
+            List query_list= pensionAdjustService.query_persionAdjust_item(id);
+            jsonObject.put("result",query_list);
+            return jsonObject.toString();
+        }
         @PostMapping("/insert_PensionAdjust")
         //新增和编辑  的保存
         public String insert_PensionAdjust(String pensionAdjustJson){
