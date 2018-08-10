@@ -15,7 +15,7 @@ $.fn.datetimepicker.dates['zh'] = {  //datetimepicker汉化
     today:       "今天"
 };
 //ajax根路径全局变量
-var ctx = getRootPath()
+var ctx = getRootPath();
 function getRootPath(){
     //获取当前网址
     var curWwwPath=window.document.location.href;

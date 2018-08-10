@@ -2,19 +2,20 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        query: ctx+'/fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
-        save:ctx+'/fundApply/FundApplyController/insert_FmBkApply',//保存申请单
-        edit:ctx+'/fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
-        del:ctx+'/fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
-        sendPdf:ctx+'/fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
-        zd:ctx+'/fundApply/FundApplyController/updateBkdSpStatus',//制单
-        sendCZ:ctx+'/fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
-        fileList:ctx+'/module/files/listByBillId',//fileList
-        uploadFile:ctx+'/module/files/uploadFile'
+        query: '../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
+        save:'../../../fundApply/FundApplyController/insert_FmBkApply',//保存申请单
+        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK',//编辑申请单
+        del:'../../../fundApply/FundApplyController/deleteBKApplyByPK',//删除申请单
+        sendPdf:'../../../fundApply/FundApplyController/createBKpdfToLocal',//向后台发送PDF编码
+        zd:'../../../fundApply/FundApplyController/updateBkdSpStatus',//制单
+        sendCZ:'../../../fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
+        uploadFile:'../../../module/files/uploadFile',//上传附件
+        fileList:'../../../module/files/listByBillId'//查看附件
     };
 
-    var fileCount = 0;
-    var billId = ''
+    var fileCount = 0;//文件数量判断
+    var billId = '';//定义上传文件主键
+
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {//编辑
@@ -60,15 +61,15 @@ $(function(){
                         $('#accounttwo').val(result.accounttwo);
                         $('#batchnotwo').val(result.batchnotwo);
                         $('#banktwo').val(result.banktwo);
-                        $('#sqdwfzr').val(result.sqdwfzr);
-                        $('#sqdwshr').val(result.sqdwshr);
-                        $('#sqdwjbr').val(result.sqdwjbr);
-                        $('#czsbld').val(result.czsbld);
-                        $('#czsbshr').val(result.czsbshr);
-                        $('#czsbzg').val(result.czsbzg);
-                        $('#gkone').val(result.gkone);
-                        $('#gktwo').val(result.gktwo);
-                        $('#gkthree').val(result.gkthree);
+                        // $('#sqdwfzr').val(result.sqdwfzr);
+                        // $('#sqdwshr').val(result.sqdwshr);
+                        // $('#sqdwjbr').val(result.sqdwjbr);
+                        // $('#czsbld').val(result.czsbld);
+                        // $('#czsbshr').val(result.czsbshr);
+                        // $('#czsbzg').val(result.czsbzg);
+                        // $('#gkone').val(result.gkone);
+                        // $('#gktwo').val(result.gktwo);
+                        // $('#gkthree').val(result.gkthree);
                     }
                 });
             }
@@ -139,15 +140,15 @@ $(function(){
                     $('#accounttwo').val(result.accounttwo);
                     $('#batchnotwo').val(result.batchnotwo);
                     $('#banktwo').val(result.banktwo);
-                    $('#sqdwfzr').val(result.sqdwfzr);
-                    $('#sqdwshr').val(result.sqdwshr);
-                    $('#sqdwjbr').val(result.sqdwjbr);
-                    $('#czsbld').val(result.czsbld);
-                    $('#czsbshr').val(result.czsbshr);
-                    $('#czsbzg').val(result.czsbzg);
-                    $('#gkone').val(result.gkone);
-                    $('#gktwo').val(result.gktwo);
-                    $('#gkthree').val(result.gkthree);
+                    $('#sqdwfzr').html(result.sqdwfzr);
+                    $('#sqdwshr').html(result.sqdwshr);
+                    $('#sqdwjbr').html(result.sqdwjbr);
+                    $('#czsbld').html(result.czsbld);
+                    $('#czsbshr').html(result.czsbshr);
+                    $('#czsbzg').html(result.czsbzg);
+                    $('#gkone').html(result.gkone);
+                    $('#gktwo').html(result.gktwo);
+                    $('#gkthree').html(result.gkthree);
                 }
             });
         },
@@ -217,15 +218,15 @@ $(function(){
                     $('#accounttwo').val(result.accounttwo);
                     $('#batchnotwo').val(result.batchnotwo);
                     $('#banktwo').val(result.banktwo);
-                    $('#sqdwfzr').val(result.sqdwfzr);
-                    $('#sqdwshr').val(result.sqdwshr);
-                    $('#sqdwjbr').val(result.sqdwjbr);
-                    $('#czsbld').val(result.czsbld);
-                    $('#czsbshr').val(result.czsbshr);
-                    $('#czsbzg').val(result.czsbzg);
-                    $('#gkone').val(result.gkone);
-                    $('#gktwo').val(result.gktwo);
-                    $('#gkthree').val(result.gkthree);
+                    $('#sqdwfzr').html(result.sqdwfzr);
+                    $('#sqdwshr').html(result.sqdwshr);
+                    $('#sqdwjbr').html(result.sqdwjbr);
+                    $('#czsbld').html(result.czsbld);
+                    $('#czsbshr').html(result.czsbshr);
+                    $('#czsbzg').html(result.czsbzg);
+                    $('#gkone').html(result.gkone);
+                    $('#gktwo').html(result.gktwo);
+                    $('#gkthree').html(result.gkthree);
                     $('#win input').attr('readonly','readonly');//签章只读
                 }
             });
@@ -386,8 +387,7 @@ $(function(){
             },
 
             //初始化文件上传
-            initUploadOption: function (param) {
-                Dropzone.autoDiscover = false;//解决两次实例Dropzone错误，可在控制台看到该错误
+            initUploadOption: function () {
                 $("#myDropzone").dropzone({
                     url: allUrl.uploadFile,
                     addRemoveLinks: true,
@@ -397,7 +397,7 @@ $(function(){
                     dictCancelUploadConfirmation: "你确定要取消上传吗?",
                     dictRemoveFile: "移除文件",
                     headers:{
-                        'billId':param
+                        'billId':billId
                     },
                     init:function () {
                         this.on('success',function (file) {
@@ -685,8 +685,7 @@ $(function(){
                 this.getComponents();
                 this.getTab('firstTable',allUrl.query,colOne,'00');
                 this.getTab('secondTable',allUrl.query,colTwo,'01');
-                Dropzone.autoDiscover = false;
-                this.initUploadOption()
+                this.initUploadOption();
                 this.onEventListener();
             }
         }

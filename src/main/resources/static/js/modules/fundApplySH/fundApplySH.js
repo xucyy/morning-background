@@ -9,7 +9,6 @@ $(function(){
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-see':function (e, value, row, index) {//查看
-            $('#firstTable').bootstrapTable('uncheckAll'); //取消所有勾选项
             $('#win').modal('show');
             $('#win input').attr('readonly','readonly');//不可编辑
             $.ajax({
@@ -59,6 +58,58 @@ $(function(){
                     $('#gkthree').val(result.gkthree);
                 }
             });
+        },
+        'click .btn-sh':function (e, value, row, index){//审核
+            if(row.SP_STATUS!='01'){
+                commonJS.confirm('警告','已审核，不可再次审核！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.sh,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID,
+                        sp_status:'02',
+                        sp_name:'审核'
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        //重新加载一次表格
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
+        },
+        'click .btn-disagree':function (e, value, row, index){//驳回
+            if(row.SP_STATUS=='03'){
+                commonJS.confirm('警告','已审批，不可驳回！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.sh,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID,
+                        sp_status:'00',
+                        sp_name:'驳回'
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        //重新加载一次表格
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
         }
     };
 
@@ -88,7 +139,7 @@ $(function(){
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                     columns:[    //表头
-                        {field: 'ck', checkbox: true},//checkbox列
+                        // {field: 'ck', checkbox: true},//checkbox列
                         {
                             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
                                 return index + 1;
@@ -109,7 +160,9 @@ $(function(){
                         {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
                         {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
-                                return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
+                                return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'+
+                                    '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
+                                    '<button class="btn btn-primary btn-disagree">驳回</button>'
                             },
                         }
                     ]
@@ -135,68 +188,6 @@ $(function(){
                 //查询
                 $('#btn-query').on('click', function () {
                     $('#firstTable').bootstrapTable('refresh');
-                });
-
-                //审核
-                $('#btn-sh').on('click',function () {
-                   if($('#firstTable').bootstrapTable('getSelections').length==0){
-                       commonJS.confirm('警告','请选择数据！');
-                   }
-                   else if($('#firstTable').bootstrapTable('getSelections')[0].SP_STATUS!='01'){
-                       commonJS.confirm('警告','已审核，不可再次审核！');
-                   }
-                   else{
-                        $.ajax({
-                           url: allUrl.sh,
-                           type:"post",
-                           dataType:'json',
-                           data:{
-                               bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
-                               sp_status:'02',
-                               sp_name:'审核'
-                           },
-                           beforeSend:function (){
-                               $('#myModal').modal('show');
-                           },
-                           success: function(result){
-                               $('#myModal').modal('hide');
-                               //重新加载一次表格
-                               $('#firstTable').bootstrapTable('refresh');
-                               commonJS.confirm('消息',result.result,result.msg);
-                           }
-                        });
-                   }
-                });
-
-                //驳回
-                $('#btn-disagree').on('click',function () {
-                    if($('#firstTable').bootstrapTable('getSelections').length==0){
-                        commonJS.confirm('警告','请选择数据！');
-                    }
-                    else if($('#firstTable').bootstrapTable('getSelections')[0].SP_STATUS=='03'){
-                        commonJS.confirm('警告','已审批，不可驳回！');
-                    }
-                    else{
-                        $.ajax({
-                            url: allUrl.sh,
-                            type:"post",
-                            dataType:'json',
-                            data:{
-                                bkdId:$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID,
-                                sp_status:'00',
-                                sp_name:'驳回'
-                            },
-                            beforeSend:function (){
-                                $('#myModal').modal('show');
-                            },
-                            success: function(result){
-                                $('#myModal').modal('hide');
-                                //重新加载一次表格
-                                $('#firstTable').bootstrapTable('refresh');
-                                commonJS.confirm('消息',result.result,result.msg);
-                            }
-                        });
-                    }
                 });
             },
 

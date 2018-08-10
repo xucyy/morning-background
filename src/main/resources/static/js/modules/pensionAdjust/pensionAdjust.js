@@ -5,14 +5,36 @@ $(function(){
         sh:'../../../fundApply/FundApplyController/updateBkdSpStatus',//审核
         edit:'../../../fundApply/FundApplyController/selectBKApplyByPK'//查看
     };
+    var cols=[    //表头
+        // {field: 'ck', checkbox: true},//checkbox列
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'DWMC', title: '单位名称', align: 'center',editable:{type:'text'}},
+        {field: 'SNJJJY', title: '上年末基金累计结余', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DNJJSR', title: '当年基金预算收入', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DNJJZC', title: '当年基金预算支出', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YSJJJE', title: '预算应调剂补助基金金额', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YJJJJY', title: '预计当年基金结余', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YJJJSR', title: '预计当年基金征缴收入', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DNYJZC', title: '当年基金预计支出', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YJSZJY', title: '预计当年收支结余', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}}
 
+
+    ]
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit':function (e, value, row, index) {//修改
-            $('#firstTable').bootstrapTable('uncheckAll'); //取消所有勾选项
+            $('#firstTable').bootstrapTable('uncheckAll');
             $('#win').modal('show');
             $('#myModalLabel').html('编辑审核表');
-            $("#modalTable").bootstrapTable({
+            $("#modalTable").bootstrapTable('destroy').bootstrapTable({
                 url: allUrl.query,
                 queryParams: {
                     timeStart:$('#startTime').val().replace(/-/g, ''),
@@ -30,26 +52,10 @@ $(function(){
                 sidePagination: 'server',//server:服务器端分页|client：前端分页
                 paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                 paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                columns:[    //表头
-                    // {field: 'ck', checkbox: true},//checkbox列
-                    {
-                        field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                            return index + 1;
-                        }
-                    },
-                    {field: 'XZ', title: '编制日期', align: 'center'},
-                    {field: 'SQSJ', title: '年份', align: 'center'},
-                    {field: 'ACCOUNTONE', title: '季度', align: 'center'},
-                    {field: 'BATCHNOONE', title: '经办人', align: 'center'},
-                    {field: 'PDF_ADDRESS', title: '审批状态', align: 'center'},
-                    {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
-                            return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-del">删除</button>'
-                        },
-                    }
-                ]
-            })
+                columns:cols
+            });
+            $('#modalTable').bootstrapTable('insertRow',
+                {index:$('#modalTable').bootstrapTable('getData').length,row:{}})
         },
         'click .btn-submit':function (e, value, row, index) {//提交
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -79,12 +85,11 @@ $(function(){
                     pageSize: 10,
                     pagination: true, // 是否分页
                     clickToSelect:true,
-                    singleSelect:true,
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                     columns:[    //表头
-                        // {field: 'ck', checkbox: true},//checkbox列
+                        {field: 'ck', checkbox: true},//checkbox列
                         {
                             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
                                 return index + 1;
@@ -98,7 +103,9 @@ $(function(){
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                                 return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
                                     '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-del">删除</button>'
+                                    '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
+                                    '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
+                                    '<button class="btn btn-primary btn-disagree">驳回</button>'
                             },
                         }
                     ]
@@ -128,9 +135,35 @@ $(function(){
 
                 //新增
                 $('#btn-add').on('click',function () {
+                    $('#firstTable').bootstrapTable('uncheckAll');
                     $('#win').modal('show');
                     $('#myModalLabel').html('新增审核表');
+                    $("#modalTable").bootstrapTable('destroy').bootstrapTable({
+                        pageNumber: 1, //初始化加载第一页
+                        pageSize: 10,
+                        pagination: true, // 是否分页
+                        clickToSelect:true,
+                        singleSelect:true,
+                        sidePagination: 'server',//server:服务器端分页|client：前端分页
+                        paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                        columns:cols,
+                        data:[{j:''}]
+                    });
                 });
+
+                //新增行
+                $('.btn-plus').on('click',function () {
+                    $('#modalTable').bootstrapTable('insertRow',
+                        {index:$('#modalTable').bootstrapTable('getData').length,row:{
+
+                        }})
+                });
+
+                //保存
+                $('#btn-save').on('click',function () {
+                    console.log($('#modalTable').bootstrapTable('getData'))
+                })
             },
 
             init: function () {
