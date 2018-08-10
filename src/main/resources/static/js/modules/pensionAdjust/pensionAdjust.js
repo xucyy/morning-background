@@ -38,7 +38,6 @@ $(function(){
             $('#firstTable').bootstrapTable('uncheckAll');
             $('#win').modal('show');
             $('#myModalLabel').html('编辑审核表');
-            page.getWinTab();//重绘Bootstrap
             $.ajax({
                 url: allUrl.edit,
                 type:"post",
@@ -213,7 +212,8 @@ $(function(){
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                    columns:cols
+                    columns:cols,
+                    data:[]
                 });
             },
 
