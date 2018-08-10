@@ -78,7 +78,11 @@
       </insert>
     <select id="query_persionAdjust_pagedata" parameterType="java.util.Map"  resultMap="glodResultMap" >
 
-        select * from fm_adjust_gold
+        select ID, YEAR, QUARTER,
+        SBJZ, SBLD, SBCZ, SBJBR,
+        CZLD, CZZR, CZJBR,
+        BZDATE, SHDATE, SP_STATUS,
+        SEND_STATUS from fm_adjust_gold
         <where>
             <if test="(timeStart !=null and timeStart != '')"><!-- 开始时间检索 -->
                 and date_format(BZDATE,'%y%m%d')>= date_format(#{timeStart},'%y%m%d')
