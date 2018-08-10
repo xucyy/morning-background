@@ -35,6 +35,7 @@ public class PensionAdjustController {
 
         @Autowired
         private FmBankXmlLogService fmBankXmlLogService;
+        //养老调剂金修改查询主表
         @PostMapping("/query_persionAdjust_pagedata")
         public String  query_persionAdjust_pagedata(String timeStart, String timeEnd){
                 JSONObject jsonObject = new JSONObject();
@@ -45,11 +46,26 @@ public class PensionAdjustController {
                 jsonObject.put("result",query_list);
                 return jsonObject.toString();
         }
+        //养老调剂金修改查询子表
         @PostMapping("/query_persionAdjust_item")
         public String  query_persionAdjust_item(String id){
             JSONObject jsonObject = new JSONObject();
             List query_list= pensionAdjustService.query_persionAdjust_item(id);
             jsonObject.put("result",query_list);
+            return jsonObject.toString();
+        }
+        //养老调剂金修提交
+        @PostMapping("/tijiao_persionAdjust")
+        public String  tijiao_persionAdjust(String pensionAdjustJson){
+            JSONObject jsonObject = new JSONObject();
+            try{
+                FmAdjustGold fmAdjustGold = JSON.parseObject(pensionAdjustJson,FmAdjustGold.class);
+                List query_list= pensionAdjustService.tijiao_persionAdjust(fmAdjustGold);
+            }catch (Exception e){
+                jsonObject.put("result","数据库更新失败");
+                return jsonObject.toString();
+            }
+            jsonObject.put("result","养老调剂金单提交成功");
             return jsonObject.toString();
         }
         @PostMapping("/insert_PensionAdjust")

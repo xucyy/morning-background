@@ -71,7 +71,8 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'02',
-                        sp_name:'审核'
+                        sp_name:'黄2',
+                        sp_status_name:'审核'
                     },
                     beforeSend:function (){
                         $('#myModal').modal('show');
@@ -97,7 +98,8 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'00',
-                        sp_name:'驳回'
+                        sp_name:'黄2',
+                        sp_status_name:'驳回'
                     },
                     beforeSend:function (){
                         $('#myModal').modal('show');

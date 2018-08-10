@@ -19,4 +19,6 @@ public interface PensionAdjustService {
     List query_persionAdjust_pagedata(Map map);
    //查询养老调剂金子表
     List query_persionAdjust_item(String id);
+    //提交
+    List tijiao_persionAdjust(FmAdjustGold fmAdjustGold);
 }

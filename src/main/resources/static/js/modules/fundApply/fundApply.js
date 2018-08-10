@@ -61,15 +61,15 @@ $(function(){
                         $('#accounttwo').val(result.accounttwo);
                         $('#batchnotwo').val(result.batchnotwo);
                         $('#banktwo').val(result.banktwo);
-                        // $('#sqdwfzr').val(result.sqdwfzr);
-                        // $('#sqdwshr').val(result.sqdwshr);
-                        // $('#sqdwjbr').val(result.sqdwjbr);
-                        // $('#czsbld').val(result.czsbld);
-                        // $('#czsbshr').val(result.czsbshr);
-                        // $('#czsbzg').val(result.czsbzg);
-                        // $('#gkone').val(result.gkone);
-                        // $('#gktwo').val(result.gktwo);
-                        // $('#gkthree').val(result.gkthree);
+                        $('#sqdwfzr').html(result.sqdwfzr);
+                        $('#sqdwshr').html(result.sqdwshr);
+                        $('#sqdwjbr').html(result.sqdwjbr);
+                        $('#czsbld').html(result.czsbld);
+                        $('#czsbshr').html(result.czsbshr);
+                        $('#czsbzg').html(result.czsbzg);
+                        $('#gkone').html(result.gkone);
+                        $('#gktwo').html(result.gktwo);
+                        $('#gkthree').html(result.gkthree);
                     }
                 });
             }
@@ -164,7 +164,7 @@ $(function(){
                 content: $('#file')
             });
             // page.initUploadOption(row.BKD_ID);
-            billId = row.BKD_ID
+            billId = row.BKD_ID;
         },
         'click .btn-fileList':function (e, value, row, index) {//查看附件
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -244,7 +244,8 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'01',
-                        sp_name:'制单'
+                        sp_name:'黄1',
+                        sp_status_name:'制单'
                     },
                     beforeSend:function (){
                         $('#myModal').modal('show');
@@ -351,12 +352,10 @@ $(function(){
                     $('#firstTable').bootstrapTable('uncheckAll'); //新增时取消所有勾选项
                     $('#win').modal('show');
                     $("#myModalLabel").html('新增拨款申请单');//改变标题
-                    for(var i=0;i<$('#win input').length;i++){
-                        $('#win input').eq(i).val('');//新增表格置空
-                    }
+                    $('#win input').val('').attr('readonly',false);;//新增表格置空
+                    $('#win td span').html('');
                     $('#btn-pdf').addClass('hide');
                     $('#btn-save').removeClass('hide');
-                    $('#win input').attr('readonly',false);//input可编辑
                 }
                 else if(edit=='editZD'){//制单编辑
                     $('#win').modal('show');
@@ -396,18 +395,13 @@ $(function(){
                     dictCancelUpload: "取消上传",
                     dictCancelUploadConfirmation: "你确定要取消上传吗?",
                     dictRemoveFile: "移除文件",
-                    headers:{
-                        'billId':billId
-                    },
                     init:function () {
                         this.on('success',function (file) {
-                            console.log(file);
                             commonJS.confirm('消息','上传成功！');
-                            this.removeFile(file);
+                            this.removeFile(file);//移除上传的文件占据空间
                         });
                         this.on('sending',function(data,xhr,formData){
-                            formData.append('billId',billId);
-                            formData.append('seqNo',fileCount);
+                            formData.append('billId',billId);//文件流跟随主键
                             console.log(formData);
                         })
                     }
@@ -432,7 +426,6 @@ $(function(){
                     pageNumber: 1, //初始化加载第一页
                     pageSize: 10,
                     pagination: true, // 是否分页
-                    clickToSelect:true,
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
@@ -443,14 +436,9 @@ $(function(){
                                 return index + 1;
                             }
                         },
-                        {field: 'XZ', title: '文件名', align: 'center'},
-                        {field: 'SQSJ', title: '上传时间', align: 'center'},
-                        {field: 'ACCOUNTONE', title: '上传人', align: 'center'}
-                        // {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
-                        //         return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
-                        //             '<button class="btn btn-primary btn-del">删除</button>'
-                        //     },
-                        // }
+                        {field: 'fileName', title: '文件名', align: 'center'},
+                        {field: 'filePath', title: '附件名称', align: 'center'},
+                        {field: 'creatTime', title: '上传时间', align: 'center'}
                     ]
                 });
             },
@@ -497,15 +485,15 @@ $(function(){
                         "accounttwo": $('#accounttwo').val(),
                         "batchnotwo": $('#batchnotwo').val(),
                         "banktwo": $('#banktwo').val(),
-                        "sqdwfzr": $('#sqdwfzr').val(),
-                        "sqdwshr": $('#sqdwshr').val(),
-                        "sqdwjbr": $('#sqdwjbr').val(),
-                        "czsbzg": $('#czsbzg').val(),
-                        "czsbshr": $('#czsbshr').val(),
-                        "czsbld": $('#czsbld').val(),
-                        "gkone": $('#gkone').val(),
-                        "gktwo": $('#gktwo').val(),
-                        "gkthree": $('#gkthree').val(),
+                        "sqdwfzr": $('#sqdwfzr').html(),
+                        "sqdwshr": $('#sqdwshr').html(),
+                        "sqdwjbr": $('#sqdwjbr').html(),
+                        "czsbzg": $('#czsbzg').html(),
+                        "czsbshr": $('#czsbshr').html(),
+                        "czsbld": $('#czsbld').html(),
+                        "gkone": $('#gkone').html(),
+                        "gktwo": $('#gktwo').html(),
+                        "gkthree": $('#gkthree').html(),
                         //进行判断，新增时不会选择数据，此时BKD_ID传空
                         "bkdId":$('#firstTable').bootstrapTable('getSelections').length!=0?$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID:''
                     };

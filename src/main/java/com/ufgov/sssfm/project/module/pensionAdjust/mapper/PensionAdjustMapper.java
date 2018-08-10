@@ -31,4 +31,6 @@ public interface PensionAdjustMapper {
     List query_persionAdjust_pagedata(Map map);
 
     List query_persionAdjust_item(String id);
+
+    List update_fmAdjustGold(FmAdjustGold fmAdjustGold);
 }
