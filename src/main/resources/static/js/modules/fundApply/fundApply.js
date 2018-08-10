@@ -164,7 +164,7 @@ $(function(){
                 content: $('#file')
             });
             // page.initUploadOption(row.BKD_ID);
-            billId = row.BKD_ID
+            billId = row.BKD_ID;
         },
         'click .btn-fileList':function (e, value, row, index) {//查看附件
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -395,9 +395,6 @@ $(function(){
                     dictCancelUpload: "取消上传",
                     dictCancelUploadConfirmation: "你确定要取消上传吗?",
                     dictRemoveFile: "移除文件",
-                    headers:{
-                        'billId':billId
-                    },
                     init:function () {
                         this.on('success',function (file) {
                             console.log(file);
@@ -406,7 +403,6 @@ $(function(){
                         });
                         this.on('sending',function(data,xhr,formData){
                             formData.append('billId',billId);
-                            formData.append('seqNo',fileCount);
                             console.log(formData);
                         })
                     }
@@ -442,14 +438,9 @@ $(function(){
                                 return index + 1;
                             }
                         },
-                        {field: 'XZ', title: '文件名', align: 'center'},
-                        {field: 'SQSJ', title: '上传时间', align: 'center'},
-                        {field: 'ACCOUNTONE', title: '上传人', align: 'center'}
-                        // {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
-                        //         return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
-                        //             '<button class="btn btn-primary btn-del">删除</button>'
-                        //     },
-                        // }
+                        {field: 'fileName', title: '文件名', align: 'center'},
+                        {field: 'filePath', title: '附件名称', align: 'center'},
+                        {field: 'createTime', title: '上传时间', align: 'center'}
                     ]
                 });
             },

@@ -48,13 +48,12 @@ $(function(){
                     $('#myModal').modal('show');
                 },
                 success: function(result){
-                    console.log(row.ID);
                     $('#myModal').modal('hide');
-                    $('#modalTable').bootstrapTable('load',result[0].TABLE);
-                    $('#year').val(result[0].YEAR);
-                    $('#quarter').val(result[0].QUARTER);
-                    $('#bzDate').val(result[0].BZDATE);
-                    $('#shDate').val(result[0].SHDATE);
+                    //$('#modalTable').bootstrapTable('load',result[0].TABLE?result[0].TABLE:[]);
+                    $('#year').val(result.YEAR);
+                    $('#quarter').val(result.QUARTER);
+                    $('#bzDate').val(result.BZDATE);
+                    $('#shDate').val(result.SHDATE);
                 }
             });
         },
