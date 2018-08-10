@@ -1,5 +1,8 @@
 package com.ufgov.sssfm.project.module.pensionAdjust.mapper;
-
+import com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold;
+import com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGoldItem;
+import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -8,5 +11,21 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2018/8/9
  **/
 @Mapper
-public class PensionAdjustMapper {
+public interface PensionAdjustMapper {
+    int deleteByPrimaryKey(String id);
+
+    int insert(FmAdjustGold record);
+
+    int insertSelective(FmAdjustGold record);
+
+    FmAdjustGold selectByPrimaryKey(String id);
+
+    int updateByPrimaryKeySelective(FmAdjustGold record);
+
+    int updateByPrimaryKey(FmAdjustGold record);
+
+    int insert_fmAdjustGoldItem(FmAdjustGoldItem fmAdjustGoldItem);
+    int insert_fmAdjustGold(FmAdjustGold fmAdjustGold);
+    int deletepensionAdjustMapperZhuByPK(String id);
+    int deletepensionAdjustMapperByPK(String id);
 }
