@@ -27,4 +27,6 @@ public interface PensionAdjustService {
     int delete_persionAdjust(String id);
 
     int delete_persionAdjust_item(String id);
+
+    int shenhe_persionAdjust(String id, String spStatus);
 }

@@ -86,6 +86,20 @@ public class PensionAdjustController {
             jsonObject.put("result","养老调剂金单删除成功");
             return jsonObject.toString();
         }
+        //养老调剂金删除
+        @PostMapping("/shenhe_persionAdjust")
+        public String  shenhe_persionAdjust(String id,String spStatus){
+            JSONObject jsonObject = new JSONObject();
+            try{
+
+                pensionAdjustService.shenhe_persionAdjust(id,spStatus);
+            }catch (Exception e){
+                jsonObject.put("result","数据库更新失败");
+                return jsonObject.toString();
+            }
+            jsonObject.put("result","养老调剂金单审核成功");
+            return jsonObject.toString();
+        }
         @PostMapping("/insert_PensionAdjust")
         //新增和编辑  的保存
         public String insert_PensionAdjust(String pensionAdjustJson){
@@ -107,9 +121,9 @@ public class PensionAdjustController {
                                 }
                         }else{
                                 //删除
-                                pensionAdjustService.deletefmAdjustGoldByPK(fmAdjustGold.getId());
+                               //ensionAdjustService.deletefmAdjustGoldByPK(fmAdjustGold.getId());
                                 //插入
-                                pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
+                               //ensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
                             pensionAdjustService.deletefmAdjustGoldItemByPK(fmAdjustGold.getId());
                             //插入
                             for( int m=0;m<personObject.size();m++){
