@@ -73,7 +73,7 @@ public class PensionAdjustController {
             return jsonObject.toString();
         }
         //养老调剂金删除
-        @PostMapping("/tijiao_persionAdjust")
+        @PostMapping("/delete_persionAdjust")
         public String  delete_persionAdjust(String id){
             JSONObject jsonObject = new JSONObject();
             try{
