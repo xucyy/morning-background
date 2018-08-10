@@ -3,8 +3,7 @@ $(function(){
     var allUrl={//后台交互URL
         save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
         query:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
-        sh:'../../../fundApply/FundApplyController/updateBkdSpStatus',//审核
-        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK'//查看
+        edit:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_item/'//编辑
     };
     var cols=[    //表头
         // {field: 'ck', checkbox: true},//checkbox列
@@ -35,24 +34,22 @@ $(function(){
             $('#firstTable').bootstrapTable('uncheckAll');
             $('#win').modal('show');
             $('#myModalLabel').html('编辑审核表');
-            $("#modalTable").bootstrapTable('destroy').bootstrapTable({
-                url: allUrl.query,
-                queryParams: {
-                    timeStart:$('#startTime').val().replace(/-/g, ''),
-                    timeEnd:$('#endTime').val().replace(/-/g, '')
+            page.getWinTab();//重绘Bootstrap
+            $.ajax({
+                url: allUrl.edit,
+                type:"post",
+                dataType:'json',
+                data:{
+                    id:row.ID
                 },
-                method: 'post',
-                contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
-                pageNumber: 1, //初始化加载第一页
-                pageSize: 10,
-                pagination: true, // 是否分页
-                clickToSelect:true,
-                singleSelect:true,
-                sidePagination: 'server',//server:服务器端分页|client：前端分页
-                paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                columns:cols
+                beforeSend:function (){
+                    $('#myModal').modal('show');
+                },
+                success: function(result){
+                    $('#myModal').modal('hide');
+                    $('#modalTable').bootstrapTable('load',result);
+                    $('#year').val(result.YEAR);
+                }
             });
         },
         'click .btn-submit':function (e, value, row, index) {//提交
@@ -73,7 +70,9 @@ $(function(){
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, '')
+                        timeEnd:$('#endTime').val().replace(/-/g, ''),
+                        spStatus:'00',
+                        sendStatus:'00'
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -92,11 +91,11 @@ $(function(){
                                 return index + 1;
                             }
                         },
-                        {field: 'XZ', title: '编制日期', align: 'center'},
-                        {field: 'SQSJ', title: '年份', align: 'center'},
-                        {field: 'ACCOUNTONE', title: '季度', align: 'center'},
-                        {field: 'BATCHNOONE', title: '经办人', align: 'center'},
-                        {field: 'PDF_ADDRESS', title: '审批状态', align: 'center'},
+                        {field: 'BZDATE', title: '编制日期', align: 'center'},
+                        {field: 'YEAR', title: '年份', align: 'center'},
+                        {field: 'QUARTER', title: '季度', align: 'center'},
+                        {field: 'JBPERSON', title: '经办人', align: 'center'},
+                        {field: 'SP_STATUS', title: '审批状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                                 return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
                                 '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
@@ -106,6 +105,21 @@ $(function(){
                             },
                         }
                     ]
+                });
+            },
+
+            //加载编辑单表格
+            getWinTab:function(){
+                $("#modalTable").bootstrapTable('destroy').bootstrapTable({
+                    pageNumber: 1, //初始化加载第一页
+                    pageSize: 10,
+                    pagination: true, // 是否分页
+                    clickToSelect:true,
+                    singleSelect:true,
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                    columns:cols
                 });
             },
 
@@ -137,17 +151,7 @@ $(function(){
                     $('#myModalLabel').html('新增审核表');
                     $('#win input').val('');//新增置空
                     $('#win td span').html('');//新增置空
-                    $("#modalTable").bootstrapTable('destroy').bootstrapTable({
-                        pageNumber: 1, //初始化加载第一页
-                        pageSize: 10,
-                        pagination: true, // 是否分页
-                        clickToSelect:true,
-                        singleSelect:true,
-                        sidePagination: 'server',//server:服务器端分页|client：前端分页
-                        paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns:cols
-                    });
+                    page.getWinTab();//重绘Bootstrap
                 });
 
                 //可编辑表格新增行
