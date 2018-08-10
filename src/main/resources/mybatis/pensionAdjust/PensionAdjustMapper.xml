@@ -76,7 +76,7 @@
           #{yjszjy,jdbcType=VARCHAR}, #{sbkzs,jdbcType=VARCHAR}, #{sxje,jdbcType=VARCHAR},
           #{sbje,jdbcType=VARCHAR}, #{czje,jdbcType=VARCHAR})
       </insert>
-    <select id="query_persionAdjust_pagedata" parameterType="java.util.Map"  resultType="glodResultMap"  >
+    <select id="query_persionAdjust_pagedata" parameterType="java.util.Map"  resultType="com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold" >
 
         select * from fm_adjust_gold
         <where>
