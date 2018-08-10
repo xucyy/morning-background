@@ -57,5 +57,7 @@ public class PensionAdjustServiceImpl implements PensionAdjustService {
     public int delete_persionAdjust_item(String id){
         return pensionAdjustMapper.delete_persionAdjust_item(id);
     }
-
+    public int shenhe_persionAdjust(String id,String spStatus){
+        return pensionAdjustMapper.shenhe_persionAdjust(id,spStatus);
+    }
 }
