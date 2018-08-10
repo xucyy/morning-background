@@ -4,7 +4,9 @@ $(function(){
         save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
         query:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
         edit:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_item',//编辑
-        submit:'../../../persionAdjust/PersionAdjustController/tijiao_persionAdjust'//提交
+        submit:'../../../persionAdjust/PersionAdjustController/tijiao_persionAdjust',//提交
+        del:'../../../persionAdjust/PersionAdjustController/delete_persionAdjust',//删除
+        sh:'../../../persionAdjust/PersionAdjustController/shenhe_persionAdjust'//审核
     };
     var cols=[    //表头
         // {field: 'ck', checkbox: true},//checkbox列
@@ -85,6 +87,52 @@ $(function(){
         },
         'click .btn-del':function (e, value, row, index) {//删除
             $('#firstTable').bootstrapTable('uncheckAll');
+            if(row.SP_STATUS!='00'){
+                commonJS.confirm('警告','已经提交，不可删除！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.del,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        id:row.ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#modalTable').bootstrapTable('load',result);
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
+        },
+        'click .btn-sh':function (e, value, row, index) {//审核
+            $('#firstTable').bootstrapTable('uncheckAll');
+            if(row.SP_STATUS!='01'){
+                commonJS.confirm('警告','已经审核，不可再次审核！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.sh,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        id:row.ID,
+                        spStatus:'02'
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#modalTable').bootstrapTable('load',result);
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
         }
     };
 
@@ -99,7 +147,6 @@ $(function(){
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
                         timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        spStatus:'00',
                         sendStatus:'00'
                     },
                     method: 'post',
