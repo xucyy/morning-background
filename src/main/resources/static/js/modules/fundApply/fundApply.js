@@ -282,7 +282,7 @@ $(function(){
         },
         {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
         {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
-        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                 return '<button class="btn btn-primary btn-edit">编辑</button>&nbsp;'+
                 '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
                 '<button class="btn btn-primary btn-appendix">上传附件</button>&nbsp;'+
@@ -312,7 +312,7 @@ $(function(){
         },
         {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
         {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
-        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'
             },
         }
@@ -680,8 +680,7 @@ $(function(){
 
             init: function () {
                 if (typeof JSON == 'undefined') {
-                    $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
-                }
+                    $('head').append($("<script type='text/javascript' src='@{/js/resource/json2.js}'>"));                }
                 this.getComponents();
                 this.getTab('firstTable',allUrl.query,colOne,'00');
                 this.getTab('secondTable',allUrl.query,colTwo,'01');

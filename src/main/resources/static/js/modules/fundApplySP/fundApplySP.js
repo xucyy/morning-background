@@ -48,15 +48,15 @@ $(function(){
                     $('#accounttwo').val(result.accounttwo);
                     $('#batchnotwo').val(result.batchnotwo);
                     $('#banktwo').val(result.banktwo);
-                    $('#sqdwfzr').val(result.sqdwfzr);
-                    $('#sqdwshr').val(result.sqdwshr);
-                    $('#sqdwjbr').val(result.sqdwjbr);
-                    $('#czsbld').val(result.czsbld);
-                    $('#czsbshr').val(result.czsbshr);
-                    $('#czsbzg').val(result.czsbzg);
-                    $('#gkone').val(result.gkone);
-                    $('#gktwo').val(result.gktwo);
-                    $('#gkthree').val(result.gkthree);
+                    $('#sqdwfzr').html(result.sqdwfzr);
+                    $('#sqdwshr').html(result.sqdwshr);
+                    $('#sqdwjbr').html(result.sqdwjbr);
+                    $('#czsbld').html(result.czsbld);
+                    $('#czsbshr').html(result.czsbshr);
+                    $('#czsbzg').html(result.czsbzg);
+                    $('#gkone').html(result.gkone);
+                    $('#gktwo').html(result.gktwo);
+                    $('#gkthree').html(result.gkthree);
                 }
             });
         },
@@ -160,7 +160,7 @@ $(function(){
                         },
                         {field: 'PDF_ADDRESS', title: '生成PDF地址', align: 'center'},
                         {field: 'SP_STATUS_NAME', title: '状态', align: 'center'},
-                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'+
                                     '<button class="btn btn-primary btn-sp">审批</button>&nbsp;'+
                                     '<button class="btn btn-primary btn-disagree">驳回</button>'
@@ -194,7 +194,7 @@ $(function(){
 
             init: function () {
                 if (typeof JSON == 'undefined') {
-                    $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
+                    $('head').append($("<script type='text/javascript' src='@{/js/resource/json2.js}'>"));
                 }
                 this.getComponents();
                 //打开页面时先加载第一个表格

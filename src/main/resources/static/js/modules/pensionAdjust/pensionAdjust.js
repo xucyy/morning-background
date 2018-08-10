@@ -27,7 +27,8 @@ $(function(){
         {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}}
 
 
-    ]
+    ];
+
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit':function (e, value, row, index) {//修改
@@ -102,10 +103,10 @@ $(function(){
                         {field: 'PDF_ADDRESS', title: '审批状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
                                 return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-disagree">驳回</button>'
+                                '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
+                                '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
+                                '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
+                                '<button class="btn btn-primary btn-disagree">驳回</button>'
                             },
                         }
                     ]
@@ -168,8 +169,7 @@ $(function(){
 
             init: function () {
                 if (typeof JSON == 'undefined') {
-                    $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
-                }
+                    $('head').append($("<script type='text/javascript' src='@{/js/resource/json2.js}'>"));                }
                 this.getComponents();
                 //打开页面时先加载第一个表格
                 this.getTab('firstTable',allUrl.query);
