@@ -1,10 +1,22 @@
 package com.ufgov.sssfm.project.module.pensionAdjust.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGoldItem;
+import com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold;
 import com.ufgov.sssfm.project.module.pensionAdjust.service.PensionAdjustService;
+import com.ufgov.sssfm.project.module.queryutils.service.FmBankXmlLogService;
+import com.ufgov.sssfm.project.module.queryutils.service.FmInterfaceUtilsService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @Description 养老调剂金控制层
@@ -18,5 +30,56 @@ public class PensionAdjustController {
 
         @Autowired
         private PensionAdjustService pensionAdjustService;
+        @Autowired
+        private FmInterfaceUtilsService fmInterfaceUtilsService;
+
+        @Autowired
+        private FmBankXmlLogService fmBankXmlLogService;
+        @PostMapping("/query_persionAdjust_pagedata")
+        public String  query_persionAdjust_pagedata(String timeStart, String timeEnd){
+                JSONObject jsonObject = new JSONObject();
+                Map map = new HashMap();
+                map.put("timeStart", timeStart);
+                map.put("timeEnd", timeEnd);
+                List query_list= pensionAdjustService.query_persionAdjust_pagedata(map);
+                jsonObject.put("result",query_list);
+                return jsonObject.toString();
+        }
+
+        @PostMapping("/insert_PensionAdjust")
+        //新增和编辑  的保存
+        public String insert_PensionAdjust(String pensionAdjustJson){
+                JSONObject jsonObject=new JSONObject();
+                try{
+                        FmAdjustGold fmAdjustGold = JSON.parseObject(pensionAdjustJson,FmAdjustGold.class);
+                        FmAdjustGoldItem fmAdjustGoldItem = JSON.parseObject(pensionAdjustJson,FmAdjustGoldItem.class);
+                        //判断是否存在拨款单Id,如果存在，则先删除，后插入。不存在，直接插入
+                        String id = (UUID.randomUUID()+"").replaceAll("-","");
+                        if((fmAdjustGold.getId().length()<=0)){
+                                fmAdjustGold.setId(id);
+                                pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
+                        }else{
+                                //删除
+                                pensionAdjustService.deletefmAdjustGoldByPK(fmAdjustGold.getId());
+                                //插入
+                                pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
+                        }
+                        if((fmAdjustGoldItem.getId().length()<=0)){
+                            fmAdjustGoldItem.setId(id);
+                            pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
+                        }else{
+                            //删除
+                            pensionAdjustService.deletefmAdjustGoldItemByPK(fmAdjustGoldItem.getId());
+                            //插入
+                            pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
+                        }
+                }catch (Exception e){
+                        jsonObject.put("result","插入数据库失败");
+                        return jsonObject.toString();
+                }
+                jsonObject.put("result","生成养老调剂金单成功");
+                return jsonObject.toString();
+
+        }
 
 }
