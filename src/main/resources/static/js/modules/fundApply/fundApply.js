@@ -397,12 +397,11 @@ $(function(){
                     dictRemoveFile: "移除文件",
                     init:function () {
                         this.on('success',function (file) {
-                            console.log(file);
                             commonJS.confirm('消息','上传成功！');
-                            this.removeFile(file);
+                            this.removeFile(file);//移除上传的文件占据空间
                         });
                         this.on('sending',function(data,xhr,formData){
-                            formData.append('billId',billId);
+                            formData.append('billId',billId);//文件流跟随主键
                             console.log(formData);
                         })
                     }
@@ -427,7 +426,6 @@ $(function(){
                     pageNumber: 1, //初始化加载第一页
                     pageSize: 10,
                     pagination: true, // 是否分页
-                    clickToSelect:true,
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
@@ -440,7 +438,7 @@ $(function(){
                         },
                         {field: 'fileName', title: '文件名', align: 'center'},
                         {field: 'filePath', title: '附件名称', align: 'center'},
-                        {field: 'createTime', title: '上传时间', align: 'center'}
+                        {field: 'creatTime', title: '上传时间', align: 'center'}
                     ]
                 });
             },
