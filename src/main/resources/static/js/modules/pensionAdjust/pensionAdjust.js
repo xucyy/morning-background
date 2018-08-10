@@ -1,6 +1,7 @@
 $(function(){
 
     var allUrl={//后台交互URL
+        save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
         query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
         sh:'../../../fundApply/FundApplyController/updateBkdSpStatus',//审核
         edit:'../../../fundApply/FundApplyController/selectBKApplyByPK'//查看
@@ -24,9 +25,8 @@ $(function(){
         {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}}
-
-
+        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DELID', title: '删除行', align: 'center',visible:false}//删除一行预定ID列
     ];
 
     //单元格按钮事件
@@ -101,7 +101,7 @@ $(function(){
                         {field: 'ACCOUNTONE', title: '季度', align: 'center'},
                         {field: 'BATCHNOONE', title: '经办人', align: 'center'},
                         {field: 'PDF_ADDRESS', title: '审批状态', align: 'center'},
-                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter(row){
+                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                                 return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
                                 '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
                                 '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
@@ -148,22 +148,64 @@ $(function(){
                         sidePagination: 'server',//server:服务器端分页|client：前端分页
                         paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                         paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns:cols,
-                        data:[{j:''}]
+                        columns:cols
                     });
                 });
 
-                //新增行
+                //可编辑表格新增行
                 $('.btn-plus').on('click',function () {
                     $('#modalTable').bootstrapTable('insertRow',
                         {index:$('#modalTable').bootstrapTable('getData').length,row:{
+                            'DWMC':'',
+                            'SNJJJY':'',
+                            'DNJJSR':'',
+                            'DNJJZC':'',
+                            'YSJJJE':'',
+                            'YJJJJY':'',
+                            'YJJJSR':'',
+                            'DNYJZC':'',
+                            'YJSZJY':'',
+                            'SBKZS':'',
+                            'SXJE':'',
+                            'SBJE':'',
+                            'CZJE':'',
+                            'DELID':$('#modalTable').bootstrapTable('getData').length+1
+                    }})
+                });
 
-                        }})
+                //删除可编辑表格最后一行
+                $('.btn-minus').on('click',function () {
+                    $('#modalTable').bootstrapTable('remove',{field:'DELID',values:[$('#modalTable').bootstrapTable('getData').length]})
                 });
 
                 //保存
                 $('#btn-save').on('click',function () {
-                    console.log($('#modalTable').bootstrapTable('getData'))
+                    console.log($('#modalTable').bootstrapTable('getData'));
+                    var jsonObj={
+                        id:$('#firstTable').bootstrapTable('getSelections').length==0?'':$('#firstTable').bootstrapTable('getSelections')[0].ID,
+                        year:$('#year').val(),
+                        month:$('#month').val(),
+                        bzdate:$('#bzDate').val(),
+                        shdate:$('#shDate').val(),
+                        table:$('#modalTable').bootstrapTable('getData')
+                    };
+                    $.ajax({
+                        url: allUrl.save,
+                        type:"post",
+                        dataType:'json',
+                        data:{
+                            pensionAdjustJson:JSON.stringify(jsonObj)
+                        },
+                        beforeSend:function (){
+                            $('#myModal').modal('show');
+                        },
+                        success: function(result){
+                            $('#myModal,#win').modal('hide');
+                            //重新加载一次表格
+                            $('#firstTable').bootstrapTable('refresh');
+                            commonJS.confirm('消息',result.result,result.msg);
+                        }
+                    });
                 })
             },
 
