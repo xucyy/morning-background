@@ -446,7 +446,7 @@ $(function(){
                         type:"post",
                         dataType:'json',
                         data:{
-                            pensionAdjustJson:JSON.stringify(jsonObj)
+                            medicalAdjustJson:JSON.stringify(jsonObj)
                         },
                         beforeSend:function (){
                             $('#myModal').modal('show');
