@@ -125,7 +125,7 @@ $(function(){
                 skin: 'yourclass',
                 content: $('#daily')
             });
-            $('#dailyTable').bootstrapTable({
+            $('#dailyTable').bootstrapTable('destroy').bootstrapTable({
                 url: allUrl.daily,
                 queryParams: {
                     bkdId:row.BKD_ID

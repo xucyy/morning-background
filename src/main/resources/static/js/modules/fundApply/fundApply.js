@@ -456,7 +456,7 @@ $(function(){
             },
 
             dailyTable:function(id){
-                $('#dailyTable').bootstrapTable({
+                $('#dailyTable').bootstrapTable('destroy').bootstrapTable({
                     url: allUrl.daily,
                     queryParams: {
                         bkdId:id
