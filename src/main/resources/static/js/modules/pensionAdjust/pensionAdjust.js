@@ -1,11 +1,11 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
-        query:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
-        edit:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_item',//编辑
-        submit:'../../../persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
-        del:'../../../persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
+        save:ctx+'persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
+        query:ctx+'persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
+        edit:ctx+'persionAdjust/PersionAdjustController/query_persionAdjust_item',//编辑
+        submit:ctx+'persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
+        del:ctx+'persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
     };
 
     //单元格按钮事件
@@ -244,6 +244,7 @@ $(function(){
         {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'ITEMID', title: '删除ID', align: 'center',visible:false}
     ];
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>基本养老保险调剂金申请</title>
+    <title>医疗、工伤保险调剂金</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!--引入公共CSS JS文件-->
     <link rel="stylesheet" th:href="@{/css/resource/jquery-confirm.min.css}">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/resource/bootstrap-table.min.css}">
     <link rel="stylesheet" th:href="@{/css/resource/bootstrap-datetimepicker.min.css}">
     <link rel="stylesheet" th:href="@{/css/resource/bootstrap-editable.min.css}">
-    <link rel="stylesheet" th:href="@{/css/modules/pensionAdjust/pensionAdjust.css}">
+    <link rel="stylesheet" th:href="@{/css/modules/medicalAdjust/medicalAdjust.css}">
 </head>
 <body>
 <div id="workspace">
@@ -75,7 +75,7 @@
                                 <input class="titleInput" id="year" autocomplete="off">
                                 <span>年</span>
                                 <input class="titleInput" id="quarter" autocomplete="off">
-                                <span>季度企业职工养老保险调剂金审核表</span>
+                                <span>季度基本医疗、工伤保险调剂金审核拨款表</span>
                             </h3>
                         </div>
                     </div>
@@ -84,6 +84,12 @@
                         <div class="editTipCont">
                             <div class="pull-left">
                                 <b>编制单位：宁夏回族自治区社会保险事业管理局</b>
+                            </div>
+                        </div>
+                        <div class="editTipCont">
+                            <div class="pull-left">
+                                <b>险种：</b>
+                                <input class="titleInput" id="safe" autocomplete="off">
                             </div>
                             <div class="pull-right">
                                 <b>单位：万元</b>
@@ -122,9 +128,7 @@
                     </div>
                     <div class="editTip">
                         <div class="editTipCont">
-                            <b>备注：根据《关于进一步规范拨付职工基本养老保险调剂金有关问题的通知》（宁人社发[2014]50号）对市县进行调剂。
-                                基金收入及基金支出中均不含上级补助收入、下级上解收入、补助下级支出、上解上级支出。
-                            </b>
+                            <b>说明：基金收入、支出均不含上级补助收入、下级上解收入、补助下级支出及上解上级支出。</b>
                         </div>
                     </div>
                 </div>
@@ -151,6 +155,6 @@
 <script th:src="@{/js/resource/bootstrap-editable.min.js}"></script>
 <script th:src="@{/js/resource/bootstrap-table-editable.min.js}"></script>
 <script th:src="@{/js/resource/commonJS.js}"></script>
-<script th:src="@{/js/modules/pensionAdjust/pensionAdjust.js}"></script>
+<script th:src="@{/js/modules/medicalAdjust/medicalAdjust.js}"></script>
 </body>
 </html>
