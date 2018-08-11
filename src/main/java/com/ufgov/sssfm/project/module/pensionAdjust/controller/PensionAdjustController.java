@@ -74,18 +74,19 @@ public class PensionAdjustController {
         }
     //修改拨款单的审批状态
     @PostMapping("/shenhetijiao_persionAdjust")
-    public String updateBkdSpStatus(String id,String sp_status,String sp_name){
+    public String updateBkdSpStatus(String id,String sp_status,String sp_name,String sp_status_name){
         JSONObject jsonObject=new JSONObject();
         Map queryMap=new HashMap();
         queryMap.put("id",id);
         queryMap.put("sp_status",sp_status);
+        queryMap.put("sp_name",sp_name);
         try{
             pensionAdjustService.shenhe_persionAdjust(queryMap);
         }catch (Exception e){
-            jsonObject.put("result",sp_name+"失败");
+            jsonObject.put("result",sp_status_name+"失败");
             return jsonObject.toString();
         }
-        jsonObject.put("result",sp_name+"成功");
+        jsonObject.put("result",sp_status_name+"成功");
         return jsonObject.toString();
     }
 
