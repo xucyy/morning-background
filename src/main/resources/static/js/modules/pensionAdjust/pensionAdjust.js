@@ -300,7 +300,7 @@ $(function(){
                         {field: 'BZDATE', title: '编制日期', align: 'center'},
                         {field: 'YEAR', title: '年份', align: 'center'},
                         {field: 'QUARTER', title: '季度', align: 'center'},
-                        {field: 'JBPERSON', title: '经办人', align: 'center'},
+                        {field: 'SBJBR', title: '经办人', align: 'center'},
                         {field: 'SP_STATUS_NAME', title: '审批状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                                 return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
