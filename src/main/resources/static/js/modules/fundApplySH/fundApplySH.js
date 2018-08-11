@@ -1,9 +1,10 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        query:'../../../fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
-        sh:'../../../fundApply/FundApplyController/updateBkdSpStatus',//审核
-        edit:'../../../fundApply/FundApplyController/selectBKApplyByPK'//查看
+        query:ctx+'fundApply/FundApplyController/selectAllBkApplyTime',//加载表格
+        sh:ctx+'fundApply/FundApplyController/updateBkdSpStatus',//审核
+        edit:ctx+'fundApply/FundApplyController/selectBKApplyByPK',//查看
+        daily:ctx + 'fundApply/FundApplyController/query_sp_daily',//审批日志
     };
 
     //单元格按钮事件
@@ -112,6 +113,43 @@ $(function(){
                     }
                 });
             }
+        },
+        'click .btn-daily':function (e, value, row, index) {//审批日志
+            layer.open({
+                type: 1,
+                title: '审批日志',
+                closeBtn: 1,
+                area: ['350px', '400px'],
+                shadeClose: true,
+                skin: 'yourclass',
+                content: $('#daily')
+            });
+            $('#dailyTable').bootstrapTable({
+                url: allUrl.daily,
+                queryParams: {
+                    bkdId:row.BKD_ID
+                },
+                method: 'post',
+                contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
+                pageNumber: 1, //初始化加载第一页
+                pageSize: 10,
+                pagination: true, // 是否分页
+                clickToSelect:true,
+                sidePagination: 'server',//server:服务器端分页|client：前端分页
+                paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                columns:[    //表头
+                    {
+                        field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                            return index + 1;
+                        }
+                    },
+                    {field: 'czFs', title: '操作', align: 'center'},
+                    {field: 'czPeople', title: '操作人', align: 'center'},
+                    {field: 'czTime', title: '操作时间', align: 'center'}
+                ]
+            });
         }
     };
 
@@ -164,7 +202,8 @@ $(function(){
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                                 return '<button class="btn btn-primary btn-see">查看</button>&nbsp;'+
                                     '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
-                                    '<button class="btn btn-primary btn-disagree">驳回</button>'
+                                    '<button class="btn btn-primary btn-disagree">驳回</button>&nbsp;'+
+                                    '<button class="btn btn-primary btn-daily">审批日志</button>'
                             },
                         }
                     ]
