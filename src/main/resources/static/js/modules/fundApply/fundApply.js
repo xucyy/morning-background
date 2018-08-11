@@ -477,9 +477,9 @@ $(function(){
                                 return index + 1;
                             }
                         },
-                        {field: 'CZ_FS', title: '操作', align: 'center'},
-                        {field: 'CZ_PEOPLE', title: '操作人', align: 'center'},
-                        {field: 'CZ_TIME', title: '操作时间', align: 'center'}
+                        {field: 'czFs', title: '操作', align: 'center'},
+                        {field: 'czPeople', title: '操作人', align: 'center'},
+                        {field: 'czTime', title: '操作时间', align: 'center'}
                     ]
                 });
             },
