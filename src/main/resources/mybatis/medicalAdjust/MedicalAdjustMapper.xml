@@ -81,7 +81,7 @@
             SBLD, SBCZ, SBJBR,
             CZLD, CZZR, CZJBR,
             BZDATE, SHDATE, SP_STATUS,
-            SEND_STATUS ，b.val SP_STATUS_NAME from fm_medical_adjust_gold a,fm_as_val b
+            SEND_STATUS ,b.val SP_STATUS_NAME from fm_medical_adjust_gold a,fm_as_val b
             <where>
                 a.SP_STATUS=b.VAL_ID and b.VALSET_ID='SP_STATUS'
                 <if test="send_status !=null">

@@ -7,6 +7,7 @@ import com.ufgov.sssfm.project.module.medicalAdjust.entity.FmMedicalAdjust;
 import com.ufgov.sssfm.project.module.medicalAdjust.service.MedicalAdjustService;
 import com.ufgov.sssfm.project.module.medicalAdjust.entity.FmMedicalAdjustItem;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ import java.util.UUID;
 @Api(value = "医疗调剂金" ,tags = "医疗调剂金")
 @RequestMapping("medicalAdjust/MedicalAdjustController")
 public class MedicalAdjustController {
-
+    @Autowired
     private MedicalAdjustService medicalAdjustService;
     //医疗调剂金查询主表
     @PostMapping("/query_medicalAdjust_pagedata")
