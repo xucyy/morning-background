@@ -54,46 +54,51 @@ $(function(){
     window.operateEvents = {
         'click .btn-edit':function (e, value, row, index) {//修改
             $('#firstTable').bootstrapTable('uncheckAll');
-            $('#win').modal('show');
-            $('#btn-save,.appendRow').removeClass('hide');
-            $('#win input').attr('readonly',false);
-            $('#myModalLabel').html('编辑审核表');
-            $.ajax({
-                url: allUrl.edit,
-                type:"post",
-                dataType:'json',
-                data:{
-                    id:row.ID
-                },
-                beforeSend:function (){
-                    $('#myModal').modal('show');
-                },
-                success: function(result){
-                    $('#myModal').modal('hide');
-                    $('#modalTable').bootstrapTable('destroy').bootstrapTable({
-                        url: allUrl.edit,
-                        queryParams: {
-                            id:row.ID
-                        },
-                        method: 'post',
-                        contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                        dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
-                        pageNumber: 1, //初始化加载第一页
-                        pageSize: 10,
-                        pagination: true, // 是否分页
-                        clickToSelect:true,
-                        singleSelect:true,
-                        sidePagination: 'server',//server:服务器端分页|client：前端分页
-                        paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns:colOne
-                    });
-                    $('#year').val(result.result[0].YEAR);
-                    $('#quarter').val(result.result[0].QUARTER);
-                    $('#bzDate').val(result.result[0].BZDATE);
-                    $('#shDate').val(result.result[0].SHDATE);
-                }
-            });
+            if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可再次编辑
+                commonJS.confirm('警告','已提交不可编辑！')
+            }
+            else{
+                $('#win').modal('show');
+                $('#btn-save,.appendRow').removeClass('hide');
+                $('#win input').attr('readonly',false);
+                $('#myModalLabel').html('编辑审核表');
+                $.ajax({
+                    url: allUrl.edit,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        id:row.ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#modalTable').bootstrapTable('destroy').bootstrapTable({
+                            url: allUrl.edit,
+                            queryParams: {
+                                id:row.ID
+                            },
+                            method: 'post',
+                            contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                            dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
+                            pageNumber: 1, //初始化加载第一页
+                            pageSize: 10,
+                            pagination: true, // 是否分页
+                            clickToSelect:true,
+                            singleSelect:true,
+                            sidePagination: 'server',//server:服务器端分页|client：前端分页
+                            paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                            paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                            columns:colOne
+                        });
+                        $('#year').val(result.result[0].YEAR);
+                        $('#quarter').val(result.result[0].QUARTER);
+                        $('#bzDate').val(result.result[0].BZDATE);
+                        $('#shDate').val(result.result[0].SHDATE);
+                    }
+                });
+            }
         },
         'click .btn-submit':function (e, value, row, index) {//提交
             $('#firstTable').bootstrapTable('uncheckAll');
