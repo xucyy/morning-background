@@ -101,9 +101,6 @@
                 and date_format(#{timeEnd},'%y%m%d') >= date_format(BZDATE,'%y%m%d')
             </if>
         </where>
-
-
-
     </select>
     <select id="query_persionAdjust_item" parameterType="java.lang.String"  resultType="java.util.Map" >
         SELECT  *  from fm_adjust_gold

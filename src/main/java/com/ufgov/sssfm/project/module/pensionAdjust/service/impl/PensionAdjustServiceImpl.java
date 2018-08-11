@@ -48,16 +48,15 @@ public class PensionAdjustServiceImpl implements PensionAdjustService {
     public List  query_persionAdjust_item_table(String id){
         return pensionAdjustMapper.query_persionAdjust_item_table(id);
     }
-
-    public int tijiao_persionAdjust(String id,String spStatus){
-        return pensionAdjustMapper.update_fmAdjustGold(id,spStatus);
-    }
+    @Override
     public int delete_persionAdjust(String id){
         return pensionAdjustMapper.delete_persionAdjust(id);
     }
+    @Override
     public int delete_persionAdjust_item(String id){
         return pensionAdjustMapper.delete_persionAdjust_item(id);
     }
+    @Override
     public int  shenhe_persionAdjust(Map queryMap){
         return pensionAdjustMapper.shenhe_persionAdjust(queryMap);
     }
