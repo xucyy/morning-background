@@ -61,7 +61,7 @@
 .titleInput{
     width: 70px;
     border: 0;
-    border-bottom: 1px solid #0e9aef;
+    border-bottom: 1px solid #000000;
     outline: none;
     text-align: center;
     vertical-align: bottom;
@@ -70,7 +70,7 @@
 .tableInput{
     width: 200px;
     border: 0;
-    border-bottom: 1px solid #0e9aef;
+    border-bottom: 1px solid #000000;
     outline: none;
     vertical-align: bottom;
 }
