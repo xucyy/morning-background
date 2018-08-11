@@ -62,11 +62,19 @@ public class PathConversionController {
         return "module/fundApplySP" + "/fundApplySP";
     }
 
-    //调剂金制单页面跳转
+    //养老调剂金制单页面跳转
     @RequiresPermissions("module:pensionAdjust:view")
     @GetMapping("/pensionAdjust")
     public String pensionAdjust()
     {
         return "module/pensionAdjust" + "/pensionAdjust";
+    }
+
+    //医疗调剂金制单页面跳转
+    @RequiresPermissions("module:medicalAdjust:view")
+    @GetMapping("/medicalAdjust")
+    public String medicalAdjust()
+    {
+        return "module/medicalAdjust" + "/medicalAdjust";
     }
 }
