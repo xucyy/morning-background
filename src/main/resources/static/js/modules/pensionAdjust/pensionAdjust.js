@@ -118,7 +118,7 @@ $(function(){
                     success: function(result){
                         console.log(row.ID);
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('refresh');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -142,7 +142,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('refresh');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -211,7 +211,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('refresh');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
