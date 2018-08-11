@@ -118,7 +118,7 @@ $(function(){
                     success: function(result){
                         console.log(row.ID);
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('refresh');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -130,21 +130,23 @@ $(function(){
                 commonJS.confirm('警告','已经提交，不可删除！');
             }
             else{
-                $.ajax({
-                    url: allUrl.del,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        id:row.ID
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('refresh');
-                        commonJS.confirm('消息',result.result,result.msg);
-                    }
+                commonJS.confirm('信息','确认删除？','',function(){
+                    $.ajax({
+                        url: allUrl.del,
+                        type:"post",
+                        dataType:'json',
+                        data:{
+                            id:row.ID
+                        },
+                        beforeSend:function (){
+                            $('#myModal').modal('show');
+                        },
+                        success: function(result){
+                            $('#myModal').modal('hide');
+                            $('#firstTable').bootstrapTable('refresh');
+                            commonJS.confirm('消息',result.result,result.msg);
+                        }
+                    });
                 });
             }
         },
@@ -211,7 +213,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('refresh');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
