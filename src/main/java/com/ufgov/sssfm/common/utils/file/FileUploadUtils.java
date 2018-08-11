@@ -1,6 +1,7 @@
 package com.ufgov.sssfm.common.utils.file;
 
 import com.ufgov.sssfm.common.exception.file.FileNameLengthLimitExceededException;
+import com.ufgov.sssfm.common.utils.nx.NormalUtil;
 import com.ufgov.sssfm.framework.config.SssfmConfig;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase.FileSizeLimitExceededException;
@@ -25,7 +26,8 @@ public class FileUploadUtils
     /**
      * 默认上传的地址
      */
-    private static String defaultBaseDir = SssfmConfig.getProfile();
+//    private static String defaultBaseDir = SssfmConfig.getProfile();
+    private static String defaultBaseDir = NormalUtil.getWebRootUrlSpringboot()+"/static/upload/bkdpdf";
 
     /**
      * 默认的文件名最大长度

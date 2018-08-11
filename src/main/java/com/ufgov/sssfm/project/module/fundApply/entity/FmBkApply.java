@@ -8,12 +8,6 @@ package com.ufgov.sssfm.project.module.fundApply.entity;
 public class FmBkApply {
     private String bkdId;
 
-    private String sendstatus;
-
-    private String spstatus;
-
-    private String pdfaddress;
-
     private String year;
 
     private String month;
@@ -60,6 +54,29 @@ public class FmBkApply {
 
     private String banktwo;
 
+    private String spstatus;
+
+    private String sendstatus;
+
+    private String pdfaddress;
+
+    private String sqdwfzr;
+
+    private String sqdwshr;
+
+    private String sqdwjbr;
+
+    private String czsbbzg;
+
+    private String czsbshr;
+
+    private String czsbld;
+
+    private String gkone;
+
+    private String gktwo;
+
+    private String gkthree;
 
     public String getBkdId() {
         return bkdId;
@@ -67,30 +84,6 @@ public class FmBkApply {
 
     public void setBkdId(String bkdId) {
         this.bkdId = bkdId == null ? null : bkdId.trim();
-    }
-
-    public String getSendstatus() {
-        return sendstatus;
-    }
-
-    public void setSendstatus(String sendstatus) {
-        this.sendstatus = sendstatus;
-    }
-
-    public String getSpstatus() {
-        return spstatus;
-    }
-
-    public void setSpstatus(String spstatus) {
-        this.spstatus = spstatus;
-    }
-
-    public String getPdfaddress() {
-        return pdfaddress;
-    }
-
-    public void setPdfaddress(String pdfaddress) {
-        this.pdfaddress = pdfaddress;
     }
 
     public String getYear() {
@@ -275,5 +268,101 @@ public class FmBkApply {
 
     public void setBanktwo(String banktwo) {
         this.banktwo = banktwo == null ? null : banktwo.trim();
+    }
+
+    public String getSpstatus() {
+        return spstatus;
+    }
+
+    public void setSpstatus(String spstatus) {
+        this.spstatus = spstatus;
+    }
+
+    public String getSendstatus() {
+        return sendstatus;
+    }
+
+    public void setSendstatus(String sendstatus) {
+        this.sendstatus = sendstatus;
+    }
+
+    public String getPdfaddress() {
+        return pdfaddress;
+    }
+
+    public void setPdfaddress(String pdfaddress) {
+        this.pdfaddress = pdfaddress;
+    }
+
+    public String getSqdwfzr() {
+        return sqdwfzr;
+    }
+
+    public void setSqdwfzr(String sqdwfzr) {
+        this.sqdwfzr = sqdwfzr == null ? null : sqdwfzr.trim();
+    }
+
+    public String getSqdwshr() {
+        return sqdwshr;
+    }
+
+    public void setSqdwshr(String sqdwshr) {
+        this.sqdwshr = sqdwshr == null ? null : sqdwshr.trim();
+    }
+
+    public String getSqdwjbr() {
+        return sqdwjbr;
+    }
+
+    public void setSqdwjbr(String sqdwjbr) {
+        this.sqdwjbr = sqdwjbr == null ? null : sqdwjbr.trim();
+    }
+
+    public String getCzsbbzg() {
+        return czsbbzg;
+    }
+
+    public void setCzsbbzg(String czsbbzg) {
+        this.czsbbzg = czsbbzg == null ? null : czsbbzg.trim();
+    }
+
+    public String getCzsbshr() {
+        return czsbshr;
+    }
+
+    public void setCzsbshr(String czsbshr) {
+        this.czsbshr = czsbshr == null ? null : czsbshr.trim();
+    }
+
+    public String getCzsbld() {
+        return czsbld;
+    }
+
+    public void setCzsbld(String czsbld) {
+        this.czsbld = czsbld == null ? null : czsbld.trim();
+    }
+
+    public String getGkone() {
+        return gkone;
+    }
+
+    public void setGkone(String gkone) {
+        this.gkone = gkone == null ? null : gkone.trim();
+    }
+
+    public String getGktwo() {
+        return gktwo;
+    }
+
+    public void setGktwo(String gktwo) {
+        this.gktwo = gktwo == null ? null : gktwo.trim();
+    }
+
+    public String getGkthree() {
+        return gkthree;
+    }
+
+    public void setGkthree(String gkthree) {
+        this.gkthree = gkthree == null ? null : gkthree.trim();
     }
 }

@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
- /** @Author xucy
+/** @Author xucy
  * @Description md5 对文件内容的加密以及对文本的加密
  * @Date 16:04 2018/8/9
  * @Param 
@@ -142,13 +143,13 @@ public class Md5Util {
 
 	 }
 	public static void main(String[] args) {
-		try {
-			System.out.println(fileMD5("D:/SDFSDF.txt"));
-		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
-		System.out.println(md5Password("徐晨阳"));
+//		try {
+//			System.out.println(fileMD5("D:/SDFSDF.txt"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println(md5Password("徐晨阳"));
 
+		System.out.println((UUID.randomUUID()+"").replaceAll("-",""));
 	}
 }

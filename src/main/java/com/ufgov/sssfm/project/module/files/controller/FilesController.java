@@ -1,9 +1,13 @@
 package com.ufgov.sssfm.project.module.files.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ufgov.sssfm.common.utils.file.FileUploadUtils;
 import com.ufgov.sssfm.project.system.user.controller.ProfileController;
 import io.swagger.annotations.Api;
@@ -24,6 +28,7 @@ import com.ufgov.sssfm.framework.web.page.TableDataInfo;
 import com.ufgov.sssfm.framework.web.domain.AjaxResult;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -159,12 +164,17 @@ public class FilesController extends BaseController {
     @PostMapping("/listByBillId")
     @ResponseBody
     @ApiOperation(value = "根据单据id查询附件列表", notes = "根据单据id查询附件列表")
-    public List<Files> listByBillId(@RequestParam("billId") String billId) {
+    public String listByBillId(@RequestParam("billId") String billId) {
+        JSONObject jsonObject=new JSONObject();
         List<Files> list = filesService.selectFilesListByBillId(billId);
-        return list;
+        JSONArray jsonArray=(JSONArray)JSONObject.toJSON(list);
+        for(int i=0;i<jsonArray.size();i++){
+            JSONObject jsonObject1=(JSONObject)jsonArray.get(i);
+            SimpleDateFormat sb=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
+            jsonObject1.put("creatTime",sb.format(jsonObject1.get("creatTime")));
+        }
+        jsonObject.put("result",jsonArray);
+        return jsonObject.toString();
     }
-
-
-
 
 }

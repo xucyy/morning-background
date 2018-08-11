@@ -3,6 +3,7 @@ package com.ufgov.sssfm.project.module.fundApply.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ufgov.sssfm.common.utils.file.FileUploadUtils;
 import com.ufgov.sssfm.common.utils.nx.AnalysisMsgUtil;
 import com.ufgov.sssfm.common.utils.nx.NormalUtil;
 import com.ufgov.sssfm.common.utils.nx.NxConstants;
@@ -10,6 +11,8 @@ import com.ufgov.sssfm.common.utils.nx.OSSFileUtil;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
 import com.ufgov.sssfm.common.utils.nx.bean.MsgHeaderParamBean;
+import com.ufgov.sssfm.project.module.files.domain.Files;
+import com.ufgov.sssfm.project.module.files.service.IFilesService;
 import com.ufgov.sssfm.project.module.fundApply.entity.FmBkApply;
 import com.ufgov.sssfm.project.module.fundApply.service.FundApplyService;
 import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.spring.web.json.Json;
 import sun.misc.BASE64Decoder;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -52,6 +56,10 @@ public class FundApplyController {
 
     @Autowired
     private FmBankXmlLogService fmBankXmlLogService;
+    @Autowired
+    private IFilesService filesService;
+
+
     @PostMapping("/send_bkd_to_czsb")
     @ApiOperation(value = "发送拨款单去财政", notes="发送拨款单去财政")
     public String send_bkd_to_czsb(String bkdJson){
@@ -64,41 +72,48 @@ public class FundApplyController {
             return jsonObject.toString();
         }
         List bkdList=JSONArray.parseArray(bkdJson);
-        List<String> filePathList=new ArrayList();
-        List<FmBkApply> fmBkApplyList=new ArrayList<>();
+
         //1.根据拨款单Id去库里将拨款单的信息查询出来。
         for(int i=0;i<bkdList.size();i++){
+
+            List<String> filePathList=new ArrayList();
+            List<FmBkApply> fmBkApplyList=new ArrayList<>();
+            //得到所有的附件以及生成的盖章Pdf
+            List<Files> list = filesService.selectFilesListByBillId(bkdList.get(i)+"");
             FmBkApply fmBkApply=fundApplyService.selectBKApplyByPK(bkdList.get(i)+"");
-            filePathList.add(fmBkApply.getPdfaddress());
-            fmBkApplyList.add(fmBkApply);
-        }
-
-        //拼装拨款单发送报文
-        String[] resultBkd=AnalysisMsgUtil.CompleteBkdMsg(fmBkApplyList,FmBkApply.class);
-
-        //2.将文件上传到OSS服务器上,返回一个ossstr 用于通知财政或其他系统  上OSS上拿文件
-        List<String> ossstrList=uoloadFileToOSS(filePathList);
-        if(ossstrList==null || ossstrList.size()==0 ){
-            jsonObject.put("result","将文件上传到OSS服务器失败");
-            return jsonObject.toString();
-        }
-
-        //3.带着ossstr通知财政
-        String[] result=send_bkd_to_czsb_1(ossstrList,fmBkApplyList);
-
-        //4.根据第三步返回的result[0]判断是否发送成功，发送成功，修改对应数据库中的发送状态
-        try{
-            if(result[0].equals("00")){
-                //修改状态
-                for(int i=0;i<fmBkApplyList.size();i++){
-                    fundApplyService.updateBkdSendStatus(fmBkApplyList.get(i).getBkdId());
-                }
+            for(Files file:list){
+                filePathList.add(file.getFileName());
             }
-        }catch(RuntimeException ex){
-            System.out.println("更新主表中发送状态报错");
-            result[1]="更新主表中发送状态报错";
+            fmBkApplyList.add(fmBkApply);
+
+
+            //2.将文件上传到OSS服务器上,返回一个ossstr 用于通知财政或其他系统  上OSS上拿文件
+            List<String> ossstrList=uoloadFileToOSS(filePathList);
+            if(ossstrList==null || ossstrList.size()==0 ){
+                jsonObject.put("result","将文件上传到OSS服务器失败");
+                return jsonObject.toString();
+            }
+
+            //3.带着ossstr通知财政
+            String[] result=send_bkd_to_czsb_1(ossstrList,filePathList,fmBkApplyList);
+
+            //4.根据第三步返回的result[0]判断是否发送成功，发送成功，修改对应数据库中的发送状态
+            try{
+                if(result[0].equals("00")){
+                    //修改状态
+                    fundApplyService.updateBkdSendStatus(bkdList.get(i)+"");
+                }
+            }catch(RuntimeException ex){
+                System.out.println("更新主表中发送状态报错");
+                result[1]="更新主表中发送状态报错";
+                fmBankXmlLogService.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("send_bkd_to_czsb","send_bkd_to_czsb",""
+                        ,fmBkApplyList.get(0).getBkdId()+"更新主表中发送状态报错","",""));
+                jsonObject.put("result",result[1]);
+                return jsonObject.toString();
+            }
         }
-        jsonObject.put("result",result[1]);
+
+        jsonObject.put("result","发送成功");
         return jsonObject.toString();
     }
 
@@ -131,7 +146,7 @@ public class FundApplyController {
     }
 
     //3.发送至财政社保端,带着ossstr通知财政
-    public String[] send_bkd_to_czsb_1( List<String> ossstrList, List<FmBkApply> fmBkApplyList ){
+    public String[] send_bkd_to_czsb_1( List<String> ossstrList,List<String> filePathList,List<FmBkApply> fmBkApplyList ){
         //返回数组结果,00代表发送成功，01代表发送失败
         String[] result=new String[2];
 
@@ -146,7 +161,7 @@ public class FundApplyController {
         headerParamBean.setVer(fmInterfaceUtils.getVer());							//设置请求服务的版本号D
         headerParamBean.setSvid(fmInterfaceUtils.getSvid());//测试消息联通性服务编号（用于测试联通性，测试用）
 
-        if(ossstrList.size()!=fmBkApplyList.size()){
+        if(ossstrList.size()!=filePathList.size()){
             fmBankXmlLogService.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("send_bkd_to_czsb","send_bkd_to_czsb",""
                     ,"文件数量和返回的ossstr加密串数量不相等","",""));
             result[0]="01";
@@ -156,16 +171,16 @@ public class FundApplyController {
         List<AnalysisReceiveMsgSmall> listSmall=new ArrayList<AnalysisReceiveMsgSmall>();
         for(int i=0;i<ossstrList.size();i++){
             AnalysisReceiveMsgSmall msgSmall=new AnalysisReceiveMsgSmall();
-            msgSmall.setFjid(fmBkApplyList.get(i).getPdfaddress());
+            msgSmall.setFjid(filePathList.get(i));
             msgSmall.setMd5fjcode("");
             msgSmall.setOssstr(ossstrList.get(i));
-            msgSmall.setFjname(fmBkApplyList.get(i).getPdfaddress());
+            msgSmall.setFjname(filePathList.get(i));
             msgSmall.setFjtype("1");
             listSmall.add(msgSmall);
         }
         //拼装报文消息部分
         AnalysisReceiveMsgBig msgBig =new AnalysisReceiveMsgBig();
-        msgBig.setMsgid(UUID.randomUUID()+"");
+        msgBig.setMsgid((UUID.randomUUID()+"").replaceAll("-",""));
         msgBig.setOldmsgid("");
         msgBig.setSenderno(NxConstants.RS_SEND_BH);
         msgBig.setRecieverno(NxConstants.CZ_RECIEVE_BH);
@@ -266,7 +281,7 @@ public class FundApplyController {
             FmBkApply fmBkApply = JSON.parseObject(bkdJson,FmBkApply.class);
             //判断是否存在拨款单Id,如果存在，则先删除，后插入。不存在，直接插入
             if((fmBkApply.getBkdId().length()<=0)){
-                fmBkApply.setBkdId(UUID.randomUUID()+"");
+                fmBkApply.setBkdId((UUID.randomUUID()+"").replaceAll("-",""));
                 fundApplyService.insert_FmBkApply(fmBkApply);
             }else{
                 //删除
@@ -328,18 +343,19 @@ public class FundApplyController {
 
     //修改拨款单的审批状态
     @PostMapping("/updateBkdSpStatus")
-    public String updateBkdSpStatus(String bkdId,String sp_status,String sp_name){
+    public String updateBkdSpStatus(String bkdId,String sp_status,String sp_name,String sp_status_name){
         JSONObject jsonObject=new JSONObject();
         Map queryMap=new HashMap();
         queryMap.put("bkdId",bkdId);
         queryMap.put("sp_status",sp_status);
+        queryMap.put("sp_name",sp_name);
         try{
             fundApplyService.updateBkdSpStatus(queryMap);
         }catch (Exception e){
-            jsonObject.put("result",sp_name+"失败");
+            jsonObject.put("result",sp_status_name+"失败");
             return jsonObject.toString();
         }
-        jsonObject.put("result",sp_name+"成功");
+        jsonObject.put("result",sp_status_name+"成功");
         return jsonObject.toString();
     }
 
@@ -372,12 +388,25 @@ public class FundApplyController {
             jsonObject.put("result","生成PDF失败");
             return jsonObject.toString();
         }
-        //生成pdf之后，修改fm_bk_apply表中的pdf_address的地址 ，将生成Pdf的地址存起来
+        //生成pdf之后，修改fm_bk_apply表中的pdf_address的地址 ，将生成Pdf的地址存起来。
         try{
             Map updateMap=new HashMap();
             updateMap.put("bkdId",bkdId);
             updateMap.put("fileName",bkdId+".pdf");
             fundApplyService.updateBkdPdfAddress(updateMap);
+
+            //存到附件表中
+            Files files = new Files();
+            String fileName = bkdId+".pdf";
+            //获取文件类型
+            String suffix = "pdf";
+            files.setFileId(UUID.randomUUID().toString().trim().replace("-", ""));
+            files.setFilePath(bkdId+".pdf");
+            files.setFileName(fileName);
+            files.setFileType(suffix);
+            files.setCreatTime(new Date());
+            files.setBillId(bkdId);
+            filesService.insertFiles(files);
         }catch (Exception e){
             System.out.println("修改库中PDF地址失败");
             jsonObject.put("result","修改库中PDF地址失败");

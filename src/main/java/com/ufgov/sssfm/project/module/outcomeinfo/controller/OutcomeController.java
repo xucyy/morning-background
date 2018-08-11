@@ -303,7 +303,7 @@ public class OutcomeController {
         }
         //拼装报文消息部分
         AnalysisReceiveMsgBig msgBig =new AnalysisReceiveMsgBig();
-        msgBig.setMsgid(UUID.randomUUID()+"");
+        msgBig.setMsgid((UUID.randomUUID()+"").replaceAll("-",""));
         msgBig.setOldmsgid("");
         msgBig.setSenderno(NxConstants.RS_SEND_BH);
         msgBig.setRecieverno(NxConstants.CZ_RECIEVE_BH);
