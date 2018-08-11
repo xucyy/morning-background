@@ -460,33 +460,4 @@ public class AnalysisMsgUtil
 		    return xmlRequest;
 	}
 	
-	public static void main(String[] args) {
-//		CompleteMsgToFile(null,null,"D:/sftptest/test.xml");
-//		Class clazz=Class.forName("com.ufgov.fm.compo.ad68.bean.Ad68Fa");
-//		Class clazz=Ad68Fa.class;
-//		getBeanChildName(clazz);
-//		Ad68Fa ad68Fa=new Ad68Fa();
-//		ad68Fa.setAaa028("sdfdsf");
-//		ad68Fa.setAab191(new Date());
-//		
-//		Ad68Son ad68Son=new Ad68Son();
-//		ad68Son.setAaa028("试试aaa028");
-//		ad68Son.setAaa115("试试aaa115");
-//		Ad68Son ad68Son1=new Ad68Son();
-//		ad68Son1.setAaa028("试试111aaa028");
-//		ad68Son1.setAaa115("试试111aaa115");
-//		
-//		List<Ad68Son> list=new ArrayList();
-//		list.add(ad68Son);
-//		list.add(ad68Son1);
-//		
-//		ad68Fa.setAd68SonList(list);
-//		
-//		CompleteMsgToFile(null,Ad68Fa.class,Ad68Son.class,"D:/sftptest/test.xml");
-		
-		
-	}
-	
-	
-	
 }

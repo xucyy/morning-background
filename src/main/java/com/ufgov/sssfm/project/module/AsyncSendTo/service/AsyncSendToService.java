@@ -7,5 +7,5 @@ import java.util.List;
 public interface AsyncSendToService {
 
     @Async
-    String[] send_outcome_intcome_to_czsb(List<String> ossstrList, List<String> filePathList, String bse173);
+    String[] send_outcome_intcome_to_czsb(String msgContext,List<String> ossstrList, List<String> filePathList, String bse173);
 }

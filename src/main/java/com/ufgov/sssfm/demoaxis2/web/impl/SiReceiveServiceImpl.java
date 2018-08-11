@@ -91,6 +91,128 @@ public class SiReceiveServiceImpl implements SiReceiveService {
         //得到业务代码bse173，根据业务代码判断是哪一种业务场景，分不同业务场景进行不同操作
         String bse173 = analysisReceiveMsgBig.getBse173();
 
+        //得到报文业务要素内容，如果不为空，则解析内容入库
+        String msgContext = analysisReceiveMsgBig.getMsgcontent();
+        if(msgContext!=null && msgContext.length()>0){
+            boolean bool=true;
+            try {
+                bool = Md5Util.md5Password(msgContext).equals(analysisReceiveMsgBig.getMd5msgcode());
+            } catch (Exception e) {
+                //插入日志表记录
+                fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","md5校验",""
+                        ,"md5校验完整性的时候报错",element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "md5校验完整性的时候报错！")));
+
+                return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "md5校验完整性的时候报错");
+            }
+
+            if(bool==false){
+                //插入日志表记录
+                fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","md5校验",""
+                        ,"md5校验完整性失败",element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "md5校验完整性失败！")));
+
+                return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "md5校验完整性失败");
+            }
+
+            //解析入库
+            if(NxConstants.AD68_WEB_SERVICE.equals(bse173)){
+                long start = System.currentTimeMillis();
+                Map mapResult = NxXmlUtil.xmlToBeanList(msgContext, Ad68Fa.class, NxConstants.AD68_SAX_HANDLER,true);
+                if(mapResult.get("errorMsg")!=null){
+                    //插入日志表记录
+                    fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                            ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+mapResult.get("errorMsg"),element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+mapResult.get("errorMsg"))));
+
+                    return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+mapResult.get("errorMsg"));
+                }else{
+                    List<Ad68Fa> ad68FaList=(List<Ad68Fa>)mapResult.get("returnList");
+                    for(int i=0;i<ad68FaList.size();i++){
+                        Ad68Fa ad68Fa=ad68FaList.get(i);
+                        try{
+                            incomeMapper.insert_Fa(ad68Fa);
+                        }catch (Exception e){
+                            //插入日志表记录
+                            fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                                    ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e,element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e)));
+
+                            return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e);
+                        }
+
+                        for(int j=0;j<ad68Fa.getAd68SonList().size();j++){
+                            Ad68Son ad68Son= ad68Fa.getAd68SonList().get(j);
+                            try{
+                                incomeMapper.insert_Son(ad68Son);
+                            }catch (Exception e){
+                                //插入日志表记录
+                                fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                                        ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e,element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e)));
+
+                                return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e);
+                            }
+                        }
+                    }
+                }
+                long end = System.currentTimeMillis();
+                System.out.println("共耗时："+(end-start)+"毫秒");
+
+            }else if(NxConstants.JF07_WEB_SERVICE.equals(bse173)){
+                long start = System.currentTimeMillis();
+                Map mapResult = NxXmlUtil.xmlToBeanList(msgContext, Jf07GraFa.class, NxConstants.JF07_SAX_HANDLER,false);
+                if(mapResult.get("errorMsg")!=null){
+                    //插入日志表记录
+                    fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                            ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+mapResult.get("errorMsg"),element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "解析业务方发送报文失败！")));
+
+                    return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+mapResult.get("errorMsg"));
+                }else{
+                    List<Jf07GraFa> jf07GraList=(List<Jf07GraFa>)mapResult.get("returnList");
+                    for(int i=0;i<jf07GraList.size();i++){
+                        Jf07GraFa jf07GraFa=jf07GraList.get(i);
+                        try{
+                            outcomeMapper.insert_Gra(jf07GraFa);
+                        }catch (Exception e){
+                            //插入日志表记录
+                            fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                                    ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e,element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e)));
+
+                            return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e);
+                        }
+
+                        List<Jf07Fa> jf07FaList =jf07GraFa.getJf07FaList();
+                        for(int j=0;j<jf07FaList.size();j++){
+                            Jf07Fa jf07Fa=jf07FaList.get(j);
+                            try{
+                                outcomeMapper.insert_Fa(jf07Fa);
+                            }catch (Exception e){
+                                //插入日志表记录
+                                fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                                        ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e,element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e)));
+
+                                return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e);
+                            }
+
+                            List<Jf07Son> Jf07SonList=jf07Fa.getJf07SonList();
+                            for(int h=0;h<Jf07SonList.size();h++){
+                                Jf07Son jf07Son=Jf07SonList.get(h);
+                                try{
+                                    outcomeMapper.insert_Son(jf07Son);
+                                }catch (Exception e){
+                                    //插入日志表记录
+                                    fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
+                                            ,"此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e,element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e)));
+
+                                    return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此msgid："+analysisReceiveMsgBig.getMsgid()+"下载解析入库时报错:::"+e);
+                                }
+                            }
+                            System.out.println(Jf07SonList);
+                        }
+                    }
+                }
+                long end = System.currentTimeMillis();
+                System.out.println("共耗时："+(end-start)+"毫秒");
+            }
+        }
+
+
         //得到请求报文中的各个上传文件的信息
         List<AnalysisReceiveMsgSmall> listSmall=analysisReceiveMsgBig.getAnalysisReceiveMsgSmallList();
 
@@ -118,10 +240,28 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
                 return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此ossstr："+ossstr+"下载时报错:::"+mapFilePath.get("errorMsg"));
             }
+            boolean bool=true;
+            try {
+                bool = Md5Util.fileMD5(dowloadPath).equals(analysisReceiveMsgSmall.getMd5fjcode());
+		    } catch (Exception e) {
+                //插入日志表记录
+                fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","md5校验",""
+                        ,"此ossstr："+ossstr+"md5校验完整性的时候报错",element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "md5校验完整性的时候报错！")));
+
+                return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此ossstr："+ossstr+"md5校验完整性的时候报错");
+		    }
+
+		    if(bool==false){
+                //插入日志表记录
+                fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","md5校验",""
+                        ,"此ossstr："+ossstr+"md5校验完整性失败",element.toString(),ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "md5校验完整性失败！")));
+
+                return ReaderSoapXmlOut4NX.buildSoapXMl4Error(900, "此ossstr："+ossstr+"md5校验完整性失败");
+            }
 
             if(NxConstants.AD68_WEB_SERVICE.equals(bse173)){
                 long start = System.currentTimeMillis();
-                Map mapResult = NxXmlUtil.xmlToBeanList(dowloadPath, Ad68Fa.class, NxConstants.AD68_SAX_HANDLER);
+                Map mapResult = NxXmlUtil.xmlToBeanList(dowloadPath, Ad68Fa.class, NxConstants.AD68_SAX_HANDLER,false);
                 if(mapResult.get("errorMsg")!=null){
                     //插入日志表记录
                     fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
@@ -161,7 +301,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
 
             }else if(NxConstants.JF07_WEB_SERVICE.equals(bse173)){
                 long start = System.currentTimeMillis();
-                Map mapResult = NxXmlUtil.xmlToBeanList(dowloadPath, Jf07GraFa.class, NxConstants.JF07_SAX_HANDLER);
+                Map mapResult = NxXmlUtil.xmlToBeanList(dowloadPath, Jf07GraFa.class, NxConstants.JF07_SAX_HANDLER,false);
                 if(mapResult.get("errorMsg")!=null){
                     //插入日志表记录
                     fmBankXmlLogMapper.insertFmBankXmlLog( NormalUtil.getFmBankXmlLog("getYWDataRecieveMessage","xmlToBeanList",""
@@ -221,7 +361,7 @@ public class SiReceiveServiceImpl implements SiReceiveService {
          *    通过对业务类别的判断，去拼装支出或者收入报文
          */
 
-        asyncSendToService.send_outcome_intcome_to_czsb(ossstrList,filePathList,bse173);
+        asyncSendToService.send_outcome_intcome_to_czsb(msgContext,ossstrList,filePathList,bse173);
 
 
         /**

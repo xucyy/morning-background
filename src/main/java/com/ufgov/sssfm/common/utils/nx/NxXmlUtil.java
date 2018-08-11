@@ -1,5 +1,6 @@
 package com.ufgov.sssfm.common.utils.nx;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,13 +48,19 @@ public class NxXmlUtil {
         }
         return parse(map,tClass);
     }
-    
-    public static <T> Map  xmlToBeanList(String path, Class<T> tClass,String handlerType){
+
+    /** @Author xucy
+     * @Description xml 解析成bean
+     * @Date 9:58 2018/8/10
+     * @Param  content  传过来的xml内容  tClass 要生成的bean handlerType xml转换格式 strOrPath 判断是文件xml还是字符串中xml true代表字符串 false代表文件
+     * @return
+     **/
+    public static <T> Map  xmlToBeanList(String content, Class<T> tClass,String handlerType,boolean strOrPath){
         Map mapResult=new HashMap();
     	ArrayList<Map<String, Object>> maps = null;
     	List<T> returnList=new ArrayList<T>();
         try {
-            maps = parseXmlList(new File(path),handlerType);
+            maps = parseXmlList(content,handlerType,strOrPath);
         } catch (Exception e) {
             System.out.println("解析OSS服务器上业务要素文件失败");
             //解析出错
@@ -214,22 +221,40 @@ public class NxXmlUtil {
     }
     
     //返回包含多个map的List
-    public static ArrayList<Map<String, Object>>  parseXmlList(File file,String handlerType) throws Exception {
+    public static ArrayList<Map<String, Object>>  parseXmlList(String  content,String handlerType,Boolean strOrPath) throws Exception {
         ArrayList<Map<String, Object>> maps = null;
-        if(!file.exists()){
-            throw new IllegalAccessException("文件访问不到");
+        if(strOrPath){
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            try {
+                SAXParser parser = factory.newSAXParser();
+                ParserHandlerFactory parserHandlerFactory = new ParserHandlerFactory();
+                DefaultSAXParserHandler handler = parserHandlerFactory.getHandler(handlerType);
+                ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(content.getBytes("GBK"));
+                parser.parse(tInputStringStream, handler);
+                maps = handler.getMaps();
+            } catch (ParserConfigurationException | SAXException  |IOException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }else{
+
+            File file=new File(content);
+            if(!file.exists()){
+                throw new IllegalAccessException("文件访问不到");
+            }
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            try {
+                SAXParser parser = factory.newSAXParser();
+                ParserHandlerFactory parserHandlerFactory = new ParserHandlerFactory();
+                DefaultSAXParserHandler handler = parserHandlerFactory.getHandler(handlerType);
+                parser.parse(file.getAbsolutePath(), handler);
+                maps = handler.getMaps();
+            } catch (ParserConfigurationException | SAXException  |IOException e) {
+                e.printStackTrace();
+                throw e;
+            }
         }
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-            SAXParser parser = factory.newSAXParser();
-            ParserHandlerFactory parserHandlerFactory = new ParserHandlerFactory();
-            DefaultSAXParserHandler handler = parserHandlerFactory.getHandler(handlerType);
-            parser.parse(file.getAbsolutePath(), handler);
-            maps = handler.getMaps();
-        } catch (ParserConfigurationException | SAXException  |IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
+
         return maps;
     }
 

@@ -1,9 +1,6 @@
 package com.ufgov.sssfm.project.module.AsyncSendTo.service.impl;
 
-import com.ufgov.sssfm.common.utils.nx.AnalysisMsgUtil;
-import com.ufgov.sssfm.common.utils.nx.NormalUtil;
-import com.ufgov.sssfm.common.utils.nx.NxConstants;
-import com.ufgov.sssfm.common.utils.nx.SpringUtil;
+import com.ufgov.sssfm.common.utils.nx.*;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgBig;
 import com.ufgov.sssfm.common.utils.nx.bean.AnalysisReceiveMsgSmall;
 import com.ufgov.sssfm.common.utils.nx.bean.MsgHeaderParamBean;
@@ -42,7 +39,7 @@ public class AsyncSendToServiceImpl implements AsyncSendToService {
         fmBankXmlLogService=(FmBankXmlLogService)SpringUtil.getBean("fmBankXmlLogService");
     }
     @Async
-    public String[] send_outcome_intcome_to_czsb(List<String> ossstrList, List<String> filePathList,String bse173){
+    public String[] send_outcome_intcome_to_czsb(String msgContext,List<String> ossstrList, List<String> filePathList,String bse173){
         init();
 
         //返回数组结果,00代表发送成功，01代表发送失败
@@ -78,7 +75,7 @@ public class AsyncSendToServiceImpl implements AsyncSendToService {
         }
         //拼装报文消息部分
         AnalysisReceiveMsgBig msgBig =new AnalysisReceiveMsgBig();
-        msgBig.setMsgid(UUID.randomUUID()+"");
+        msgBig.setMsgid((UUID.randomUUID()+"").replaceAll("-",""));
         msgBig.setOldmsgid("");
         msgBig.setSenderno(NxConstants.RS_SEND_BH);
         msgBig.setRecieverno(NxConstants.CZ_RECIEVE_BH);
@@ -92,8 +89,8 @@ public class AsyncSendToServiceImpl implements AsyncSendToService {
         msgBig.setAae036(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         msgBig.setAbe100("");
         msgBig.setMsgtype("");
-        msgBig.setMsgcontent("");
-        msgBig.setMd5msgcode("");
+        msgBig.setMsgcontent(msgContext);
+        msgBig.setMd5msgcode(Md5Util.md5Password(msgContext));
         msgBig.setFjnum(ossstrList.size()+"");
         msgBig.setAnalysisReceiveMsgSmallList(listSmall);
 
