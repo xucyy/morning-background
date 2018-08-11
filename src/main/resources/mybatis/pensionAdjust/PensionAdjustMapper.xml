@@ -35,6 +35,7 @@
             <result column="SXJE" jdbcType="VARCHAR" property="sxje" />
             <result column="SBJE" jdbcType="VARCHAR" property="sbje" />
             <result column="CZJE" jdbcType="VARCHAR" property="czje" />
+            <result column="ITEMID" jdbcType="VARCHAR" property="itemid" />
         </resultMap>
 
         <sql id="Base_Column_List">
@@ -102,9 +103,8 @@
           where ID = #{id,jdbcType=VARCHAR}
     </select>
 
-    <update id="update_fmAdjustGold" parameterType="com.ufgov.sssfm.project.module.pensionAdjust.entity.FmAdjustGold">
-        update fm_adjust_gold    set SP_STATUS =  #{spStatus}
-        where ID = #{id,jdbcType=VARCHAR}
+    <update id="update_fmAdjustGold" parameterType="java.lang.String">
+        update fm_adjust_gold    set SP_STATUS = #{spStatus，jdbcType=VARCHAR} where ID = #{id,jdbcType=VARCHAR}
       </update>
     <delete id="delete_persionAdjust" parameterType="java.lang.String">
             delete from fm_adjust_gold
@@ -114,8 +114,7 @@
             delete from fm_adjust_gold_item
             where ID = #{id,jdbcType=VARCHAR}
         </delete>
-    <update id="shenhe_persionAdjust" parameterType="java.lang.String">
-        update fm_adjust_gold    set SP_STATUS =  #{spStatus}
-        where ID = #{id,jdbcType=VARCHAR}
+    <update id="shenhe_persionAdjust" parameterType="java.util.Map">
+        update fm_adjust_gold    set SP_STATUS=#{sp_status} where ID=#{id}
       </update>
 </mapper>

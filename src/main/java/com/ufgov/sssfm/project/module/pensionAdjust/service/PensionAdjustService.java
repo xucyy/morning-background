@@ -20,13 +20,12 @@ public interface PensionAdjustService {
    //查询养老调剂金子表
     List query_persionAdjust_item(String id);
     //提交
-    List tijiao_persionAdjust(FmAdjustGold fmAdjustGold);
+    //List tijiao_persionAdjust(FmAdjustGold fmAdjustGold);
 
     List query_persionAdjust_item_table(String id);
 
     int delete_persionAdjust(String id);
 
     int delete_persionAdjust_item(String id);
-
-    int shenhe_persionAdjust(String id, String spStatus);
+    int shenhe_persionAdjust(Map queryMap);
 }

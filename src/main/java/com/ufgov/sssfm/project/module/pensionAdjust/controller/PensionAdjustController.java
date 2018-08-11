@@ -58,20 +58,6 @@ public class PensionAdjustController {
             jsonObject.put("TABLE",TABLE);
             return jsonObject.toString();
         }
-        //养老调剂金修提交
-        @PostMapping("/tijiao_persionAdjust")
-        public String  tijiao_persionAdjust(String pensionAdjustJson){
-            JSONObject jsonObject = new JSONObject();
-            try{
-                FmAdjustGold fmAdjustGold = JSON.parseObject(pensionAdjustJson,FmAdjustGold.class);
-                List query_list= pensionAdjustService.tijiao_persionAdjust(fmAdjustGold);
-            }catch (Exception e){
-                jsonObject.put("result","数据库更新失败");
-                return jsonObject.toString();
-            }
-            jsonObject.put("result","养老调剂金单提交成功");
-            return jsonObject.toString();
-        }
         //养老调剂金删除
         @PostMapping("/delete_persionAdjust")
         public String  delete_persionAdjust(String id){
@@ -86,20 +72,23 @@ public class PensionAdjustController {
             jsonObject.put("result","养老调剂金单删除成功");
             return jsonObject.toString();
         }
-        //养老调剂金删除
-        @PostMapping("/shenhe_persionAdjust")
-        public String  shenhe_persionAdjust(String id,String spStatus){
-            JSONObject jsonObject = new JSONObject();
-            try{
-
-                pensionAdjustService.shenhe_persionAdjust(id,spStatus);
-            }catch (Exception e){
-                jsonObject.put("result","数据库更新失败");
-                return jsonObject.toString();
-            }
-            jsonObject.put("result","养老调剂金单审核成功");
+    //修改拨款单的审批状态
+    @PostMapping("/shenhetijiao_persionAdjust")
+    public String updateBkdSpStatus(String id,String sp_status,String sp_name){
+        JSONObject jsonObject=new JSONObject();
+        Map queryMap=new HashMap();
+        queryMap.put("id",id);
+        queryMap.put("sp_status",sp_status);
+        try{
+            pensionAdjustService.shenhe_persionAdjust(queryMap);
+        }catch (Exception e){
+            jsonObject.put("result",sp_name+"失败");
             return jsonObject.toString();
         }
+        jsonObject.put("result",sp_name+"成功");
+        return jsonObject.toString();
+    }
+
         @PostMapping("/insert_PensionAdjust")
         //新增和编辑  的保存
         public String insert_PensionAdjust(String pensionAdjustJson){
@@ -112,11 +101,14 @@ public class PensionAdjustController {
                         String id = (UUID.randomUUID()+"").replaceAll("-","");
                         if((fmAdjustGold.getId().length()<=0)){
                                 fmAdjustGold.setId(id);
+                                fmAdjustGold.setSpStatus("00");
                                 pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
                                 for(int i=0;i<personObject.size();i++){
                                     String personOb = personObject.get(i)+"";
                                     FmAdjustGoldItem fmAdjustGoldItem = JSON.parseObject(personOb,FmAdjustGoldItem.class);
                                     fmAdjustGoldItem.setId(id);
+                                    String itemid = (UUID.randomUUID()+"").replaceAll("-","");
+                                    fmAdjustGoldItem.setItemid(itemid);
                                     pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
                                 }
                         }else{
@@ -129,6 +121,9 @@ public class PensionAdjustController {
                             for( int m=0;m<personObject.size();m++){
                                 String personOb = personObject.get(m)+"";
                                 FmAdjustGoldItem fmAdjustGoldItem = JSON.parseObject(personOb,FmAdjustGoldItem.class);
+                                fmAdjustGoldItem.setId(fmAdjustGold.getId());
+                                String itemid = (UUID.randomUUID()+"").replaceAll("-","");
+                                fmAdjustGoldItem.setItemid(itemid);
                                 pensionAdjustService.insert_fmAdjustGoldItem(fmAdjustGoldItem);
                             }
                         }

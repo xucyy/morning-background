@@ -4,6 +4,7 @@ public class FmAdjustGoldItem {
     private String id;
 
     private String dwmc;
+    private String itemid;
 
     private String snjjjy;
 
@@ -139,5 +140,13 @@ public class FmAdjustGoldItem {
 
     public void setCzje(String czje) {
         this.czje = czje == null ? null : czje.trim();
+    }
+
+    public String getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
     }
 }
