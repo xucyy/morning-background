@@ -698,7 +698,7 @@ $(function(){
                                 skin: 'yourclass',
                                 content: $('#daily')
                             });
-                            page.dailyTable(firstSel[0].BKDID);
+                            page.dailyTable(firstSel[0].BKD_ID);
                         }
                    }
                    else {
@@ -715,7 +715,7 @@ $(function(){
                                 skin: 'yourclass',
                                 content: $('#daily')
                             });
-                            page.dailyTable(secondSel[0].BKDID);
+                            page.dailyTable(secondSel[0].BKD_ID);
                         }
                     }
                 });
