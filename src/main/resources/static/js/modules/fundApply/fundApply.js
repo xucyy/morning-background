@@ -227,7 +227,6 @@ $(function(){
                     $('#gkone').html(result.gkone);
                     $('#gktwo').html(result.gktwo);
                     $('#gkthree').html(result.gkthree);
-                    $('#win input').attr('readonly','readonly');//签章只读
                 }
             });
         },
@@ -519,19 +518,6 @@ $(function(){
 				//查询
                 $('#btn-query').on('click', function () {
                     $('#firstTable').bootstrapTable('refresh');
-                });
-
-                //签章
-                $('#btn-sign').on('click',function () {
-                    if($('#firstTable').bootstrapTable('getSelections').length==0){
-                        commonJS.confirm('警告','请选择数据！');
-                    }
-                    else if($('#firstTable').bootstrapTable('getSelections').length>1){
-                        commonJS.confirm('警告','只能选择一条数据！');
-                    }
-                    else{
-
-                    }
                 });
 
                 //生成pdf

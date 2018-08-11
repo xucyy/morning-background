@@ -7,7 +7,7 @@ $(function(){
         submit:'../../../persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
         del:'../../../persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
     };
-    var colOne=[    //表头
+    var colOne=[    //编辑时的表头
         {field: 'ck', checkbox: true},//checkbox列
         {
             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
@@ -29,7 +29,7 @@ $(function(){
         {field: 'ITEMID', title: '删除ID', align: 'center',visible:false}
     ];
 
-    var colTwo=[    //表头
+    var colTwo=[    //查看时的表头（不可编辑）
         {
             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
                 return index + 1;
@@ -96,6 +96,13 @@ $(function(){
                         $('#quarter').val(result.result[0].QUARTER);
                         $('#bzDate').val(result.result[0].BZDATE);
                         $('#shDate').val(result.result[0].SHDATE);
+                        $('#sbjz').html(result.result[0].SBJZ);
+                        $('#sbld').html(result.result[0].SBLD);
+                        $('#sbcz').html(result.result[0].SBCZ);
+                        $('#sbjbr').html(result.result[0].SBJBR);
+                        $('#czld').html(result.result[0].CZLD);
+                        $('#czzr').html(result.result[0].CZZR);
+                        $('#czjbr').html(result.result[0].CZJBR);
                     }
                 });
             }
@@ -192,12 +199,19 @@ $(function(){
                     $('#quarter').val(result.result[0].QUARTER);
                     $('#bzDate').val(result.result[0].BZDATE);
                     $('#shDate').val(result.result[0].SHDATE);
+                    $('#sbjz').html(result.result[0].SBJZ);
+                    $('#sbld').html(result.result[0].SBLD);
+                    $('#sbcz').html(result.result[0].SBCZ);
+                    $('#sbjbr').html(result.result[0].SBJBR);
+                    $('#czld').html(result.result[0].CZLD);
+                    $('#czzr').html(result.result[0].CZZR);
+                    $('#czjbr').html(result.result[0].CZJBR);
                 }
             });
         },
         'click .btn-sh':function (e, value, row, index) {//审核
             $('#firstTable').bootstrapTable('uncheckAll');
-            if(row.SP_STATUS='00'){
+            if(row.SP_STATUS=='00'){
                 commonJS.confirm('警告','请先提交！');
             }
             else if(row.SP_STATUS!='01'){
@@ -213,6 +227,32 @@ $(function(){
                         spStatus:'02',
                         sp_name:'黄审核',
                         sp_status_name:'审核'
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
+                });
+            }
+        },
+        'click .btn-disagree':function (e, value, row, index) {//驳回
+            if(row.SP_STATUS=='00'){
+                commonJS.confirm('警告','请先提交！');
+            }
+            else{
+                $.ajax({
+                    url: allUrl.submit,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        id:row.ID,
+                        spStatus:'00',
+                        sp_name:'黄驳回',
+                        sp_status_name:'驳回'
                     },
                     beforeSend:function (){
                         $('#myModal').modal('show');
@@ -261,7 +301,7 @@ $(function(){
                         {field: 'YEAR', title: '年份', align: 'center'},
                         {field: 'QUARTER', title: '季度', align: 'center'},
                         {field: 'JBPERSON', title: '经办人', align: 'center'},
-                        {field: 'SP_STATUS', title: '审批状态', align: 'center'},
+                        {field: 'SP_STATUS_NAME', title: '审批状态', align: 'center'},
                         {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
                                 return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
                                 '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
@@ -367,7 +407,14 @@ $(function(){
                         quarter:$('#quarter').val(),
                         bzdate:$('#bzDate').val(),
                         shdate:$('#shDate').val(),
-                        table:$('#modalTable').bootstrapTable('getData')
+                        table:$('#modalTable').bootstrapTable('getData'),
+                        sbjz:$('#sbjz').html(),
+                        sbld:$('#sbld').html(),
+                        sbcz:$('#sbcz').html(),
+                        sbjbr:$('#sbjbr').html(),
+                        czld:$('#czld').html(),
+                        czzr:$('#czzr').html(),
+                        czjbr:$('#czjbr').html()
                     };
                     $.ajax({
                         url: allUrl.save,
