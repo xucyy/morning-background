@@ -406,24 +406,14 @@ $(function(){
 
                 //删除可编辑表格最后一行
                 $('.btn-minus').on('click',function () {
-                    if($('#firstTable').bootstrapTable('getSelections').length==0){//新增状态
-                        if($('#modalTable').bootstrapTable('getSelections').length==0){
-                            commonJS.confirm('警告','请选择一条数据删除！');
-                        }
-                        else{
-                            $('#modalTable').bootstrapTable('remove',{field:'ITEMID',values:[$('#modalTable').bootstrapTable('getSelections')[0].ITEMID]})
-                        }
+                    if($('#modalTable').bootstrapTable('getSelections').length==0){
+                        commonJS.confirm('警告','请选择一条数据删除！');
                     }
-                    else{
-                        if($('#firstTable').bootstrapTable('getSelections')[0].SP_STATUS!='00'){//编辑状态
-                            commonJS.confirm('警告','已经提交不可删除！');
-                        }
-                        else if($('#modalTable').bootstrapTable('getSelections').length==0){
-                            commonJS.confirm('警告','请选择一条数据删除！');
-                        }
-                        else{
-                            $('#modalTable').bootstrapTable('remove',{field:'ITEMID',values:[$('#modalTable').bootstrapTable('getSelections')[0].ITEMID]})
-                        }
+                    else {
+                        $('#modalTable').bootstrapTable('remove', {
+                            field: 'ITEMID',
+                            values: [$('#modalTable').bootstrapTable('getSelections')[0].ITEMID]
+                        })
                     }
                 });
 
