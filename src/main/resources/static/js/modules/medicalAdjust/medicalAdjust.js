@@ -1,11 +1,11 @@
 $(function(){
 
     var allUrl={//后台交互URL
-        save:ctx+'persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
-        query:ctx+'persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
-        edit:ctx+'persionAdjust/PersionAdjustController/query_persionAdjust_item',//编辑
-        submit:ctx+'persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
-        del:ctx+'persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
+        save:ctx+'medicalAdjust/MedicalAdjustController/insert_medicalAdjust',//保存
+        query:ctx+'medicalAdjust/MedicalAdjustController/query_medicalAdjust_pagedata',//加载表格
+        edit:ctx+'medicalAdjust/MedicalAdjustController/query_medicalAdjust_item',//编辑
+        submit:ctx+'medicalAdjust/MedicalAdjustController/shenhetijiao_medicalAdjust',//提交审核驳回
+        del:ctx+'medicalAdjust/MedicalAdjustController/delete_medicalAdjust'//删除
     };
 
     //单元格按钮事件
