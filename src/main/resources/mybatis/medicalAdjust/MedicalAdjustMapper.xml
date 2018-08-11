@@ -42,7 +42,7 @@
         <result column="SBJSHTJJE" jdbcType="VARCHAR" property="sbjshtjje" />
         <result column="CZSDBKJE" jdbcType="VARCHAR" property="czsdbkje" />
     </resultMap>
-    <insert id="insert_fmMedicalAdjust" parameterType="com.ufgov.fm.compo.fmMedicalAdjust.bean.FmMedicalAdjust">
+    <insert id="insert_fmMedicalAdjust" parameterType="com.ufgov.sssfm.project.module.medicalAdjust.entity.FmMedicalAdjust">
             insert into fm_medical_adjust_gold (ID, XZ, YEAR,
               QUARTER, TJJ_QUARTER, LJJY_QUARTER,
               SBSHJE_QUARTER, CZSDJE_QUARTER, SBJZ,
@@ -59,7 +59,7 @@
               #{sendStatus,jdbcType=VARCHAR})
   </insert>
 
-    <insert id="insert_fmMedicalAdjustItem" parameterType="com.ufgov.fm.compo.fmMedicalAdjust.bean.FmMedicalAdjustItem">
+    <insert id="insert_fmMedicalAdjustItem" parameterType="com.ufgov.sssfm.project.module.medicalAdjust.entity.FmMedicalAdjustItem">
             insert into fm_medical_adjust_gold_item (ID, ITEMID, DWMC,
               SNJJLJJY, DNYSSR, QZBFSR,
               DNYSZC, DNYSYTJBZJE, DNYTJBZJE,
