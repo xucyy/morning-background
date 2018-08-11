@@ -3,5 +3,46 @@
 
 <mapper namespace="com.ufgov.sssfm.project.module.medicalAdjust.mapper.MedicalAdjustMapper">
 
+    <resultMap id="MedicalResultMap" type="com.ufgov.sssfm.project.module.medicalAdjust.entity.FmMedicalAdjust">
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="XZ" jdbcType="VARCHAR" property="xz" />
+        <result column="YEAR" jdbcType="VARCHAR" property="year" />
+        <result column="QUARTER" jdbcType="VARCHAR" property="quarter" />
+        <result column="TJJ_QUARTER" jdbcType="VARCHAR" property="tjjQuarter" />
+        <result column="LJJY_QUARTER" jdbcType="VARCHAR" property="ljjyQuarter" />
+        <result column="SBSHJE_QUARTER" jdbcType="VARCHAR" property="sbshjeQuarter" />
+        <result column="CZSDJE_QUARTER" jdbcType="VARCHAR" property="czsdjeQuarter" />
+        <result column="SBJZ" jdbcType="VARCHAR" property="sbjz" />
+        <result column="SBLD" jdbcType="VARCHAR" property="sbld" />
+        <result column="SBCZ" jdbcType="VARCHAR" property="sbcz" />
+        <result column="SBJBR" jdbcType="VARCHAR" property="sbjbr" />
+        <result column="CZLD" jdbcType="VARCHAR" property="czld" />
+        <result column="CZZR" jdbcType="VARCHAR" property="czzr" />
+        <result column="CZJBR" jdbcType="VARCHAR" property="czjbr" />
+        <result column="BZDATE" jdbcType="VARCHAR" property="bzdate" />
+        <result column="SHDATE" jdbcType="VARCHAR" property="shdate" />
+        <result column="SP_STATUS" jdbcType="VARCHAR" property="spStatus" />
+        <result column="SEND_STATUS" jdbcType="VARCHAR" property="sendStatus" />
+    </resultMap>
+
+    <resultMap id="ItemResultMap" type="com.ufgov.sssfm.project.module.medicalAdjust.entity.FmMedicalAdjustItem">
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="ITEMID" jdbcType="VARCHAR" property="itemid" />
+        <result column="DWMC" jdbcType="VARCHAR" property="dwmc" />
+        <result column="SNJJLJJY" jdbcType="VARCHAR" property="snjjljjy" />
+        <result column="DNYSSR" jdbcType="VARCHAR" property="dnyssr" />
+        <result column="QZBFSR" jdbcType="VARCHAR" property="qzbfsr" />
+        <result column="DNYSZC" jdbcType="VARCHAR" property="dnyszc" />
+        <result column="DNYSYTJBZJE" jdbcType="VARCHAR" property="dnysytjbzje" />
+        <result column="DNYTJBZJE" jdbcType="VARCHAR" property="dnytjbzje" />
+        <result column="DNJJLJJY" jdbcType="VARCHAR" property="dnjjljjy" />
+        <result column="DNJJYJZC" jdbcType="VARCHAR" property="dnjjyjzc" />
+        <result column="SXSQTJJE" jdbcType="VARCHAR" property="sxsqtjje" />
+        <result column="YJLJJYJE" jdbcType="VARCHAR" property="yjljjyje" />
+        <result column="SBJSHTJJE" jdbcType="VARCHAR" property="sbjshtjje" />
+        <result column="CZSDBKJE" jdbcType="VARCHAR" property="czsdbkje" />
+    </resultMap>
+
+
 
 </mapper>
