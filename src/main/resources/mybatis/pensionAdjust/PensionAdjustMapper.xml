@@ -82,8 +82,18 @@
         SBJZ, SBLD, SBCZ, SBJBR,
         CZLD, CZZR, CZJBR,
         BZDATE, SHDATE, SP_STATUS,
-        SEND_STATUS from fm_adjust_gold
+        SEND_STATUS,b.val SP_STATUS_NAME from fm_adjust_gold a,fm_as_val b
         <where>
+            a.SP_STATUS=b.VAL_ID and b.VALSET_ID='SP_STATUS'
+            <if test="send_status !=null">
+                and SEND_STATUS=#{send_status}
+            </if>
+            <if test="sp_status =='01'">
+                and SP_STATUS in('01','02','03')
+            </if>
+            <if test="sp_status =='02'">
+                and SP_STATUS in('02','03')
+            </if>
             <if test="(timeStart !=null and timeStart != '')"><!-- 开始时间检索 -->
                 and date_format(BZDATE,'%y%m%d')>= date_format(#{timeStart},'%y%m%d')
             </if>
@@ -91,6 +101,7 @@
                 and date_format(#{timeEnd},'%y%m%d') >= date_format(BZDATE,'%y%m%d')
             </if>
         </where>
+
 
 
     </select>
@@ -115,6 +126,13 @@
             where ID = #{id,jdbcType=VARCHAR}
         </delete>
     <update id="shenhe_persionAdjust" parameterType="java.util.Map">
-        update fm_adjust_gold    set SP_STATUS=#{sp_status} where ID=#{id}
+        update fm_adjust_gold    set SP_STATUS=#{sp_status}
+        <if test="sp_status=='01'">
+            ,SBJBR=#{sp_name}
+        </if>
+        <if test="sp_status=='02'">
+            ,SBCZ=#{sp_name}
+        </if>
+        where ID=#{id}
       </update>
 </mapper>
