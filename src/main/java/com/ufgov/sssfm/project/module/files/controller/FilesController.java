@@ -139,8 +139,7 @@ public class FilesController extends BaseController {
                 String fileName = file.getOriginalFilename();
                 //获取文件类型
                 String suffix = file.getContentType();
-                String avatar = FileUploadUtils.upload(file);
-//              String avatar1 = FileUploadUtils.upload("/statics",file);
+                String avatar = FileUploadUtils.upload(file,fileName.substring(fileName.lastIndexOf(".")));
                 files.setFileId(UUID.randomUUID().toString().trim().replace("-", ""));
                 files.setFilePath(avatar);
                 files.setFileName(fileName);
