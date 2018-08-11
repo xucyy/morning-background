@@ -38,11 +38,12 @@ public class PensionAdjustController {
         private FmBankXmlLogService fmBankXmlLogService;
         //养老调剂金修改查询主表
         @PostMapping("/query_persionAdjust_pagedata")
-        public String  query_persionAdjust_pagedata(String timeStart, String timeEnd){
+        public String  query_persionAdjust_pagedata(String timeStart, String timeEnd,String sendStatus){
                 JSONObject jsonObject = new JSONObject();
                 Map map = new HashMap();
                 map.put("timeStart", timeStart);
                 map.put("timeEnd", timeEnd);
+                map.put("sendStatus", sendStatus);
                 List query_list= pensionAdjustService.query_persionAdjust_pagedata(map);
                 jsonObject.put("result",query_list);
                 return jsonObject.toString();
@@ -74,11 +75,11 @@ public class PensionAdjustController {
         }
     //修改拨款单的审批状态
     @PostMapping("/shenhetijiao_persionAdjust")
-    public String updateBkdSpStatus(String id,String sp_status,String sp_name,String sp_status_name){
+    public String updateBkdSpStatus(String id,String spStatus,String sp_name,String sp_status_name){
         JSONObject jsonObject=new JSONObject();
         Map queryMap=new HashMap();
         queryMap.put("id",id);
-        queryMap.put("sp_status",sp_status);
+        queryMap.put("sp_status",spStatus);
         queryMap.put("sp_name",sp_name);
         try{
             pensionAdjustService.shenhe_persionAdjust(queryMap);
