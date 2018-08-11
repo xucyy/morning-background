@@ -5,17 +5,19 @@ $(function() {
     //用户信息存入cookie
     if(typeof (data) != "undefined"){
         if(data){
-            var userId = data.userId
-            var date = new Date()
-            var expDate = date.setTime(date.getTime()+30*60*1000)
-            setCookie('userId',userId,expDate)
+            var userId = data.userId;
+            var userName = data.userName;
+            var date = new Date();
+            var expDate = date.setTime(date.getTime()+30*60*1000);
+            setCookie('userId',userId,expDate);
+            setCookie('userName',userName,expDate);
         }
     }
 
     function setCookie(c_name,value,expiredays)
     {
-        var exdate=new Date()
-        exdate.setDate(exdate.getDate()+expiredays)
+        var exdate=new Date();
+        exdate.setDate(exdate.getDate()+expiredays);
         document.cookie=c_name+ "=" +escape(value)+
             ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
     }

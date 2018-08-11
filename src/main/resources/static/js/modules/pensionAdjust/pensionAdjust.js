@@ -7,48 +7,6 @@ $(function(){
         submit:'../../../persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
         del:'../../../persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
     };
-    var colOne=[    //编辑时的表头
-        {field: 'ck', checkbox: true},//checkbox列
-        {
-            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                return index + 1;
-            }
-        },
-        {field: 'DWMC', title: '单位名称', align: 'center',editable:{type:'text'}},
-        {field: 'SNJJJY', title: '上年末基金累计结余', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'DNJJSR', title: '当年基金预算收入', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'DNJJZC', title: '当年基金预算支出', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'YSJJJE', title: '预算应调剂补助基金金额', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'YJJJJY', title: '预计当年基金结余', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'YJJJSR', title: '预计当年基金征缴收入', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'DNYJZC', title: '当年基金预计支出', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'YJSZJY', title: '预计当年收支结余', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'ITEMID', title: '删除ID', align: 'center',visible:false}
-    ];
-
-    var colTwo=[    //查看时的表头（不可编辑）
-        {
-            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                return index + 1;
-            }
-        },
-        {field: 'DWMC', title: '单位名称', align: 'center'},
-        {field: 'SNJJJY', title: '上年末基金累计结余', align: 'right',halign:'center'},
-        {field: 'DNJJSR', title: '当年基金预算收入', align: 'right',halign:'center'},
-        {field: 'DNJJZC', title: '当年基金预算支出', align: 'right',halign:'center'},
-        {field: 'YSJJJE', title: '预算应调剂补助基金金额', align: 'right',halign:'center'},
-        {field: 'YJJJJY', title: '预计当年基金结余', align: 'right',halign:'center'},
-        {field: 'YJJJSR', title: '预计当年基金征缴收入', align: 'right',halign:'center'},
-        {field: 'DNYJZC', title: '当年基金预计支出', align: 'right',halign:'center'},
-        {field: 'YJSZJY', title: '预计当年收支结余', align: 'right',halign:'center'},
-        {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center'},
-        {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center'},
-        {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center'},
-        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center'}
-    ];
 
     //单元格按钮事件
     window.operateEvents = {
@@ -120,7 +78,7 @@ $(function(){
                     data:{
                         id:row.ID,
                         spStatus:'01',
-                        sp_name:'黄制单',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'制单'
                     },
                     beforeSend:function (){
@@ -225,7 +183,7 @@ $(function(){
                     data:{
                         id:row.ID,
                         spStatus:'02',
-                        sp_name:'黄审核',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'审核'
                     },
                     beforeSend:function (){
@@ -251,7 +209,7 @@ $(function(){
                     data:{
                         id:row.ID,
                         spStatus:'00',
-                        sp_name:'黄驳回',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'驳回'
                     },
                     beforeSend:function (){
@@ -267,18 +225,101 @@ $(function(){
         }
     };
 
+    var colOne=[    //编辑时的表头
+        {field: 'ck', checkbox: true},//checkbox列
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'DWMC', title: '单位名称', align: 'center',editable:{type:'text'}},
+        {field: 'SNJJJY', title: '上年末基金累计结余', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DNJJSR', title: '当年基金预算收入', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DNJJZC', title: '当年基金预算支出', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YSJJJE', title: '预算应调剂补助基金金额', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YJJJJY', title: '预计当年基金结余', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YJJJSR', title: '预计当年基金征缴收入', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'DNYJZC', title: '当年基金预计支出', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'YJSZJY', title: '预计当年收支结余', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
+        {field: 'ITEMID', title: '删除ID', align: 'center',visible:false}
+    ];
+
+    var colTwo=[    //查看时的表头（不可编辑）
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'DWMC', title: '单位名称', align: 'center'},
+        {field: 'SNJJJY', title: '上年末基金累计结余', align: 'right',halign:'center'},
+        {field: 'DNJJSR', title: '当年基金预算收入', align: 'right',halign:'center'},
+        {field: 'DNJJZC', title: '当年基金预算支出', align: 'right',halign:'center'},
+        {field: 'YSJJJE', title: '预算应调剂补助基金金额', align: 'right',halign:'center'},
+        {field: 'YJJJJY', title: '预计当年基金结余', align: 'right',halign:'center'},
+        {field: 'YJJJSR', title: '预计当年基金征缴收入', align: 'right',halign:'center'},
+        {field: 'DNYJZC', title: '当年基金预计支出', align: 'right',halign:'center'},
+        {field: 'YJSZJY', title: '预计当年收支结余', align: 'right',halign:'center'},
+        {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center'},
+        {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center'},
+        {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center'},
+        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center'}
+    ];
+
+    var mainColOne=[    //主页面表头1
+        {field: 'ck', checkbox: true},//checkbox列
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'BZDATE', title: '编制日期', align: 'center'},
+        {field: 'YEAR', title: '年份', align: 'center'},
+        {field: 'QUARTER', title: '季度', align: 'center'},
+        {field: 'SBJBR', title: '经办人', align: 'center'},
+        {field: 'SP_STATUS_NAME', title: '审批状态', align: 'center'},
+        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
+                return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
+                    '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
+                    '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
+                    '<button class="btn btn-primary btn-see">查看</button>&nbsp;'+
+                    '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
+                    '<button class="btn btn-primary btn-disagree">驳回</button>'
+            },
+        }
+    ];
+
+    var mainColTwo=[    //主页面表头2
+        {
+            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                return index + 1;
+            }
+        },
+        {field: 'BZDATE', title: '编制日期', align: 'center'},
+        {field: 'YEAR', title: '年份', align: 'center'},
+        {field: 'QUARTER', title: '季度', align: 'center'},
+        {field: 'SBJBR', title: '经办人', align: 'center'},
+        {field: 'SP_STATUS_NAME', title: '审批状态', align: 'center'},
+        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
+                return '<button class="btn btn-primary btn-see">查看</button>'
+            },
+        }
+    ];
+
     var page = function () {
 
         return {
             // 加载表格
-            getTab: function (id,url) {
+            getTab: function (id,url,cols,sendSta) {
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
                         timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        sendStatus:'00'
+                        sendStatus:sendSta
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -290,28 +331,7 @@ $(function(){
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                    columns:[    //表头
-                        {field: 'ck', checkbox: true},//checkbox列
-                        {
-                            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                                return index + 1;
-                            }
-                        },
-                        {field: 'BZDATE', title: '编制日期', align: 'center'},
-                        {field: 'YEAR', title: '年份', align: 'center'},
-                        {field: 'QUARTER', title: '季度', align: 'center'},
-                        {field: 'SBJBR', title: '经办人', align: 'center'},
-                        {field: 'SP_STATUS_NAME', title: '审批状态', align: 'center'},
-                        {field: 'operate', title: '操作', align: 'center',events:operateEvents,formatter:function(row){
-                                return '<button class="btn btn-primary btn-edit">修改</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-submit">提交</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-see">查看</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-sh">审核</button>&nbsp;'+
-                                '<button class="btn btn-primary btn-disagree">驳回</button>'
-                            },
-                        }
-                    ]
+                    columns:cols
                 });
             },
 
@@ -433,7 +453,21 @@ $(function(){
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
-                })
+                });
+
+                //页签中的表格初始化
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    // 获取已激活的标签页的名称
+                    var activeTab = $(e.target).text();
+                    if (activeTab == '未发财政') {
+                        $('#firstTable').bootstrapTable('refresh');
+                        $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',false);
+                    }
+                    else{
+                        $('#secondTable').bootstrapTable('refresh');
+                        $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',true);
+                    }
+                });
             },
 
             init: function () {
@@ -441,7 +475,8 @@ $(function(){
                     $('head').append($("<script type='text/javascript' src='@{/js/resource/json2.js}'>"));                }
                 this.getComponents();
                 //打开页面时先加载第一个表格
-                this.getTab('firstTable',allUrl.query);
+                this.getTab('firstTable',allUrl.query,mainColOne,'00');
+                this.getTab('secondTable',allUrl.query,mainColTwo,'01');
                 this.onEventListener();
             }
         }

@@ -18,6 +18,9 @@
     clear: both;
     margin-top: 20px;
 }
+#myTabContent{
+    padding-top: 15px;
+}
 .glyphicon-time{
     left: -25px;
     cursor: pointer;

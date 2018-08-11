@@ -10,7 +10,8 @@ $(function(){
         zd:ctx + 'fundApply/FundApplyController/updateBkdSpStatus',//制单
         sendCZ:ctx + 'fundApply/FundApplyController/send_bkd_to_czsb',//发财政地址
         uploadFile:ctx + 'module/files/uploadFile',//上传附件
-        fileList:ctx + 'module/files/listByBillId'//查看附件
+        fileList:ctx + 'module/files/listByBillId',//查看附件
+        daily:ctx + 'fundApply/FundApplyController/query_sp_daily',//审批日志
     };
 
     var fileCount = 0;//文件数量判断
@@ -154,17 +155,22 @@ $(function(){
         },
         'click .btn-appendix':function (e, value, row, index) {//上传附件
             $('#firstTable').bootstrapTable('uncheckAll');
-            layer.open({
-                type: 1,
-                title: '文件上传',
-                closeBtn: 1,
-                area: ['850px', '480px'],
-                shadeClose: true,
-                skin: 'yourclass',
-                content: $('#file')
-            });
-            // page.initUploadOption(row.BKD_ID);
-            billId = row.BKD_ID;
+            if(row.SP_STATUS!='00'){
+                commonJS.confirm('警告','已经制单不可上传附件！')
+            }
+            else {
+                layer.open({
+                    type: 1,
+                    title: '文件上传',
+                    closeBtn: 1,
+                    area: ['850px', '480px'],
+                    shadeClose: true,
+                    skin: 'yourclass',
+                    content: $('#file')
+                });
+                // page.initUploadOption(row.BKD_ID);
+                billId = row.BKD_ID;
+            }
         },
         'click .btn-fileList':function (e, value, row, index) {//查看附件
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -181,54 +187,59 @@ $(function(){
         },
         'click .btn-sign':function (e, value, row, index) {//签章
             $('#firstTable').bootstrapTable('uncheckAll');
-            page.getEditTab('QZ');
-            $.ajax({
-                url: allUrl.edit,
-                type:"post",
-                dataType:'json',
-                data:{
-                    bkdId:row.BKD_ID
-                },
-                beforeSend:function (){
-                    $('#myModal').modal('show');
-                },
-                success: function(result){
-                    $('#myModal').modal('hide');
-                    // 插数
-                    $('#year').val(result.year);
-                    $('#month').val(result.month);
-                    $('#day').val(result.day);
-                    $('#xz').val(result.xz);
-                    $('#monthend').val(result.monthend);
-                    $('#lastyearlast').val(result.lastyearlast);
-                    $('#thisyearpre').val(result.thisyearpre);
-                    $('#thisyearplus').val(result.thisyearplus);
-                    $('#monthplus').val(result.monthplus);
-                    $('#lastmonthlast').val(result.lastmonthlast);
-                    $('#thismonthapply').val(result.thismonthapply);
-                    $('#bz').val(result.bz);
-                    $('#tsbkone').val(result.tsbkone);
-                    $('#tsbktwo').val(result.tsbktwo);
-                    $('#tsbkthree').val(result.tsbkthree);
-                    $('#accountone').val(result.accountone);
-                    $('#batchnoone').val(result.batchnoone);
-                    $('#bankone').val(result.bankone);
-                    $('#moneybig').val(result.moneybig);
-                    $('#moneysmall').val(result.moneysmall);
-                    $('#accounttwo').val(result.accounttwo);
-                    $('#batchnotwo').val(result.batchnotwo);
-                    $('#banktwo').val(result.banktwo);
-                    $('#sqdwfzr').html(result.sqdwfzr);
-                    $('#sqdwshr').html(result.sqdwshr);
-                    $('#sqdwjbr').html(result.sqdwjbr);
-                    $('#czsbld').html(result.czsbld);
-                    $('#czsbshr').html(result.czsbshr);
-                    $('#czsbzg').html(result.czsbzg);
-                    $('#gkone').html(result.gkone);
-                    $('#gktwo').html(result.gktwo);
-                    $('#gkthree').html(result.gkthree);
-                }
-            });
+            if(row.SP_STATUS!='03'){
+                commonJS.confirm('警告','未审批，不可加盖签章！');
+            }
+            else{
+                page.getEditTab('QZ');
+                $.ajax({
+                    url: allUrl.edit,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        // 插数
+                        $('#year').val(result.year);
+                        $('#month').val(result.month);
+                        $('#day').val(result.day);
+                        $('#xz').val(result.xz);
+                        $('#monthend').val(result.monthend);
+                        $('#lastyearlast').val(result.lastyearlast);
+                        $('#thisyearpre').val(result.thisyearpre);
+                        $('#thisyearplus').val(result.thisyearplus);
+                        $('#monthplus').val(result.monthplus);
+                        $('#lastmonthlast').val(result.lastmonthlast);
+                        $('#thismonthapply').val(result.thismonthapply);
+                        $('#bz').val(result.bz);
+                        $('#tsbkone').val(result.tsbkone);
+                        $('#tsbktwo').val(result.tsbktwo);
+                        $('#tsbkthree').val(result.tsbkthree);
+                        $('#accountone').val(result.accountone);
+                        $('#batchnoone').val(result.batchnoone);
+                        $('#bankone').val(result.bankone);
+                        $('#moneybig').val(result.moneybig);
+                        $('#moneysmall').val(result.moneysmall);
+                        $('#accounttwo').val(result.accounttwo);
+                        $('#batchnotwo').val(result.batchnotwo);
+                        $('#banktwo').val(result.banktwo);
+                        $('#sqdwfzr').html(result.sqdwfzr);
+                        $('#sqdwshr').html(result.sqdwshr);
+                        $('#sqdwjbr').html(result.sqdwjbr);
+                        $('#czsbld').html(result.czsbld);
+                        $('#czsbshr').html(result.czsbshr);
+                        $('#czsbzg').html(result.czsbzg);
+                        $('#gkone').html(result.gkone);
+                        $('#gktwo').html(result.gktwo);
+                        $('#gkthree').html(result.gkthree);
+                    }
+                });
+            }
         },
         'click .btn-zd':function (e, value, row, index) {//制单
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -243,7 +254,7 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'01',
-                        sp_name:'黄1',
+                        sp_name:commonJS.getCookie('userName'),//cookie取用户信息
                         sp_status_name:'制单'
                     },
                     beforeSend:function (){
@@ -287,12 +298,14 @@ $(function(){
                 '<button class="btn btn-primary btn-del">删除</button>&nbsp;'+
                 '<button class="btn btn-primary btn-appendix">上传附件</button>&nbsp;'+
                 '<button class="btn btn-primary btn-fileList">查看附件</button>&nbsp;'+
-                '<button class="btn btn-primary btn-sign">签章</button>&nbsp;'+
-                '<button class="btn btn-primary btn-zd">制单</button>&nbsp;'
+                '<button class="btn btn-primary btn-zd">制单</button>&nbsp;'+
+                '<button class="btn btn-primary btn-sign">签章</button>'
+
             },
         }
     ];
     var colTwo=[    //表头
+        {field: 'ck', checkbox: true},//checkbox列
         {
             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
                 return index + 1;
@@ -438,6 +451,35 @@ $(function(){
                         {field: 'fileName', title: '文件名', align: 'center'},
                         {field: 'filePath', title: '附件路径', align: 'center'},
                         {field: 'creatTime', title: '上传时间', align: 'center'}
+                    ]
+                });
+            },
+
+            dailyTable:function(id){
+                $('#dailyTable').bootstrapTable({
+                    url: allUrl.daily,
+                    queryParams: {
+                        bkdId:id
+                    },
+                    method: 'post',
+                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                    dataField: "result",//定义从后台接收的字段，包括result和total，这里我们取result
+                    pageNumber: 1, //初始化加载第一页
+                    pageSize: 10,
+                    pagination: true, // 是否分页
+                    clickToSelect:true,
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                    columns:[    //表头
+                        {
+                            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
+                                return index + 1;
+                            }
+                        },
+                        {field: 'CZ_FS', title: '操作', align: 'center'},
+                        {field: 'CZ_PEOPLE', title: '操作人', align: 'center'},
+                        {field: 'CZ_TIME', title: '操作时间', align: 'center'}
                     ]
                 });
             },
@@ -637,22 +679,64 @@ $(function(){
                     }
                 });
 
+                //审批日志
+                $('#btn-daily').on('click',function () {
+                    var firstSel=$('#firstTable').bootstrapTable('getSelections');
+                    var secondSel=$('#secondTable').bootstrapTable('getSelections');
+                    if(firstSel.length==0&&secondSel==0){commonJS.confirm('警告','请选择一条数据！');}
+                   else if(firstSel.length!=0){//选中的是第一个表格数据
+                        if(firstSel.length>1){
+                            commonJS.confirm('警告','只能选择一条数据！');
+                        }
+                        else{
+                            layer.open({
+                                type: 1,
+                                title: '审批日志',
+                                closeBtn: 1,
+                                area: ['350px', '400px'],
+                                shadeClose: true,
+                                skin: 'yourclass',
+                                content: $('#daily')
+                            });
+                            page.dailyTable(firstSel[0].BKDID);
+                        }
+                   }
+                   else {
+                        if(secondSel.length>1){
+                            commonJS.confirm('警告','只能选择一条数据！');
+                        }
+                        else{
+                            layer.open({
+                                type: 1,
+                                title: '审批日志',
+                                closeBtn: 1,
+                                area: ['350px', '400px'],
+                                shadeClose: true,
+                                skin: 'yourclass',
+                                content: $('#daily')
+                            });
+                            page.dailyTable(secondSel[0].BKDID);
+                        }
+                    }
+                });
+
                 //页签中的表格初始化
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                     // 获取已激活的标签页的名称
                     var activeTab = $(e.target).text();
                     if (activeTab == '未发财政') {
                         $('#firstTable').bootstrapTable('refresh');
-                        $('#btn-add,#btn-daily,#btn-sendCZ').prop('disabled',false);
+                        $('#btn-add,#btn-sendCZ').prop('disabled',false);
                     }
                     else{
                         $('#secondTable').bootstrapTable('refresh');
-                        $('#btn-add,#btn-daily,#btn-sendCZ').prop('disabled',true);
+                        $('#btn-add,#btn-sendCZ').prop('disabled',true);
                     }
                 });
             },
 
             init: function () {
+                commonJS.getCookie();
                 if (typeof JSON == 'undefined') {
                     $('head').append($("<script type='text/javascript' src='@{/js/resource/json2.js}'>"));                }
                 this.getComponents();

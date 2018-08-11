@@ -38,7 +38,21 @@
         </div>
         <!--center-->
         <div class="center">
-            <table id="firstTable"></table>
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active">
+                    <a href="#notSend" data-toggle="tab">未发财政</a>
+                </li>
+                <li><a href="#hadSend" data-toggle="tab">已发财政</a></li>
+            </ul>
+            <!--页签内容-->
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="notSend">
+                    <table id="firstTable"></table>
+                </div>
+                <div class="tab-pane fade" id="hadSend">
+                    <table id="secondTable"></table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

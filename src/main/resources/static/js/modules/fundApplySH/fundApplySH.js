@@ -71,7 +71,7 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'02',
-                        sp_name:'黄2',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'审核'
                     },
                     beforeSend:function (){
@@ -98,7 +98,7 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'00',
-                        sp_name:'黄2',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'驳回'
                     },
                     beforeSend:function (){

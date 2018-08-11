@@ -72,7 +72,7 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'03',
-                        sp_name:'黄3',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'审批'
                     },
                     beforeSend:function (){
@@ -99,7 +99,7 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'00',
-                        sp_name:'黄3',
+                        sp_name:commonJS.getCookie('userName'),
                         sp_status_name:'驳回'
                     },
                     beforeSend:function (){
