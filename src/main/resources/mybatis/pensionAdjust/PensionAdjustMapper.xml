@@ -70,12 +70,12 @@
           DNJJSR, DNJJZC, YSJJJE,
           YJJJJY, YJJJSR, DNYJZC,
           YJSZJY, SBKZS, SXJE,
-          SBJE, CZJE)
+          SBJE, CZJE,ITEMID)
         values (#{id,jdbcType=VARCHAR}, #{dwmc,jdbcType=VARCHAR}, #{snjjjy,jdbcType=VARCHAR},
           #{dnjjsr,jdbcType=VARCHAR}, #{dnjjzc,jdbcType=VARCHAR}, #{ysjjje,jdbcType=VARCHAR},
           #{yjjjjy,jdbcType=VARCHAR}, #{yjjjsr,jdbcType=VARCHAR}, #{dnyjzc,jdbcType=VARCHAR},
           #{yjszjy,jdbcType=VARCHAR}, #{sbkzs,jdbcType=VARCHAR}, #{sxje,jdbcType=VARCHAR},
-          #{sbje,jdbcType=VARCHAR}, #{czje,jdbcType=VARCHAR})
+          #{sbje,jdbcType=VARCHAR}, #{czje,jdbcType=VARCHAR},#{itemid,jdbcType=VARCHAR})
       </insert>
     <select id="query_persionAdjust_pagedata" parameterType="java.util.Map"  resultType="java.util.Map" >
         select ID, YEAR, QUARTER,
