@@ -4,9 +4,8 @@ $(function(){
         save:'../../../persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
         query:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
         edit:'../../../persionAdjust/PersionAdjustController/query_persionAdjust_item',//编辑
-        submit:'../../../persionAdjust/PersionAdjustController/tijiao_persionAdjust',//提交
-        del:'../../../persionAdjust/PersionAdjustController/delete_persionAdjust',//删除
-        sh:'../../../persionAdjust/PersionAdjustController/shenhe_persionAdjust'//审核
+        submit:'../../../persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
+        del:'../../../persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
     };
     var colOne=[    //表头
         {field: 'ck', checkbox: true},//checkbox列
@@ -27,7 +26,7 @@ $(function(){
         {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
-        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}}
+        {field: 'ITEMID', title: '删除ID', align: 'center',visible:false}
     ];
 
     var colTwo=[    //表头
@@ -201,12 +200,14 @@ $(function(){
             }
             else{
                 $.ajax({
-                    url: allUrl.sh,
+                    url: allUrl.submit,
                     type:"post",
                     dataType:'json',
                     data:{
                         id:row.ID,
-                        spStatus:'02'
+                        spStatus:'02',
+                        sp_name:'黄审核',
+                        sp_status_name:'审核'
                     },
                     beforeSend:function (){
                         $('#myModal').modal('show');
@@ -333,7 +334,8 @@ $(function(){
                             'SBKZS':'',
                             'SXJE':'',
                             'SBJE':'',
-                            'CZJE':''
+                            'CZJE':'',
+                            'ITEMID':''
                     }})
                 });
 
@@ -346,7 +348,7 @@ $(function(){
                         commonJS.confirm('警告','请选择一条数据删除！');
                     }
                     else{
-                        $('#modalTable').bootstrapTable('remove',{field:'DELID',values:[$('#modalTable').bootstrapTable('getData').length]})
+                        $('#modalTable').bootstrapTable('remove',{field:'ITEMID',values:[$('#modalTable').bootstrapTable('getSelections')[0].ITEMID]})
                     }
                 });
 
