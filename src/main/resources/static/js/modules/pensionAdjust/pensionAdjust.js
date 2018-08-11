@@ -20,6 +20,24 @@ $(function(){
                 $('#btn-save,.appendRow').removeClass('hide');
                 $('#win input').attr('readonly',false);
                 $('#myModalLabel').html('编辑审核表');
+                $('#modalTable').bootstrapTable('destroy').bootstrapTable({
+                    url: allUrl.edit,
+                    queryParams: {
+                        id:row.ID
+                    },
+                    method: 'post',
+                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                    dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
+                    pageNumber: 1, //初始化加载第一页
+                    pageSize: 10,
+                    pagination: true, // 是否分页
+                    clickToSelect:true,
+                    singleSelect:true,
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                    columns:colOne
+                });
                 $.ajax({
                     url: allUrl.edit,
                     type:"post",
@@ -32,24 +50,6 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#modalTable').bootstrapTable('destroy').bootstrapTable({
-                            url: allUrl.edit,
-                            queryParams: {
-                                id:row.ID
-                            },
-                            method: 'post',
-                            contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                            dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
-                            pageNumber: 1, //初始化加载第一页
-                            pageSize: 10,
-                            pagination: true, // 是否分页
-                            clickToSelect:true,
-                            singleSelect:true,
-                            sidePagination: 'server',//server:服务器端分页|client：前端分页
-                            paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                            paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                            columns:colOne
-                        });
                         $('#year').val(result.result[0].YEAR);
                         $('#quarter').val(result.result[0].QUARTER);
                         $('#bzDate').val(result.result[0].BZDATE);
@@ -400,20 +400,20 @@ $(function(){
                             'SXJE':'',
                             'SBJE':'',
                             'CZJE':'',
-                            'ITEMID':''
+                            'ITEMID':$('#modalTable').bootstrapTable('getData').length+1
                     }})
                 });
 
                 //删除可编辑表格最后一行
                 $('.btn-minus').on('click',function () {
-                    if($('#firstTable').bootstrapTable('getSelections')[0].SP_STATUS!='00'){
-                        commonJS.confirm('警告','已经提交不可删除！');
-                    }
-                    else if($('#modalTable').bootstrapTable('getSelections').length==0){
+                    if($('#modalTable').bootstrapTable('getSelections').length==0){
                         commonJS.confirm('警告','请选择一条数据删除！');
                     }
-                    else{
-                        $('#modalTable').bootstrapTable('remove',{field:'ITEMID',values:[$('#modalTable').bootstrapTable('getSelections')[0].ITEMID]})
+                    else {
+                        $('#modalTable').bootstrapTable('remove', {
+                            field: 'ITEMID',
+                            values: [$('#modalTable').bootstrapTable('getSelections')[0].ITEMID]
+                        })
                     }
                 });
 

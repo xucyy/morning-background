@@ -21,59 +21,22 @@ $(function(){
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {//编辑
             $('#firstTable').bootstrapTable('uncheckAll');//编辑前将选中事件清空
-            if(row.SP_STATUS!='00'){//判断若已经被审核后，则不可再次编辑
-                commonJS.confirm('警告','已制单不可编辑！')
-            }
-            else{
-                page.getEditTab('editZD');
-                $.ajax({
-                    url: allUrl.edit,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        bkdId:row.BKD_ID
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        // 插数
-                        $('#year').val(result.year);
-                        $('#month').val(result.month);
-                        $('#day').val(result.day);
-                        $('#xz').val(result.xz);
-                        $('#monthend').val(result.monthend);
-                        $('#lastyearlast').val(result.lastyearlast);
-                        $('#thisyearpre').val(result.thisyearpre);
-                        $('#thisyearplus').val(result.thisyearplus);
-                        $('#monthplus').val(result.monthplus);
-                        $('#lastmonthlast').val(result.lastmonthlast);
-                        $('#thismonthapply').val(result.thismonthapply);
-                        $('#bz').val(result.bz);
-                        $('#tsbkone').val(result.tsbkone);
-                        $('#tsbktwo').val(result.tsbktwo);
-                        $('#tsbkthree').val(result.tsbkthree);
-                        $('#accountone').val(result.accountone);
-                        $('#batchnoone').val(result.batchnoone);
-                        $('#bankone').val(result.bankone);
-                        $('#moneybig').val(result.moneybig);
-                        $('#moneysmall').val(result.moneysmall);
-                        $('#accounttwo').val(result.accounttwo);
-                        $('#batchnotwo').val(result.batchnotwo);
-                        $('#banktwo').val(result.banktwo);
-                        $('#sqdwfzr').html(result.sqdwfzr);
-                        $('#sqdwshr').html(result.sqdwshr);
-                        $('#sqdwjbr').html(result.sqdwjbr);
-                        $('#czsbld').html(result.czsbld);
-                        $('#czsbshr').html(result.czsbshr);
-                        $('#czsbzg').html(result.czsbzg);
-                        $('#gkone').html(result.gkone);
-                        $('#gktwo').html(result.gktwo);
-                        $('#gkthree').html(result.gkthree);
-                    }
-                });
-            }
+            page.getEditTab('editZD');
+            $.ajax({
+                url: allUrl.edit,
+                type:"post",
+                dataType:'json',
+                data:{
+                    bkdId:row.BKD_ID
+                },
+                beforeSend:function (){
+                    $('#myModal').modal('show');
+                },
+                success: function(result){
+                    $('#myModal').modal('hide');
+                    page.setVal(result);
+                }
+            });
         },
         'click .btn-del':function (e, value, row, index) {//删除
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -115,41 +78,7 @@ $(function(){
                 },
                 success: function(result){
                     $('#myModal').modal('hide');
-                    //打开加载页面
-
-                    // 插数
-                    $('#year').val(result.year);
-                    $('#month').val(result.month);
-                    $('#day').val(result.day);
-                    $('#xz').val(result.xz);
-                    $('#monthend').val(result.monthend);
-                    $('#lastyearlast').val(result.lastyearlast);
-                    $('#thisyearpre').val(result.thisyearpre);
-                    $('#thisyearplus').val(result.thisyearplus);
-                    $('#monthplus').val(result.monthplus);
-                    $('#lastmonthlast').val(result.lastmonthlast);
-                    $('#thismonthapply').val(result.thismonthapply);
-                    $('#bz').val(result.bz);
-                    $('#tsbkone').val(result.tsbkone);
-                    $('#tsbktwo').val(result.tsbktwo);
-                    $('#tsbkthree').val(result.tsbkthree);
-                    $('#accountone').val(result.accountone);
-                    $('#batchnoone').val(result.batchnoone);
-                    $('#bankone').val(result.bankone);
-                    $('#moneybig').val(result.moneybig);
-                    $('#moneysmall').val(result.moneysmall);
-                    $('#accounttwo').val(result.accounttwo);
-                    $('#batchnotwo').val(result.batchnotwo);
-                    $('#banktwo').val(result.banktwo);
-                    $('#sqdwfzr').html(result.sqdwfzr);
-                    $('#sqdwshr').html(result.sqdwshr);
-                    $('#sqdwjbr').html(result.sqdwjbr);
-                    $('#czsbld').html(result.czsbld);
-                    $('#czsbshr').html(result.czsbshr);
-                    $('#czsbzg').html(result.czsbzg);
-                    $('#gkone').html(result.gkone);
-                    $('#gktwo').html(result.gktwo);
-                    $('#gkthree').html(result.gkthree);
+                    page.setVal(result);
                 }
             });
         },
@@ -204,39 +133,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        // 插数
-                        $('#year').val(result.year);
-                        $('#month').val(result.month);
-                        $('#day').val(result.day);
-                        $('#xz').val(result.xz);
-                        $('#monthend').val(result.monthend);
-                        $('#lastyearlast').val(result.lastyearlast);
-                        $('#thisyearpre').val(result.thisyearpre);
-                        $('#thisyearplus').val(result.thisyearplus);
-                        $('#monthplus').val(result.monthplus);
-                        $('#lastmonthlast').val(result.lastmonthlast);
-                        $('#thismonthapply').val(result.thismonthapply);
-                        $('#bz').val(result.bz);
-                        $('#tsbkone').val(result.tsbkone);
-                        $('#tsbktwo').val(result.tsbktwo);
-                        $('#tsbkthree').val(result.tsbkthree);
-                        $('#accountone').val(result.accountone);
-                        $('#batchnoone').val(result.batchnoone);
-                        $('#bankone').val(result.bankone);
-                        $('#moneybig').val(result.moneybig);
-                        $('#moneysmall').val(result.moneysmall);
-                        $('#accounttwo').val(result.accounttwo);
-                        $('#batchnotwo').val(result.batchnotwo);
-                        $('#banktwo').val(result.banktwo);
-                        $('#sqdwfzr').html(result.sqdwfzr);
-                        $('#sqdwshr').html(result.sqdwshr);
-                        $('#sqdwjbr').html(result.sqdwjbr);
-                        $('#czsbld').html(result.czsbld);
-                        $('#czsbshr').html(result.czsbshr);
-                        $('#czsbzg').html(result.czsbzg);
-                        $('#gkone').html(result.gkone);
-                        $('#gktwo').html(result.gktwo);
-                        $('#gkthree').html(result.gkthree);
+                        page.setVal(result);
                     }
                 });
             }
@@ -397,6 +294,42 @@ $(function(){
                 commonJS.showMonth('yyyy-mm-dd',2,'month',nowTime);
             },
 
+            //插数
+            setVal:function(result){
+                $('#year').val(result.year);
+                $('#month').val(result.month);
+                $('#day').val(result.day);
+                $('#xz').val(result.xz);
+                $('#monthend').val(result.monthend);
+                $('#lastyearlast').val(result.lastyearlast);
+                $('#thisyearpre').val(result.thisyearpre);
+                $('#thisyearplus').val(result.thisyearplus);
+                $('#monthplus').val(result.monthplus);
+                $('#lastmonthlast').val(result.lastmonthlast);
+                $('#thismonthapply').val(result.thismonthapply);
+                $('#bz').val(result.bz);
+                $('#tsbkone').val(result.tsbkone);
+                $('#tsbktwo').val(result.tsbktwo);
+                $('#tsbkthree').val(result.tsbkthree);
+                $('#accountone').val(result.accountone);
+                $('#batchnoone').val(result.batchnoone);
+                $('#bankone').val(result.bankone);
+                $('#moneybig').val(result.moneybig);
+                $('#moneysmall').val(result.moneysmall);
+                $('#accounttwo').val(result.accounttwo);
+                $('#batchnotwo').val(result.batchnotwo);
+                $('#banktwo').val(result.banktwo);
+                $('#sqdwfzr').html(result.sqdwfzr);
+                $('#sqdwshr').html(result.sqdwshr);
+                $('#sqdwjbr').html(result.sqdwjbr);
+                $('#czsbld').html(result.czsbld);
+                $('#czsbshr').html(result.czsbshr);
+                $('#czsbzg').html(result.czsbzg);
+                $('#gkone').html(result.gkone);
+                $('#gktwo').html(result.gktwo);
+                $('#gkthree').html(result.gkthree);
+            },
+
             //初始化文件上传
             initUploadOption: function () {
                 $("#myDropzone").dropzone({
@@ -538,6 +471,13 @@ $(function(){
                         //进行判断，新增时不会选择数据，此时BKD_ID传空
                         "bkdId":$('#firstTable').bootstrapTable('getSelections').length!=0?$('#firstTable').bootstrapTable('getSelections')[0].BKD_ID:''
                     };
+                    //判断，有一种条件不允许保存，即保存已经制单的单子
+                    if($('#firstTable').bootstrapTable('getSelections').length!=0){
+                        if($('#firstTable').bootstrapTable('getSelections')[0].SP_STATUS!='00'){
+                            commonJS.confirm('警告','已经制单不允许再次保存！');
+                            return;
+                        }
+                    }
                     $.ajax({
                         url: allUrl.save,
                         type:"post",
