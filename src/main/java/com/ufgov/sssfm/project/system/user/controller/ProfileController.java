@@ -132,7 +132,7 @@ public class ProfileController extends BaseController
         {
             if (!file.isEmpty())
             {
-                String avatar = FileUploadUtils.upload(file);
+                String avatar = FileUploadUtils.upload(file,file.getContentType());
                 user.setAvatar(avatar);
                 if (userService.updateUserInfo(user) > 0)
                 {

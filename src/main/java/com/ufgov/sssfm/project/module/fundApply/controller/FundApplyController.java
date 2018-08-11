@@ -16,8 +16,10 @@ import com.ufgov.sssfm.project.module.files.service.IFilesService;
 import com.ufgov.sssfm.project.module.fundApply.entity.FmBkApply;
 import com.ufgov.sssfm.project.module.fundApply.service.FundApplyService;
 import com.ufgov.sssfm.project.module.queryutils.bean.FmInterfaceUtils;
+import com.ufgov.sssfm.project.module.queryutils.bean.FmSpDaily;
 import com.ufgov.sssfm.project.module.queryutils.service.FmBankXmlLogService;
 import com.ufgov.sssfm.project.module.queryutils.service.FmInterfaceUtilsService;
+import com.ufgov.sssfm.project.module.queryutils.service.FmSpDailyService;
 import com.ylzinfo.analysis.service.EsbQueryFactory;
 import com.ylzinfo.analysis.service.QueryListService;
 import com.ylzinfo.esb.bas.EsbException;
@@ -59,6 +61,8 @@ public class FundApplyController {
     @Autowired
     private IFilesService filesService;
 
+    @Autowired
+    private FmSpDailyService fmSpDailyService;
 
     @PostMapping("/send_bkd_to_czsb")
     @ApiOperation(value = "发送拨款单去财政", notes="发送拨款单去财政")
@@ -349,13 +353,38 @@ public class FundApplyController {
         queryMap.put("bkdId",bkdId);
         queryMap.put("sp_status",sp_status);
         queryMap.put("sp_name",sp_name);
+        FmSpDaily fmSpDaily=new FmSpDaily();
+        fmSpDaily.setId(bkdId);
+        fmSpDaily.setCzFs(sp_status_name);
+        fmSpDaily.setCzPeople(sp_name);
+        fmSpDaily.setCzTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+        fmSpDaily.setSpBusiness("fundApply");
         try{
             fundApplyService.updateBkdSpStatus(queryMap);
+            fmSpDailyService.insert(fmSpDaily);
         }catch (Exception e){
             jsonObject.put("result",sp_status_name+"失败");
             return jsonObject.toString();
         }
         jsonObject.put("result",sp_status_name+"成功");
+        return jsonObject.toString();
+    }
+
+    //查看审批日志
+    @PostMapping("/query_sp_daily")
+    public String query_sp_daily(String bkdId){
+        JSONObject jsonObject=new JSONObject();
+        Map selectMap=new HashMap();
+        selectMap.put("id",bkdId);
+        selectMap.put("spBusiness","fundApply");
+        List<FmSpDaily> list=null;
+        try{
+            list=fmSpDailyService.select(selectMap);
+        }catch(Exception e){
+            jsonObject.put("result","查询失败");
+            return jsonObject.toString();
+        }
+        jsonObject.put("result",list);
         return jsonObject.toString();
     }
 

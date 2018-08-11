@@ -27,7 +27,7 @@ public class FileUploadUtils
      * 默认上传的地址
      */
 //    private static String defaultBaseDir = SssfmConfig.getProfile();
-    private static String defaultBaseDir = NormalUtil.getWebRootUrlSpringboot()+"/static/upload/bkdpdf";
+    private static String defaultBaseDir = NormalUtil.getWebRootUrlSpringboot()+"/static/upload/bkdpdf/";
 
     /**
      * 默认的文件名最大长度
@@ -58,11 +58,11 @@ public class FileUploadUtils
      * @return 文件名称
      * @throws Exception
      */
-    public static final String upload(MultipartFile file) throws IOException
+    public static final String upload(MultipartFile file,String fileType) throws IOException
     {
         try
         {
-            return upload(getDefaultBaseDir(), file, FileUploadUtils.IMAGE_JPG_EXTENSION);
+            return upload(getDefaultBaseDir(), file, file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
         }
         catch (Exception e)
         {
@@ -143,7 +143,7 @@ public class FileUploadUtils
     private static final String encodingFilename(String filename, String extension)
     {
         filename = filename.replace("_", " ");
-        filename = new Md5Hash(filename + System.nanoTime() + counter++).toHex().toString() + extension;
+//        filename = new Md5Hash(filename + System.nanoTime() + counter++).toHex().toString() + extension;
         return filename;
     }
 
