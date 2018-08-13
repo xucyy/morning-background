@@ -286,7 +286,7 @@ $(function(){
                         $('#year').val(result.result[0].YEAR);
                         $('#quarter').val(result.result[0].QUARTER);
                         $('#bzDate').val(result.result[0].BZDATE);
-                        $('#shDate').html(result.result[0].SHDATE);
+                        $('#shDate').val(result.result[0].SHDATE);
                         $('#sbjz').html(result.result[0].SBJZ);
                         $('#sbld').html(result.result[0].SBLD);
                         $('#sbcz').html(result.result[0].SBCZ);
@@ -375,7 +375,7 @@ $(function(){
                         month:$('#month').val(),
                         quarter:$('#quarter').val(),
                         bzdate:$('#bzDate').val(),
-                        shdate:$('#shDate').html(),
+                        shdate:$('#shDate').val(),
                         table:$('#modalTable').bootstrapTable('getData'),
                         sbjz:$('#sbjz').html(),
                         sbld:$('#sbld').html(),
