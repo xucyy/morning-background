@@ -297,7 +297,7 @@ $(function(){
                 this.getComponents();
                 this.getTab('firstTable',allUrlOutcome.query,'00');
                 this.getTab('secondTable',allUrlOutcome.query,'01');
-                this.getTab('thirdTable',allUrlOutcome.query,'02');
+                this.getTab('thirdTable',allUrlOutcome.query,null);
                 this.onEventListener();
             }
         }
