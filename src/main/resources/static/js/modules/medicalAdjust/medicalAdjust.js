@@ -334,21 +334,22 @@ $(function(){
                 $('.btn-plus').on('click',function () {
                     $('#modalTable').bootstrapTable('insertRow',
                         {index:$('#modalTable').bootstrapTable('getData').length,row:{
-                                'DWMC':'',
-                                'SNJJLJJY':'',
-                                'DNYSSR':'',
-                                'QZBFSR':'',
-                                'DNYSZC':'',
-                                'DNYSYTJBZJE':'',
-                                'DNYTJBZJE':'',
-                                'DNJJLJJY':'',
-                                'DNJJYJZC':'',
-                                'SXSQTJJE':'',
-                                'YJLJJYJE':'',
-                                'SBJSHTJJE':'',
-                                'CZSDBKJE':'',
-                                'ITEMID':$('#modalTable').bootstrapTable('getData').length+1
-                            }})
+                            'DWMC':'',
+                            'SNJJLJJY':'',
+                            'DNYSSR':'',
+                            'QZBFSR':'',
+                            'DNYSZC':'',
+                            'DNYSYTJBZJE':'',
+                            'DNYTJBZJE':'',
+                            'DNJJLJJY':'',
+                            'DNJJYJZC':'',
+                            'SXSQTJJE':'',
+                            'YJLJJYJE':'',
+                            'SBJSHTJJE':'',
+                            'CZSDBKJE':'',
+                            'ITEMID':$('#modalTable').bootstrapTable('getData').length+1
+                        }
+                    })
                 });
 
                 //删除可编辑表格最后一行

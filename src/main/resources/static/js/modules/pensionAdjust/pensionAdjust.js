@@ -348,7 +348,8 @@ $(function(){
                             'SBJE':'',
                             'CZJE':'',
                             'ITEMID':$('#modalTable').bootstrapTable('getData').length+1
-                    }})
+                        }
+                    })
                 });
 
                 //删除可编辑表格最后一行
