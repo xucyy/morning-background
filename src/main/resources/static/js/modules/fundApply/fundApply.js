@@ -243,7 +243,38 @@ $(function(){
                         },
                         success: function(result){
                             $('#myModal').modal('hide');
-                            page.setVal(result);
+                            $('#year').val(result.year);
+                            $('#month').val(result.month);
+                            $('#day').val(result.day);
+                            $('#xz').val(result.xz);
+                            $('#monthend').val(result.monthend);
+                            $('#lastyearlast').val(result.lastyearlast);
+                            $('#thisyearpre').val(result.thisyearpre);
+                            $('#thisyearplus').val(result.thisyearplus);
+                            $('#monthplus').val(result.monthplus);
+                            $('#lastmonthlast').val(result.lastmonthlast);
+                            $('#thismonthapply').val(result.thismonthapply);
+                            $('#bz').val(result.bz);
+                            $('#tsbkone').val(result.tsbkone);
+                            $('#tsbktwo').val(result.tsbktwo);
+                            $('#tsbkthree').val(result.tsbkthree);
+                            $('#accountone').val(result.accountone);
+                            $('#batchnoone').val(result.batchnoone);
+                            $('#bankone').val(result.bankone);
+                            $('#moneybig').val(result.moneybig);
+                            $('#moneysmall').val(result.moneysmall);
+                            $('#accounttwo').val(result.accounttwo);
+                            $('#batchnotwo').val(result.batchnotwo);
+                            $('#banktwo').val(result.banktwo);
+                            $('#sqdwfzr').html(result.sqdwfzr);
+                            $('#sqdwshr').html(result.sqdwshr);
+                            $('#sqdwjbr').html(result.sqdwjbr);
+                            $('#czsbld').html(result.czsbld);
+                            $('#czsbshr').html(result.czsbshr);
+                            $('#czsbzg').html(result.czsbzg);
+                            $('#gkone').html(result.gkone);
+                            $('#gktwo').html(result.gktwo);
+                            $('#gkthree').html(result.gkthree);
                         }
                     });
                 }
@@ -266,42 +297,6 @@ $(function(){
             getComponents: function () {
                 //时间显示到日
                 commonJS.showMonth('yyyy-mm-dd',2,'month',nowTime);
-            },
-
-            //插数
-            setVal:function(result){
-                $('#year').val(result.year);
-                $('#month').val(result.month);
-                $('#day').val(result.day);
-                $('#xz').val(result.xz);
-                $('#monthend').val(result.monthend);
-                $('#lastyearlast').val(result.lastyearlast);
-                $('#thisyearpre').val(result.thisyearpre);
-                $('#thisyearplus').val(result.thisyearplus);
-                $('#monthplus').val(result.monthplus);
-                $('#lastmonthlast').val(result.lastmonthlast);
-                $('#thismonthapply').val(result.thismonthapply);
-                $('#bz').val(result.bz);
-                $('#tsbkone').val(result.tsbkone);
-                $('#tsbktwo').val(result.tsbktwo);
-                $('#tsbkthree').val(result.tsbkthree);
-                $('#accountone').val(result.accountone);
-                $('#batchnoone').val(result.batchnoone);
-                $('#bankone').val(result.bankone);
-                $('#moneybig').val(result.moneybig);
-                $('#moneysmall').val(result.moneysmall);
-                $('#accounttwo').val(result.accounttwo);
-                $('#batchnotwo').val(result.batchnotwo);
-                $('#banktwo').val(result.banktwo);
-                $('#sqdwfzr').html(result.sqdwfzr);
-                $('#sqdwshr').html(result.sqdwshr);
-                $('#sqdwjbr').html(result.sqdwjbr);
-                $('#czsbld').html(result.czsbld);
-                $('#czsbshr').html(result.czsbshr);
-                $('#czsbzg').html(result.czsbzg);
-                $('#gkone').html(result.gkone);
-                $('#gktwo').html(result.gktwo);
-                $('#gkthree').html(result.gkthree);
             },
 
             //初始化文件上传

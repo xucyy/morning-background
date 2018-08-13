@@ -65,26 +65,7 @@ $(function(){
                 commonJS.confirm('警告','已审核，不可再次审核！');
             }
             else{
-                $.ajax({
-                    url: allUrl.sh,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        bkdId:row.BKD_ID,
-                        sp_status:'02',
-                        sp_name:commonJS.getCookie('userName'),
-                        sp_status_name:'审核'
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        //重新加载一次表格
-                        $('#firstTable').bootstrapTable('refresh');
-                        commonJS.confirm('消息',result.result,result.msg);
-                    }
-                });
+                page.updateState(row,'02',commonJS.getCookie('userName'),'审核');
             }
         },
         'click .btn-disagree':function (e, value, row, index){//驳回
@@ -92,26 +73,7 @@ $(function(){
                 commonJS.confirm('警告','已审批，不可驳回！');
             }
             else{
-                $.ajax({
-                    url: allUrl.sh,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        bkdId:row.BKD_ID,
-                        sp_status:'00',
-                        sp_name:commonJS.getCookie('userName'),
-                        sp_status_name:'驳回'
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        //重新加载一次表格
-                        $('#firstTable').bootstrapTable('refresh');
-                        commonJS.confirm('消息',result.result,result.msg);
-                    }
-                });
+                page.updateState(row,'00',commonJS.getCookie('userName'),'驳回');
             }
         },
         'click .btn-daily':function (e, value, row, index) {//审批日志
@@ -209,6 +171,30 @@ $(function(){
                             },
                         }
                     ]
+                });
+            },
+
+            //审核状态改变
+            updateState:function(row,spSta,spName,spStaName){
+                $.ajax({
+                    url: allUrl.sh,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        bkdId:row.BKD_ID,
+                        sp_status:spSta,
+                        sp_name:spName,
+                        sp_status_name:spStaName
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        //重新加载一次表格
+                        $('#firstTable').bootstrapTable('refresh');
+                        commonJS.confirm('消息',result.result,result.msg);
+                    }
                 });
             },
 
