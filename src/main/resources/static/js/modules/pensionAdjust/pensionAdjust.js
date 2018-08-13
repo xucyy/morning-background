@@ -20,24 +20,7 @@ $(function(){
                 $('#btn-save,.appendRow').removeClass('hide');
                 $('#win input').attr('readonly',false);
                 $('#myModalLabel').html('编辑审核表');
-                $('#modalTable').bootstrapTable('destroy').bootstrapTable({
-                    url: allUrl.edit,
-                    queryParams: {
-                        id:row.ID
-                    },
-                    method: 'post',
-                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                    dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
-                    pageNumber: 1, //初始化加载第一页
-                    pageSize: 10,
-                    pagination: true, // 是否分页
-                    clickToSelect:true,
-                    singleSelect:true,
-                    sidePagination: 'server',//server:服务器端分页|client：前端分页
-                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                    columns:colOne
-                });
+                page.getEditTab(true,row);
                 $.ajax({
                     url: allUrl.edit,
                     type:"post",
@@ -53,7 +36,7 @@ $(function(){
                         $('#year').val(result.result[0].YEAR);
                         $('#quarter').val(result.result[0].QUARTER);
                         $('#bzDate').val(result.result[0].BZDATE);
-                        $('#shDate').val(result.result[0].SHDATE);
+                        $('#shDate').html(result.result[0].SHDATE);
                         $('#sbjz').html(result.result[0].SBJZ);
                         $('#sbld').html(result.result[0].SBLD);
                         $('#sbcz').html(result.result[0].SBCZ);
@@ -125,6 +108,7 @@ $(function(){
             $('#win input').attr('readonly','readonly');//input不可编辑
             $('#btn-save,.appendRow').addClass('hide');
             $('#myModalLabel').html('查看审核表');
+            page.getEditTab(false,row);
             $.ajax({
                 url: allUrl.edit,
                 type:"post",
@@ -137,26 +121,10 @@ $(function(){
                 },
                 success: function(result){
                     $('#myModal').modal('hide');
-                    $('#modalTable').bootstrapTable('destroy').bootstrapTable({
-                        url: allUrl.edit,
-                        queryParams: {
-                            id:row.ID
-                        },
-                        method: 'post',
-                        contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
-                        dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
-                        pageNumber: 1, //初始化加载第一页
-                        pageSize: 10,
-                        pagination: true, // 是否分页
-                        sidePagination: 'server',//server:服务器端分页|client：前端分页
-                        paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
-                        paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                        columns:colTwo
-                    });
                     $('#year').val(result.result[0].YEAR);
                     $('#quarter').val(result.result[0].QUARTER);
                     $('#bzDate').val(result.result[0].BZDATE);
-                    $('#shDate').val(result.result[0].SHDATE);
+                    $('#shDate').html(result.result[0].SHDATE);
                     $('#sbjz').html(result.result[0].SBJZ);
                     $('#sbld').html(result.result[0].SBLD);
                     $('#sbcz').html(result.result[0].SBCZ);
@@ -225,7 +193,7 @@ $(function(){
         }
     };
 
-    var colOne=[    //编辑时的表头
+    var colEdit=[    //可编辑表格表头
         {field: 'ck', checkbox: true},//checkbox列
         {
             field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
@@ -246,27 +214,6 @@ $(function(){
         {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center',editable:{type:'text'}},
         {field: 'ITEMID', title: '删除ID', align: 'center',visible:false}
-    ];
-
-    var colTwo=[    //查看时的表头（不可编辑）
-        {
-            field: 'number', title: '序号', align: 'center', formatter: function (value, row, index) {
-                return index + 1;
-            }
-        },
-        {field: 'DWMC', title: '单位名称', align: 'center'},
-        {field: 'SNJJJY', title: '上年末基金累计结余', align: 'right',halign:'center'},
-        {field: 'DNJJSR', title: '当年基金预算收入', align: 'right',halign:'center'},
-        {field: 'DNJJZC', title: '当年基金预算支出', align: 'right',halign:'center'},
-        {field: 'YSJJJE', title: '预算应调剂补助基金金额', align: 'right',halign:'center'},
-        {field: 'YJJJJY', title: '预计当年基金结余', align: 'right',halign:'center'},
-        {field: 'YJJJSR', title: '预计当年基金征缴收入', align: 'right',halign:'center'},
-        {field: 'DNYJZC', title: '当年基金预计支出', align: 'right',halign:'center'},
-        {field: 'YJSZJY', title: '预计当年收支结余', align: 'right',halign:'center'},
-        {field: 'SBKZS', title: '社保局审核预计动用历年累计结余控制数', align: 'right',halign:'center'},
-        {field: 'SXJE', title: '市县申请调剂金额',align: 'right',halign:'center'},
-        {field: 'SBJE', title: '社保局审核调剂金额', align: 'right',halign:'center'},
-        {field: 'CZJE', title: '财政厅核定调剂金额', align: 'right',halign:'center'}
     ];
 
     var mainColOne=[    //主页面表头1
@@ -352,6 +299,29 @@ $(function(){
                 });
             },
 
+            //编辑、查看编辑单表格
+            getEditTab:function(editable,row){
+                $('#modalTable').bootstrapTable('destroy').bootstrapTable({
+                    url: allUrl.edit,
+                    queryParams: {
+                        id:row.ID
+                    },
+                    method: 'post',
+                    editable:editable,
+                    contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
+                    dataField: "TABLE",//定义从后台接收的字段，包括result和total，这里我们取result
+                    pageNumber: 1, //初始化加载第一页
+                    pageSize: 10,
+                    pagination: true, // 是否分页
+                    clickToSelect:true,
+                    singleSelect:true,
+                    sidePagination: 'server',//server:服务器端分页|client：前端分页
+                    paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
+                    paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+                    columns:colEdit
+                });
+            },
+
             //初始化其他组件
             getComponents: function () {
                 //时间显示到日
@@ -427,7 +397,7 @@ $(function(){
                         month:$('#month').val(),
                         quarter:$('#quarter').val(),
                         bzdate:$('#bzDate').val(),
-                        shdate:$('#shDate').val(),
+                        shdate:$('#shDate').html(),
                         table:$('#modalTable').bootstrapTable('getData'),
                         sbjz:$('#sbjz').html(),
                         sbld:$('#sbld').html(),
