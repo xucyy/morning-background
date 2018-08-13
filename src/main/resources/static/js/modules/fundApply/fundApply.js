@@ -21,22 +21,12 @@ $(function(){
     window.operateEvents = {
         'click .btn-edit': function (e, value, row, index) {//编辑
             $('#firstTable').bootstrapTable('uncheckAll');//编辑前将选中事件清空
-            page.getEditTab('editZD');
-            $.ajax({
-                url: allUrl.edit,
-                type:"post",
-                dataType:'json',
-                data:{
-                    bkdId:row.BKD_ID
-                },
-                beforeSend:function (){
-                    $('#myModal').modal('show');
-                },
-                success: function(result){
-                    $('#myModal').modal('hide');
-                    page.setVal(result);
-                }
-            });
+            $('#win').modal('show');
+            $("#myModalLabel").html('编辑拨款申请单');//改变标题
+            $('#btn-pdf').addClass('hide');
+            $('#btn-save').removeClass('hide');
+            $('#win input').attr('readonly',false);//input可编辑
+            page.getEditTab('editZD',row);
         },
         'click .btn-del':function (e, value, row, index) {//删除
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -65,22 +55,8 @@ $(function(){
             }
         },
         'click .btn-see':function (e, value, row, index) {//查看
-            page.getEditTab('CK');
-            $.ajax({
-                url: allUrl.edit,
-                type:"post",
-                dataType:'json',
-                data:{
-                    bkdId:row.BKD_ID
-                },
-                beforeSend:function (){
-                    $('#myModal').modal('show');
-                },
-                success: function(result){
-                    $('#myModal').modal('hide');
-                    page.setVal(result);
-                }
-            });
+            page.getEditTab('editZD',row);//先加载表格数据
+            page.getEditTab('CK');//进行查看控制
         },
         'click .btn-appendix':function (e, value, row, index) {//上传附件
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -120,22 +96,8 @@ $(function(){
                 commonJS.confirm('警告','未审批，不可加盖签章！');
             }
             else{
-                page.getEditTab('QZ');
-                $.ajax({
-                    url: allUrl.edit,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        bkdId:row.BKD_ID
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        page.setVal(result);
-                    }
-                });
+                page.getEditTab('editZD',row);//先加载表格数据
+                page.getEditTab('QZ');//在进行控制
             }
         },
         'click .btn-zd':function (e, value, row, index) {//制单
@@ -236,10 +198,12 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
-                    queryParams: {
-                        timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        send_status:sta
+                    queryParams: function(params){
+                        return{
+                            timeStart:$('#startTime').val().replace(/-/g, ''),
+                            timeEnd:$('#endTime').val().replace(/-/g, ''),
+                            send_status:sta
+                        }
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -256,22 +220,32 @@ $(function(){
             },
 
             //可编辑表格
-            getEditTab:function(edit){
+            getEditTab:function(edit,row){
                 if(edit=='addZD'){//制单新增
                     $('#firstTable').bootstrapTable('uncheckAll'); //新增时取消所有勾选项
                     $('#win').modal('show');
                     $("#myModalLabel").html('新增拨款申请单');//改变标题
-                    $('#win input').val('').attr('readonly',false);;//新增表格置空
+                    $('#win input').val('').attr('readonly',false);//新增表格置空
                     $('#win td span').html('');
                     $('#btn-pdf').addClass('hide');
                     $('#btn-save').removeClass('hide');
                 }
                 else if(edit=='editZD'){//制单编辑
-                    $('#win').modal('show');
-                    $("#myModalLabel").html('编辑拨款申请单');//改变标题
-                    $('#btn-pdf').addClass('hide');
-                    $('#btn-save').removeClass('hide');
-                    $('#win input').attr('readonly',false);//input可编辑
+                    $.ajax({
+                        url: allUrl.edit,
+                        type:"post",
+                        dataType:'json',
+                        data:{
+                            bkdId:row.BKD_ID
+                        },
+                        beforeSend:function (){
+                            $('#myModal').modal('show');
+                        },
+                        success: function(result){
+                            $('#myModal').modal('hide');
+                            page.setVal(result);
+                        }
+                    });
                 }
                 else if(edit=='QZ'){//签章
                     $('#win').modal('show');
@@ -499,7 +473,14 @@ $(function(){
 
 				//查询
                 $('#btn-query').on('click', function () {
-                    $('#firstTable').bootstrapTable('refresh');
+                    //取当前active的标签页名
+                    var activeTab = $('#myTab li.active').find('a').text();
+                    if (activeTab == '未发财政') {
+                        $('#firstTable').bootstrapTable('refresh');
+                    }
+                    else if (activeTab == '已发财政') {
+                        $('#secondTable').bootstrapTable('refresh');
+                    }
                 });
 
                 //生成pdf
@@ -623,7 +604,7 @@ $(function(){
                 $('#btn-daily').on('click',function () {
                     var firstSel=$('#firstTable').bootstrapTable('getSelections');
                     var secondSel=$('#secondTable').bootstrapTable('getSelections');
-                    if(firstSel.length==0&&secondSel==0){commonJS.confirm('警告','请选择一条数据！');}
+                    if(firstSel.length==0&&secondSel.length==0){commonJS.confirm('警告','请选择一条数据！');}
                    else if(firstSel.length!=0){//选中的是第一个表格数据
                         if(firstSel.length>1){
                             commonJS.confirm('警告','只能选择一条数据！');

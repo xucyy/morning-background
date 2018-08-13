@@ -45,7 +45,7 @@ $(function(){
                     success: function(result){
                         console.log(row.ID);
                         $('#myModal').modal('hide');
-                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -70,7 +70,7 @@ $(function(){
                         },
                         success: function(result){
                             $('#myModal').modal('hide');
-                            page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                            $('#firstTable').bootstrapTable('refresh');
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
@@ -109,7 +109,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -135,7 +135,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                        $('#firstTable').bootstrapTable('refresh');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -214,10 +214,12 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable('destroy').bootstrapTable({
                     url: url,
-                    queryParams: {
-                        timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        sendStatus:sendSta
+                    queryParams: function(){
+                        return{
+                            timeStart:$('#startTime').val().replace(/-/g, ''),
+                            timeEnd:$('#endTime').val().replace(/-/g, ''),
+                            sendStatus:sendSta
+                        }
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
@@ -316,8 +318,14 @@ $(function(){
 
                 //查询
                 $('#btn-query').on('click', function () {
-                    page.getTab('firstTable',allUrl.query,mainColOne,'00');
-                    page.getTab('secondTable',allUrl.query,mainColTwo,'01');
+                    //取当前active的标签页名
+                    var activeTab = $('#myTab li.active').find('a').text();
+                    if (activeTab == '未发财政') {
+                        $('#firstTable').bootstrapTable('refresh');
+                    }
+                    else if (activeTab == '已发财政') {
+                        $('#secondTable').bootstrapTable('refresh');
+                    }
                 });
 
                 //新增
@@ -398,7 +406,7 @@ $(function(){
                         success: function(result){
                             $('#myModal,#win').modal('hide');
                             //重新加载一次表格
-                            page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                            $('#firstTable').bootstrapTable('refresh');
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
@@ -409,11 +417,11 @@ $(function(){
                     // 获取已激活的标签页的名称
                     var activeTab = $(e.target).text();
                     if (activeTab == '未发财政') {
-                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                        $('#firstTable').bootstrapTable('refresh');
                         $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',false);
                     }
                     else{
-                        page.getTab('secondTable',allUrl.query,mainColTwo,'01');
+                        $('#secondTable').bootstrapTable('refresh');
                         $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',true);
                     }
                 });

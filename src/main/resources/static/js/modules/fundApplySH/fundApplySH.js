@@ -161,11 +161,13 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
-                    queryParams: {
-                        timeStart:$('#startTime').val().replace(/-/g, ''),
-                        timeEnd:$('#endTime').val().replace(/-/g, ''),
-                        sp_status:'01',
-                        send_status:'00'
+                    queryParams: function () {
+                        return{
+                            timeStart:$('#startTime').val().replace(/-/g, ''),
+                            timeEnd:$('#endTime').val().replace(/-/g, ''),
+                            sp_status:'01',
+                            send_status:'00'
+                        }
                     },
                     method: 'post',
                     contentType: "application/x-www-form-urlencoded",//当请求方法为post的时候,必须要有！！！！
