@@ -21,31 +21,6 @@ $(function(){
                 $('#win input').attr('readonly',false);
                 $('#myModalLabel').html('编辑审核表');
                 page.getEditTab(true,row);
-                $.ajax({
-                    url: allUrl.edit,
-                    type:"post",
-                    dataType:'json',
-                    data:{
-                        id:row.ID
-                    },
-                    beforeSend:function (){
-                        $('#myModal').modal('show');
-                    },
-                    success: function(result){
-                        $('#myModal').modal('hide');
-                        $('#year').val(result.result[0].YEAR);
-                        $('#quarter').val(result.result[0].QUARTER);
-                        $('#bzDate').val(result.result[0].BZDATE);
-                        $('#shDate').html(result.result[0].SHDATE);
-                        $('#sbjz').html(result.result[0].SBJZ);
-                        $('#sbld').html(result.result[0].SBLD);
-                        $('#sbcz').html(result.result[0].SBCZ);
-                        $('#sbjbr').html(result.result[0].SBJBR);
-                        $('#czld').html(result.result[0].CZLD);
-                        $('#czzr').html(result.result[0].CZZR);
-                        $('#czjbr').html(result.result[0].CZJBR);
-                    }
-                });
             }
         },
         'click .btn-submit':function (e, value, row, index) {//提交
@@ -109,31 +84,7 @@ $(function(){
             $('#btn-save,.appendRow').addClass('hide');
             $('#myModalLabel').html('查看审核表');
             page.getEditTab(false,row);
-            $.ajax({
-                url: allUrl.edit,
-                type:"post",
-                dataType:'json',
-                data:{
-                    id:row.ID
-                },
-                beforeSend:function (){
-                    $('#myModal').modal('show');
-                },
-                success: function(result){
-                    $('#myModal').modal('hide');
-                    $('#year').val(result.result[0].YEAR);
-                    $('#quarter').val(result.result[0].QUARTER);
-                    $('#bzDate').val(result.result[0].BZDATE);
-                    $('#shDate').html(result.result[0].SHDATE);
-                    $('#sbjz').html(result.result[0].SBJZ);
-                    $('#sbld').html(result.result[0].SBLD);
-                    $('#sbcz').html(result.result[0].SBCZ);
-                    $('#sbjbr').html(result.result[0].SBJBR);
-                    $('#czld').html(result.result[0].CZLD);
-                    $('#czzr').html(result.result[0].CZZR);
-                    $('#czjbr').html(result.result[0].CZJBR);
-                }
-            });
+
         },
         'click .btn-sh':function (e, value, row, index) {//审核
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -301,7 +252,7 @@ $(function(){
 
             //编辑、查看编辑单表格
             getEditTab:function(editable,row){
-                $('#modalTable').bootstrapTable('destroy').bootstrapTable({
+                $('#modalTable').bootstrapTable('destroy').bootstrapTable({//加载bootstrap
                     url: allUrl.edit,
                     queryParams: {
                         id:row.ID
@@ -319,6 +270,31 @@ $(function(){
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
                     columns:colEdit
+                });
+                $.ajax({//加载input和span
+                    url: allUrl.edit,
+                    type:"post",
+                    dataType:'json',
+                    data:{
+                        id:row.ID
+                    },
+                    beforeSend:function (){
+                        $('#myModal').modal('show');
+                    },
+                    success: function(result){
+                        $('#myModal').modal('hide');
+                        $('#year').val(result.result[0].YEAR);
+                        $('#quarter').val(result.result[0].QUARTER);
+                        $('#bzDate').val(result.result[0].BZDATE);
+                        $('#shDate').html(result.result[0].SHDATE);
+                        $('#sbjz').html(result.result[0].SBJZ);
+                        $('#sbld').html(result.result[0].SBLD);
+                        $('#sbcz').html(result.result[0].SBCZ);
+                        $('#sbjbr').html(result.result[0].SBJBR);
+                        $('#czld').html(result.result[0].CZLD);
+                        $('#czzr').html(result.result[0].CZZR);
+                        $('#czjbr').html(result.result[0].CZJBR);
+                    }
                 });
             },
 
