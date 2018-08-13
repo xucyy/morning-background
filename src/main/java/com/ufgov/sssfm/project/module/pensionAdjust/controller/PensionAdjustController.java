@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Description 养老调剂金控制层
@@ -81,6 +79,12 @@ public class PensionAdjustController {
         queryMap.put("id",id);
         queryMap.put("sp_status",spStatus);
         queryMap.put("sp_name",sp_name);
+       /* SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+        String shdate =(df.format(new Date())).toString();
+        if(sp_status_name.equals("审核")){
+            queryMap.put("shdate",shdate);
+        }*/
         try{
             pensionAdjustService.shenhe_persionAdjust(queryMap);
         }catch (Exception e){
@@ -115,9 +119,10 @@ public class PensionAdjustController {
                                 }
                         }else{
                                 //删除
-                               //ensionAdjustService.deletefmAdjustGoldByPK(fmAdjustGold.getId());
+                            pensionAdjustService.delete_persionAdjust(fmAdjustGold.getId());
                                 //插入
-                               //ensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
+                            fmAdjustGold.setSpStatus("00");
+                            pensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
                             pensionAdjustService.deletefmAdjustGoldItemByPK(fmAdjustGold.getId());
                             //插入
                             for( int m=0;m<personObject.size();m++){

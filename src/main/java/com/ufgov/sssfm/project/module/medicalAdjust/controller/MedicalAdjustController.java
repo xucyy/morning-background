@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,12 @@ public class MedicalAdjustController {
         queryMap.put("id",id);
         queryMap.put("sp_status",spStatus);
         queryMap.put("sp_name",sp_name);
+       /* SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+        String shdate =(df.format(new Date())).toString();
+        if(sp_status_name.equals("审核")){
+            queryMap.put("shdate",shdate);
+        }*/
         try{
             medicalAdjustService.shenhe_medicalAdjust(queryMap);
         }catch (Exception e){
@@ -107,9 +114,10 @@ public class MedicalAdjustController {
                 }
             }else{
                 //删除
-                //ensionAdjustService.deletefmAdjustGoldByPK(fmAdjustGold.getId());
+                medicalAdjustService.delete_medicalAdjust(fmMedicalAdjust.getId());
                 //插入
-                //ensionAdjustService.insert_fmAdjustGold(fmAdjustGold);
+                fmMedicalAdjust.setSpStatus("00");
+                medicalAdjustService.insert_fmMedicalAdjust(fmMedicalAdjust);
                 medicalAdjustService.deletefmMedicalAdjustItemByPK(fmMedicalAdjust.getId());
                 //插入
                 for( int m=0;m<personObject.size();m++){
