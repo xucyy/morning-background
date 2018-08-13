@@ -12,17 +12,18 @@ $(function(){
 
         return {
             // 加载表格
-            getTab: function (id,url) {
+            getTab: function (id,url,sendSta) {
                 $('#'+id).bootstrapTable({
                     url: url,
                     queryParams: function (params) {
                         return {
                             pageSize: params.limit, // 每页显示数量
-                                pageNumber: params.offset / params.limit + 1,//当前页码
-                                "AAE140": $('#safeSelect').selectpicker('val'),//险种
-                                "AAA079":$('#bfSelect').selectpicker('val'),//拨付类型
-                                "AAE008":$('#bankSelect').selectpicker('val'),//银行编码
-                                "AAE035": $('.datetimepicker').val().replace(/-/g, '')//拨付时间
+                            pageNumber: params.offset / params.limit + 1,//当前页码
+                            "AAE140": $('#safeSelect').selectpicker('val'),//险种
+                            "AAA079":$('#bfSelect').selectpicker('val'),//拨付类型
+                            "AAE008":$('#bankSelect').selectpicker('val'),//银行编码
+                            "AAE035": $('.datetimepicker').val().replace(/-/g, ''),//拨付时间
+                            SEND_STATUS:sendSta
                         };
                     },
                     method: 'post',
@@ -294,9 +295,9 @@ $(function(){
                     $('head').append($("<script type='text/javascript' src='js/resource/json2.js'>"));
                 }
                 this.getComponents();
-                this.getTab('firstTable',allUrlOutcome.query);
-                this.getTab('secondTable',allUrlOutcome.query);
-                this.getTab('thirdTable',allUrlOutcome.query);
+                this.getTab('firstTable',allUrlOutcome.query,'00');
+                this.getTab('secondTable',allUrlOutcome.query,'01');
+                this.getTab('thirdTable',allUrlOutcome.query,'02');
                 this.onEventListener();
             }
         }

@@ -45,7 +45,7 @@ $(function(){
                     success: function(result){
                         console.log(row.ID);
                         $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -70,7 +70,7 @@ $(function(){
                         },
                         success: function(result){
                             $('#myModal').modal('hide');
-                            $('#firstTable').bootstrapTable('refresh');
+                            page.getTab('firstTable',allUrl.query,mainColOne,'00');
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
@@ -110,7 +110,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -136,7 +136,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -213,7 +213,7 @@ $(function(){
             // 加载表格
             getTab: function (id,url,cols,sendSta) {
                 // 初始化第一个表格
-                $('#'+id).bootstrapTable({
+                $('#'+id).bootstrapTable('destroy').bootstrapTable({
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
@@ -245,7 +245,7 @@ $(function(){
                     sidePagination: 'server',//server:服务器端分页|client：前端分页
                     paginationHAlign: 'left',//分页条水平方向的位置，默认right（最右），可选left
                     paginationDetailHAlign: 'right',//paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
-                    columns:colOne,
+                    columns:colEdit,
                     data:[]
                 });
             },
@@ -316,7 +316,8 @@ $(function(){
 
                 //查询
                 $('#btn-query').on('click', function () {
-                    $('#firstTable').bootstrapTable('refresh');
+                    page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                    page.getTab('secondTable',allUrl.query,mainColTwo,'01');
                 });
 
                 //新增
@@ -397,7 +398,7 @@ $(function(){
                         success: function(result){
                             $('#myModal,#win').modal('hide');
                             //重新加载一次表格
-                            $('#firstTable').bootstrapTable('refresh');
+                            page.getTab('firstTable',allUrl.query,mainColOne,'00');
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
@@ -408,11 +409,11 @@ $(function(){
                     // 获取已激活的标签页的名称
                     var activeTab = $(e.target).text();
                     if (activeTab == '未发财政') {
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',false);
                     }
                     else{
-                        $('#secondTable').bootstrapTable('refresh');
+                        page.getTab('secondTable',allUrl.query,mainColTwo,'01');
                         $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',true);
                     }
                 });

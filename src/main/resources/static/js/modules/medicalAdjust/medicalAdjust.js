@@ -45,7 +45,7 @@ $(function(){
                     success: function(result){
                         console.log(row.ID);
                         $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -70,7 +70,7 @@ $(function(){
                         },
                         success: function(result){
                             $('#myModal').modal('hide');
-                            $('#firstTable').bootstrapTable('refresh');
+                            page.getTab('firstTable',allUrl.query,mainColOne,'00');
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
@@ -109,7 +109,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -135,7 +135,7 @@ $(function(){
                     },
                     success: function(result){
                         $('#myModal').modal('hide');
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         commonJS.confirm('消息',result.result,result.msg);
                     }
                 });
@@ -212,7 +212,7 @@ $(function(){
             // 加载表格
             getTab: function (id,url,cols,sendSta) {
                 // 初始化第一个表格
-                $('#'+id).bootstrapTable({
+                $('#'+id).bootstrapTable('destroy').bootstrapTable({
                     url: url,
                     queryParams: {
                         timeStart:$('#startTime').val().replace(/-/g, ''),
@@ -316,7 +316,8 @@ $(function(){
 
                 //查询
                 $('#btn-query').on('click', function () {
-                    $('#firstTable').bootstrapTable('refresh');
+                    page.getTab('firstTable',allUrl.query,mainColOne,'00');
+                    page.getTab('secondTable',allUrl.query,mainColTwo,'01');
                 });
 
                 //新增
@@ -367,7 +368,6 @@ $(function(){
 
                 //保存
                 $('#btn-save').on('click',function () {
-                    console.log($('#modalTable').bootstrapTable('getData'));
                     var jsonObj={
                         id:$('#firstTable').bootstrapTable('getSelections').length==0?'':$('#firstTable').bootstrapTable('getSelections')[0].ID,
                         year:$('#year').val(),
@@ -398,7 +398,7 @@ $(function(){
                         success: function(result){
                             $('#myModal,#win').modal('hide');
                             //重新加载一次表格
-                            $('#firstTable').bootstrapTable('refresh');
+                            page.getTab('firstTable',allUrl.query,mainColOne,'00');
                             commonJS.confirm('消息',result.result,result.msg);
                         }
                     });
@@ -409,11 +409,11 @@ $(function(){
                     // 获取已激活的标签页的名称
                     var activeTab = $(e.target).text();
                     if (activeTab == '未发财政') {
-                        $('#firstTable').bootstrapTable('refresh');
+                        page.getTab('firstTable',allUrl.query,mainColOne,'00');
                         $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',false);
                     }
                     else{
-                        $('#secondTable').bootstrapTable('refresh');
+                        page.getTab('secondTable',allUrl.query,mainColTwo,'01');
                         $('#btn-add,#btn-appendix,#btn-sendCZ').prop('disabled',true);
                     }
                 });
