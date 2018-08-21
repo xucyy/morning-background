@@ -15,46 +15,6 @@ $.fn.datetimepicker.dates['zh'] = {  //datetimepicker汉化
     today:       "今天"
 };
 var commonJS={
-//			分页函数
-    pagerFilter:function(data){
-        if (typeof data.length == 'number' && typeof data.splice == 'function') {   // is array
-            data = {
-                total: data.length,
-                rows: data
-            }
-        }
-        var dg = $(this);
-        var opts = dg.datagrid('options');
-        var pager = dg.datagrid('getPager');
-        pager.pagination({
-            onSelectPage: function (pageNum, pageSize) {
-                opts.pageNumber = pageNum;
-                opts.pageSize = pageSize;
-                pager.pagination('refresh', {
-                    pageNumber: pageNum,
-                    pageSize: pageSize
-                });
-                dg.datagrid('loadData', data);
-            }
-        });
-        if (!data.originalRows) {
-            data.originalRows = (data.rows);
-        }
-        var start = (opts.pageNumber - 1) * parseInt(opts.pageSize);
-        var end = start + parseInt(opts.pageSize);
-        data.rows = (data.originalRows.slice(start, end));
-        return data;
-    },
-
-    //列求和函数
-    compute:function(colName,id){
-        var rows = $('#'+id).datagrid('getRows');
-        var total = 0;
-        for (var i = 0; i < rows.length; i++) {
-            total=this.adds(total,parseFloat(rows[i][colName]==undefined||rows[i][colName]==""?0:rows[i][colName]));
-        }
-        return total;
-    },
 
     //浮点数求和
     adds: function (arg1, arg2) {
@@ -263,15 +223,16 @@ var commonJS={
     getCookie:function(c_name){
         if (document.cookie.length>0)
         {
-            c_start=document.cookie.indexOf(c_name + "=")
+            c_start=document.cookie.indexOf(c_name + "=");
             if (c_start!=-1)
             {
-                c_start=c_start + c_name.length+1
-                c_end=document.cookie.indexOf(";",c_start)
-                if (c_end==-1) c_end=document.cookie.length
+                c_start=c_start + c_name.length+1;
+                c_end=document.cookie.indexOf(";",c_start);
+                if (c_end==-1) c_end=document.cookie.length;
                 return unescape(document.cookie.substring(c_start,c_end))
             }
         }
-        return ""
+        return "";
     }
 };
+var userName=commonJS.getCookie('userName');//获取当前用户

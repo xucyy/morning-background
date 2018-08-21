@@ -2,11 +2,11 @@ $(function(){
 
     var page;
     var allUrlOutcome={//后台交互URL
-        pullDown:'../../../queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
-        query:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata',//加载表格
-        querySon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_item',//子表
-        queryGrandSon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_child',//孙表
-        send:'../../../outcomeinfo/OutcomeController/send_outcome_to_czsb'//发财政
+        pullDown:ctx+'queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
+        query:ctx+'outcomeinfo/OutcomeController/query_jf07_pagedata',//加载表格
+        querySon:ctx+'outcomeinfo/OutcomeController/query_jf07_pagedata_item',//子表
+        queryGrandSon:ctx+'outcomeinfo/OutcomeController/query_jf07_pagedata_child',//孙表
+        send:ctx+'outcomeinfo/OutcomeController/send_outcome_to_czsb'//发财政
     };
     page = function () {
 

@@ -1,5 +1,4 @@
 $(function(){
-
     var allUrl={//后台交互URL
         save:ctx+'persionAdjust/PersionAdjustController/insert_PensionAdjust',//保存
         query:ctx+'persionAdjust/PersionAdjustController/query_persionAdjust_pagedata',//加载表格
@@ -7,7 +6,7 @@ $(function(){
         submit:ctx+'persionAdjust/PersionAdjustController/shenhetijiao_persionAdjust',//提交审核
         del:ctx+'persionAdjust/PersionAdjustController/delete_persionAdjust'//删除
     };
-
+    
     //单元格按钮事件
     window.operateEvents = {
         'click .btn-edit':function (e, value, row, index) {//修改
@@ -36,7 +35,7 @@ $(function(){
                     data:{
                         id:row.ID,
                         spStatus:'01',
-                        sp_name:commonJS.getCookie('userName'),
+                        sp_name:userName,
                         sp_status_name:'制单'
                     },
                     beforeSend:function (){
@@ -102,7 +101,7 @@ $(function(){
                     data:{
                         id:row.ID,
                         spStatus:'02',
-                        sp_name:commonJS.getCookie('userName'),
+                        sp_name:userName,
                         sp_status_name:'审核'
                     },
                     beforeSend:function (){
@@ -128,7 +127,7 @@ $(function(){
                     data:{
                         id:row.ID,
                         spStatus:'00',
-                        sp_name:commonJS.getCookie('userName'),
+                        sp_name:userName,
                         sp_status_name:'驳回'
                     },
                     beforeSend:function (){
@@ -215,8 +214,10 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable('destroy').bootstrapTable({
                     url: url,
-                    queryParams: function(){
+                    queryParams: function(params){
                         return{
+                            pageSize: params.limit, // 每页显示数量
+                            pageNumber: params.offset / params.limit + 1, //当前页码
                             timeStart:$('#startTime').val().replace(/-/g, ''),
                             timeEnd:$('#endTime').val().replace(/-/g, ''),
                             sendStatus:sendSta

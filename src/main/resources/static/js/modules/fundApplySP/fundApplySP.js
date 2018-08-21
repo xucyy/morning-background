@@ -71,10 +71,10 @@ $(function(){
         },
         'click .btn-disagree':function (e, value, row, index){//驳回
             if(row.SEND_STATUS=='01'){
-                page.updateState(row,'03',commonJS.getCookie('userName'),'审批');
+                page.updateState(row,'03',userName,'审批');
             }
             else{
-                page.updateState(row,'00',commonJS.getCookie('userName'),'驳回');
+                page.updateState(row,'00',userName,'驳回');
             }
         },
         'click .btn-daily':function (e, value, row, index) {//审批日志
@@ -124,8 +124,10 @@ $(function(){
                 // 初始化第一个表格
                 $('#'+id).bootstrapTable({
                     url: url,
-                    queryParams: function () {
+                    queryParams: function (params) {
                         return{
+                            pageSize: params.limit, // 每页显示数量
+                            pageNumber: params.offset / params.limit + 1, //当前页码
                             timeStart:$('#startTime').val().replace(/-/g, ''),
                             timeEnd:$('#endTime').val().replace(/-/g, ''),
                             sp_status:'02',

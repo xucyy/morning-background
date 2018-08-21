@@ -2,9 +2,9 @@ $(function(){
 
     var page;
     var allUrlInCome={//后台交互URL
-        pullDown:'../../../queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
-        query:'../../../Incomeinfo/IncomeController/query_ad68_pagedata',//加载表格
-        querySon:'../../../Incomeinfo/IncomeController/query_ad68_pagedata_item'//加载子表
+        pullDown:ctx+'queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
+        query:ctx+'Incomeinfo/IncomeController/query_ad68_pagedata',//加载表格
+        querySon:ctx+'Incomeinfo/IncomeController/query_ad68_pagedata_item'//加载子表
     };
     page = function () {
 

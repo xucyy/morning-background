@@ -2,14 +2,14 @@ $(function(){
 
     var page;
     var allUrlOutcome={//后台交互URL
-        pullDown:'../../../queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
-        query:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata',//加载表格
-        querySon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_item',//子表
-        queryGrandSon:'../../../outcomeinfo/OutcomeController/query_jf07_pagedata_child',//孙表
-        chooseBank:'../../../outcomeinfo/PaymentPlanController/query_bankName',//获取发放行下拉菜单
-        chooseName:'../../../outcomeinfo/PaymentPlanController/query_bankInfo ',//获取发放户名账号下拉菜单
-        setBank:'../../../outcomeinfo/PaymentPlanController/update_Gra_BankInfo',//设置发放行
-        genPlan:'../../../outcomeinfo/PaymentPlanController/update_createPaymentPlan'//生成支付计划
+        pullDown:ctx+'queryutils/QueryUtilsController/query_combobox',//获取下拉菜单
+        query:ctx+'outcomeinfo/OutcomeController/query_jf07_pagedata',//加载表格
+        querySon:ctx+'outcomeinfo/OutcomeController/query_jf07_pagedata_item',//子表
+        queryGrandSon:ctx+'outcomeinfo/OutcomeController/query_jf07_pagedata_child',//孙表
+        chooseBank:ctx+'outcomeinfo/PaymentPlanController/query_bankName',//获取发放行下拉菜单
+        chooseName:ctx+'outcomeinfo/PaymentPlanController/query_bankInfo ',//获取发放户名账号下拉菜单
+        setBank:ctx+'outcomeinfo/PaymentPlanController/update_Gra_BankInfo',//设置发放行
+        genPlan:ctx+'outcomeinfo/PaymentPlanController/update_createPaymentPlan'//生成支付计划
     };
     var columnsOne=[    //第一个表格表头
         {field:'ck',checkbox:true},

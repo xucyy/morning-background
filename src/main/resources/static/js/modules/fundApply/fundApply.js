@@ -26,7 +26,7 @@ $(function(){
             $('#btn-pdf').addClass('hide');
             $('#btn-save').removeClass('hide');
             $('#win input').attr('readonly',false);//input可编辑
-            page.getEditTab('editZD',row);
+            page.getEditTab('editZD',row);//加载数据
         },
         'click .btn-del':function (e, value, row, index) {//删除
             $('#firstTable').bootstrapTable('uncheckAll');
@@ -113,7 +113,7 @@ $(function(){
                     data:{
                         bkdId:row.BKD_ID,
                         sp_status:'01',
-                        sp_name:commonJS.getCookie('userName'),//cookie取用户信息
+                        sp_name:userName,//cookie取用户信息
                         sp_status_name:'制单'
                     },
                     beforeSend:function (){
@@ -200,6 +200,8 @@ $(function(){
                     url: url,
                     queryParams: function(params){
                         return{
+                            pageSize: params.limit, // 每页显示数量
+                            pageNumber: params.offset / params.limit + 1, //当前页码
                             timeStart:$('#startTime').val().replace(/-/g, ''),
                             timeEnd:$('#endTime').val().replace(/-/g, ''),
                             send_status:sta
@@ -652,7 +654,6 @@ $(function(){
             },
 
             init: function () {
-                commonJS.getCookie();
                 if (typeof JSON == 'undefined') {
                     $('head').append($("<script type='text/javascript' src='@{/js/resource/json2.js}'>"));                }
                 this.getComponents();

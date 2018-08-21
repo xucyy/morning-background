@@ -136,6 +136,8 @@
     <div id="loading" class="loading">处理中。。。</div>
 </div>
 
+<!--此下内连写法的js为获取项目根路径的方法，ctx需要加载请求路径上-->
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/resource/jquery-confirm.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
