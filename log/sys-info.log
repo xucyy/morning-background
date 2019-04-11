@@ -1,0 +1,201 @@
+14:26:35.785 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarting,50] - Starting SssfmApplication on bogon with PID 8054 (/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes started by xucy in /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background)
+14:26:35.793 [restartedMain] INFO  c.u.s.SssfmApplication - [logStartupProfileInfo,663] - The following profiles are active: druid
+14:26:37.786 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache' does not yet exist.  Creating now.
+14:26:37.789 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache]
+14:26:38.273 [restartedMain] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+14:26:38.776 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,169] - Using existing EHCache named [loginRecordCache]
+14:26:39.421 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+14:26:39.432 [restartedMain] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+14:26:39.433 [restartedMain] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.31
+14:26:39.436 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/xucy/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+14:26:39.537 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+14:26:39.566 [localhost-startStop-1] INFO  o.a.a.d.WarBasedAxisConfigurator - [<init>,152] - Could not find axis2.xml, loading default org/apache/axis2/deployment/axis2_default.xml from classpath
+14:26:39.739 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [prepareRepository,883] - No modules directory was found under /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes.
+14:26:39.805 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [addServiceGroup,389] - Deploying Web service: ws - file:/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes/services/ws/
+14:26:40.309 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1208] - Using default implementation for ThreadExecutor
+14:26:40.324 [restartedMain] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+14:26:40.324 [restartedMain] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.0 created.
+14:26:40.331 [restartedMain] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FanScheduler' with instanceId 'bogon1554964000312'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+14:26:40.331 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1362] - Quartz scheduler 'FanScheduler' initialized from an externally provided properties instance.
+14:26:40.331 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1366] - Quartz scheduler version: 2.3.0
+14:26:40.333 [restartedMain] INFO  o.q.c.QuartzScheduler - [setJobFactory,2287] - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@4fac130
+14:26:41.854 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+14:26:42.734 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+14:26:42.756 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+14:26:42.821 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+14:26:42.995 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: addUsingGET_1
+14:26:43.001 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: addSaveUsingPOST_1
+14:26:43.005 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: editUsingGET_1
+14:26:43.008 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: editSaveUsingPOST_1
+14:26:43.013 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: listUsingPOST_1
+14:26:43.019 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: removeUsingPOST_1
+14:26:43.056 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: updateBkdSpStatusUsingPOST_1
+14:26:43.085 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+14:26:43.359 [restartedMain] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+14:26:43.376 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarted,59] - Started SssfmApplication in 8.101 seconds (JVM running for 8.985)
+14:26:44.227 [Quartz Scheduler [FanScheduler]] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler FanScheduler_$_bogon1554964000312 started.
+14:27:11.847 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+14:27:11.884 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+14:27:11.903 [http-nio-8080-exec-1] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'shiro-activeSessionCache' does not yet exist.  Creating now.
+14:27:11.904 [http-nio-8080-exec-1] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [shiro-activeSessionCache]
+14:27:12.889 [pool-1-thread-1] INFO  c.u.s.f.s.w.s.OnlineWebSessionManager - [validateSessions,87] - invalidation sessions...
+14:27:12.953 [pool-1-thread-1] INFO  c.u.s.f.s.w.s.OnlineWebSessionManager - [validateSessions,146] - Finished invalidation session. [1] sessions were stopped.
+14:27:21.298 [http-nio-8080-exec-5] INFO  sys-user - [log,41] - [127.0.0.1][admin][Success][登录成功]
+14:29:51.602 [Thread-31] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964000312 paused.
+14:29:51.606 [Thread-31] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler FanScheduler_$_bogon1554964000312 shutting down.
+14:29:51.607 [Thread-31] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964000312 paused.
+14:29:51.607 [Thread-31] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler FanScheduler_$_bogon1554964000312 shutdown complete.
+14:29:51.612 [Thread-31] INFO  c.a.d.p.DruidDataSource - [close,1825] - {dataSource-1} closed
+14:29:53.853 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarting,50] - Starting SssfmApplication on bogon with PID 8121 (/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes started by xucy in /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background)
+14:29:53.857 [restartedMain] INFO  c.u.s.SssfmApplication - [logStartupProfileInfo,663] - The following profiles are active: druid
+14:31:29.255 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarting,50] - Starting SssfmApplication on bogon with PID 8159 (/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes started by xucy in /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background)
+14:31:29.259 [restartedMain] INFO  c.u.s.SssfmApplication - [logStartupProfileInfo,663] - The following profiles are active: druid
+14:31:31.268 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache' does not yet exist.  Creating now.
+14:31:31.268 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache]
+14:31:31.731 [restartedMain] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+14:31:32.225 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,169] - Using existing EHCache named [loginRecordCache]
+14:31:32.858 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+14:31:32.873 [restartedMain] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+14:31:32.874 [restartedMain] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.31
+14:31:32.878 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/xucy/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+14:31:32.975 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+14:31:33.009 [localhost-startStop-1] INFO  o.a.a.d.WarBasedAxisConfigurator - [<init>,152] - Could not find axis2.xml, loading default org/apache/axis2/deployment/axis2_default.xml from classpath
+14:31:33.207 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [prepareRepository,883] - No modules directory was found under /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes.
+14:31:33.288 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [addServiceGroup,389] - Deploying Web service: ws - file:/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes/services/ws/
+14:31:33.840 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1208] - Using default implementation for ThreadExecutor
+14:31:33.855 [restartedMain] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+14:31:33.855 [restartedMain] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.0 created.
+14:31:33.867 [restartedMain] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FanScheduler' with instanceId 'bogon1554964293842'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+14:31:33.868 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1362] - Quartz scheduler 'FanScheduler' initialized from an externally provided properties instance.
+14:31:33.868 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1366] - Quartz scheduler version: 2.3.0
+14:31:33.871 [restartedMain] INFO  o.q.c.QuartzScheduler - [setJobFactory,2287] - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@3fd613d5
+14:31:35.127 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+14:31:35.990 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+14:31:36.013 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+14:31:36.070 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+14:31:36.216 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: addUsingGET_1
+14:31:36.220 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: addSaveUsingPOST_1
+14:31:36.223 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: editUsingGET_1
+14:31:36.227 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: editSaveUsingPOST_1
+14:31:36.231 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: listUsingPOST_1
+14:31:36.236 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: removeUsingPOST_1
+14:31:36.264 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: updateBkdSpStatusUsingPOST_1
+14:31:36.289 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+14:31:36.556 [restartedMain] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+14:31:36.577 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarted,59] - Started SssfmApplication in 7.824 seconds (JVM running for 8.733)
+14:31:37.313 [Quartz Scheduler [FanScheduler]] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler FanScheduler_$_bogon1554964293842 started.
+14:32:03.699 [Thread-31] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964293842 paused.
+14:32:03.705 [Thread-31] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler FanScheduler_$_bogon1554964293842 shutting down.
+14:32:03.705 [Thread-31] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964293842 paused.
+14:32:03.706 [Thread-31] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler FanScheduler_$_bogon1554964293842 shutdown complete.
+14:32:03.711 [Thread-31] INFO  c.a.d.p.DruidDataSource - [close,1825] - {dataSource-1} closed
+14:33:04.287 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarting,50] - Starting SssfmApplication on bogon with PID 8210 (/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes started by xucy in /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background)
+14:33:04.294 [restartedMain] INFO  c.u.s.SssfmApplication - [logStartupProfileInfo,663] - The following profiles are active: druid
+14:33:06.052 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache' does not yet exist.  Creating now.
+14:33:06.053 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache]
+14:33:06.466 [restartedMain] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+14:33:06.925 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,169] - Using existing EHCache named [loginRecordCache]
+14:33:07.591 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+14:33:07.599 [restartedMain] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+14:33:07.600 [restartedMain] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.31
+14:33:07.604 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/xucy/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+14:33:07.675 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+14:33:07.703 [localhost-startStop-1] INFO  o.a.a.d.WarBasedAxisConfigurator - [<init>,152] - Could not find axis2.xml, loading default org/apache/axis2/deployment/axis2_default.xml from classpath
+14:33:07.825 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [prepareRepository,883] - No modules directory was found under /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes.
+14:33:07.900 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [addServiceGroup,389] - Deploying Web service: ws - file:/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes/services/ws/
+14:33:08.573 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1208] - Using default implementation for ThreadExecutor
+14:33:08.585 [restartedMain] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+14:33:08.586 [restartedMain] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.0 created.
+14:33:08.592 [restartedMain] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FanScheduler' with instanceId 'bogon1554964388574'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+14:33:08.592 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1362] - Quartz scheduler 'FanScheduler' initialized from an externally provided properties instance.
+14:33:08.592 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1366] - Quartz scheduler version: 2.3.0
+14:33:08.593 [restartedMain] INFO  o.q.c.QuartzScheduler - [setJobFactory,2287] - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@74986e4f
+14:33:09.911 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+14:33:10.922 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+14:33:10.938 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+14:33:10.998 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+14:33:11.420 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - [startingWith,40] - Generating unique operation named: updateBkdSpStatusUsingPOST_1
+14:33:11.448 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+14:33:11.479 [restartedMain] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+14:33:11.500 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarted,59] - Started SssfmApplication in 7.638 seconds (JVM running for 9.364)
+14:33:12.486 [Quartz Scheduler [FanScheduler]] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler FanScheduler_$_bogon1554964388574 started.
+14:33:22.863 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+14:33:22.906 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+14:33:22.910 [http-nio-8080-exec-1] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'shiro-activeSessionCache' does not yet exist.  Creating now.
+14:33:22.910 [http-nio-8080-exec-1] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [shiro-activeSessionCache]
+14:33:23.910 [pool-1-thread-1] INFO  c.u.s.f.s.w.s.OnlineWebSessionManager - [validateSessions,87] - invalidation sessions...
+14:33:23.921 [pool-1-thread-1] INFO  c.u.s.f.s.w.s.OnlineWebSessionManager - [validateSessions,146] - Finished invalidation session. No sessions were stopped.
+14:33:42.819 [Thread-30] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964388574 paused.
+14:33:42.822 [Thread-30] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler FanScheduler_$_bogon1554964388574 shutting down.
+14:33:42.822 [Thread-30] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964388574 paused.
+14:33:42.824 [Thread-30] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler FanScheduler_$_bogon1554964388574 shutdown complete.
+14:33:42.831 [Thread-30] INFO  c.a.d.p.DruidDataSource - [close,1825] - {dataSource-1} closed
+14:35:25.821 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarting,50] - Starting SssfmApplication on bogon with PID 8281 (/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes started by xucy in /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background)
+14:35:25.825 [restartedMain] INFO  c.u.s.SssfmApplication - [logStartupProfileInfo,663] - The following profiles are active: druid
+14:35:27.346 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache' does not yet exist.  Creating now.
+14:35:27.347 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [com.ufgov.sssfm.framework.shiro.realm.UserRealm.authorizationCache]
+14:35:27.701 [restartedMain] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+14:35:28.041 [restartedMain] INFO  o.a.s.c.e.EhCacheManager - [getCache,169] - Using existing EHCache named [loginRecordCache]
+14:35:28.553 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+14:35:28.561 [restartedMain] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+14:35:28.561 [restartedMain] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.31
+14:35:28.564 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/xucy/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+14:35:28.624 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+14:35:28.646 [localhost-startStop-1] INFO  o.a.a.d.WarBasedAxisConfigurator - [<init>,152] - Could not find axis2.xml, loading default org/apache/axis2/deployment/axis2_default.xml from classpath
+14:35:28.738 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [prepareRepository,883] - No modules directory was found under /Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes.
+14:35:28.822 [localhost-startStop-1] INFO  o.a.a.d.DeploymentEngine - [addServiceGroup,389] - Deploying Web service: ws - file:/Users/xucy/dev/xucy-application/Work_Space/idea/idea_project/xu_study/morning-background/target/classes/services/ws/
+14:35:29.253 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1208] - Using default implementation for ThreadExecutor
+14:35:29.262 [restartedMain] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+14:35:29.263 [restartedMain] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.0 created.
+14:35:29.267 [restartedMain] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FanScheduler' with instanceId 'bogon1554964529254'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+14:35:29.267 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1362] - Quartz scheduler 'FanScheduler' initialized from an externally provided properties instance.
+14:35:29.268 [restartedMain] INFO  o.q.i.StdSchedulerFactory - [instantiate,1366] - Quartz scheduler version: 2.3.0
+14:35:29.269 [restartedMain] INFO  o.q.c.QuartzScheduler - [setJobFactory,2287] - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@6e5bef95
+14:35:30.305 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+14:35:31.095 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+14:35:31.108 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+14:35:31.149 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+14:35:31.296 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+14:35:31.321 [restartedMain] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+14:35:31.336 [restartedMain] INFO  c.u.s.SssfmApplication - [logStarted,59] - Started SssfmApplication in 5.952 seconds (JVM running for 7.731)
+14:35:32.321 [Quartz Scheduler [FanScheduler]] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler FanScheduler_$_bogon1554964529254 started.
+14:35:35.820 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+14:35:35.846 [http-nio-8080-exec-2] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+14:35:35.849 [http-nio-8080-exec-2] INFO  o.a.s.c.e.EhCacheManager - [getCache,158] - Cache with name 'shiro-activeSessionCache' does not yet exist.  Creating now.
+14:35:35.850 [http-nio-8080-exec-2] INFO  o.a.s.c.e.EhCacheManager - [getCache,165] - Added EhCache named [shiro-activeSessionCache]
+14:35:36.849 [pool-1-thread-1] INFO  c.u.s.f.s.w.s.OnlineWebSessionManager - [validateSessions,87] - invalidation sessions...
+14:35:36.858 [pool-1-thread-1] INFO  c.u.s.f.s.w.s.OnlineWebSessionManager - [validateSessions,146] - Finished invalidation session. No sessions were stopped.
+14:35:40.227 [http-nio-8080-exec-4] INFO  sys-user - [log,41] - [127.0.0.1][admin][Success][登录成功]
+14:36:50.135 [Thread-27] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964529254 paused.
+14:36:50.138 [Thread-27] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler FanScheduler_$_bogon1554964529254 shutting down.
+14:36:50.138 [Thread-27] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler FanScheduler_$_bogon1554964529254 paused.
+14:36:50.139 [Thread-27] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler FanScheduler_$_bogon1554964529254 shutdown complete.
+14:36:50.143 [Thread-27] INFO  c.a.d.p.DruidDataSource - [close,1825] - {dataSource-1} closed

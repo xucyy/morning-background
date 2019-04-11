@@ -1,6 +1,5 @@
 package com.ufgov.sssfm.common.utils.nx;
 
-import com.ufgov.sssfm.project.module.queryutils.bean.FmBankXmlLog;
 import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,21 +49,6 @@ public class NormalUtil {
         return path.getAbsolutePath();
     }
 
-    //得到日志对象工具类
-    public  static FmBankXmlLog getFmBankXmlLog(String dataType, String senderId, String dataId,
-                                                String errorMessage, String requestXml, String resultXml  ) {
-        FmBankXmlLog log=new FmBankXmlLog();
-        log.setDataId(dataId);
-        log.setDataType(dataType);
-        log.setSenderId(senderId);
-        log.setErrorMessage(errorMessage);
-        log.setRequestXml(requestXml);
-        log.setResultXml(resultXml);
-        log.setSendDate(new Date());
-        log.setRecNo(new BigDecimal(1));
-        log.setSerialNum(new BigDecimal(1));
-        return log;
-    }
 
     /**
      * 删除单个文件
